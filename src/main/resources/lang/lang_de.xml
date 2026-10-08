@@ -2629,4 +2629,7 @@ Sie dürfen jedoch nicht oberhalb der Kopfzeile mit den Signalnamen verwendet we
     <string name="tutorialNotNeeded">
         Tutorial überspringen
     </string>
+    <string name="msg_componentShortcutsHint">A-Z, 0-9, F1-F12 oder ENTER; leer lassen zum Deaktivieren.</string>
+    <string name="msg_invalidComponentShortcuts">Korrigieren Sie die markierten Tastenkombinationen. Verwenden Sie gültige, eindeutige Kombinationen, die nicht vom Editor belegt sind.</string>
+    <string name="msg_componentShortcutsSaved">Tastenkombinationen für Komponenten gespeichert.</string>
 </resources>

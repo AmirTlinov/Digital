@@ -71,7 +71,6 @@ import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.filechooser.FileSystemView;
-import javax.swing.text.DefaultEditorKit;
 import java.awt.*;
 import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.DataFlavor;
@@ -254,7 +253,8 @@ public final class MainGui extends JFrame implements ClosingWindowListener.Confi
 
         insertHistory = new InsertHistory(toolBar, library);
         library.addListener(insertHistory);
-        final LibrarySelector librarySelector = new LibrarySelector(library, shapeFactory, this);
+        final LibrarySelector librarySelector = new LibrarySelector(library, shapeFactory, this,
+                de.tobihxd.KeybindManager.getInstance());
         library.addListener(librarySelector);
         menuBar.add(librarySelector.buildMenu(insertHistory, circuitComponent));
 
@@ -282,6 +282,7 @@ public final class MainGui extends JFrame implements ClosingWindowListener.Confi
         addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosed(WindowEvent e) {
+                librarySelector.dispose();
                 clearModelDescription(); // stop model timer if running
                 timerExecutor.shutdown();
                 library.removeListener(librarySelector);
@@ -305,6 +306,7 @@ public final class MainGui extends JFrame implements ClosingWindowListener.Confi
         }.setAccelerator("L").enableAcceleratorIn(circuitComponent);
 
         enableClockShortcut();
+        librarySelector.updateKeyBinds();
 
         new WindowSizeStorage(builder.mainFrame ? "main" : "sub").restore(this);
 
@@ -319,10 +321,6 @@ public final class MainGui extends JFrame implements ClosingWindowListener.Confi
 
         checkIDEIntegration(builder, menuBar);
 
-        // Prefetch the file dialog
-        SwingUtilities.invokeLater(() -> {
-            new Thread(() -> new JFileChooser()).start();
-        });
     }
 
     private void checkIDEIntegration(MainBuilder builder, JMenuBar menuBar) {
@@ -861,11 +859,14 @@ public final class MainGui extends JFrame implements ClosingWindowListener.Confi
                 ColorScheme.updateCustomColorScheme(modified);
                 if (Settings.getInstance().requiresRestart(modified)) {
                     Lang.setLanguage(modified.get(Keys.SETTINGS_LANGUAGE));
-                    JOptionPane.showMessageDialog(MainGui.this, Lang.get("msg_restartNeeded"));
+                    JOptionPane.showMessageDialog(MainGui.this, Lang.get("msg_restartNeeded"),
+                            Lang.get("menu_editSettings"), JOptionPane.INFORMATION_MESSAGE);
                 }
                 if (Settings.getInstance().requiresRepaint(modified)) {
                     circuitComponent.graphicHasChanged();
-                    if (Screen.isMac()) JOptionPane.showMessageDialog(MainGui.this, Lang.get("msg_restartNeeded"));
+                    if (Screen.isMac())
+                        JOptionPane.showMessageDialog(MainGui.this, Lang.get("msg_restartNeeded"),
+                                Lang.get("menu_editSettings"), JOptionPane.INFORMATION_MESSAGE);
                     else {
                         try {
                             UIManager.setLookAndFeel(modified.get(ColorScheme.COLOR_SCHEME).getScheme().getTheme());
@@ -1730,7 +1731,7 @@ public final class MainGui extends JFrame implements ClosingWindowListener.Confi
             folder = filename.getParentFile();
 
         JFileChooser fileChooser = new MyFileChooser(folder);
-        fileChooser.setFileFilter(new FileNameExtensionFilter("Circuit", "dig"));
+        fileChooser.setFileFilter(new FileNameExtensionFilter("Digital (*.dig)", "dig"));
         return fileChooser;
     }
 
@@ -2245,33 +2246,6 @@ public final class MainGui extends JFrame implements ClosingWindowListener.Confi
         if (LOGGER.isDebugEnabled())
             LOGGER.debug(InfoDialog.getInstance().getRevision());
 
-        /*
-        The Apple look an feel, which can be enabled by choosing the UIManager.getSystemLookAndFeelClassName()
-        on MacOS has problems with the component tree view because it does not support different item heights.
-        Also, the HTML rendering does not seem to be supported. See GitHub #190.
-        Therefore also on MosOS the MetalLookAndFeel is used.
-         */
-//        try { // enforce MetalLookAndFeel
-//            UIManager.setLookAndFeel("javax.swing.plaf.metal.MetalLookAndFeel");
-//        } catch (ClassNotFoundException | InstantiationException | UnsupportedLookAndFeelException | IllegalAccessException e) {
-//            e.printStackTrace();
-//        }
-//        ToolTipManager.sharedInstance().setDismissDelay(10000);
-//        URL.setURLStreamHandlerFactory(ElementHelpDialog.createURLStreamHandlerFactory());
-
-//        if (Screen.isMac()) {
-//            setMacCopyPasteTo(UIManager.get("TextField.focusInputMap"));
-//            setMacCopyPasteTo(UIManager.get("TextArea.focusInputMap"));
-//        }
-//        UIManager.getLookAndFeel().getDefaults().forEach((k,v) -> {
-//            System.out.println("KEY: " + k + "    ----    VALUE: " + v);
-//        });
-//        HashMap<?,?> hm = (HashMap<?, ?>) UIManager.get("FlatLaf.internal.variables");
-//       hm.forEach((k,v) -> {
-//           System.out.println("KEY: " + k + "    ----    VALUE: " + v);
-//       });
-//       System.out.println(hm.get("@buttonPressedArrowColor"));
-//        }
         File file = null;
         for (String s : args) {
             if (s.equals("experimental")) experimental = true;
@@ -2284,8 +2258,12 @@ public final class MainGui extends JFrame implements ClosingWindowListener.Confi
 
         if (file != null && file.getName().endsWith(".fsm")) {
             FSMFrame.openFile(file);
+            splashFrame.dispose();
+            DesktopIntegration.install();
         } else if (file != null && file.getName().endsWith(".tru")) {
             TableDialog.openFile(file);
+            splashFrame.dispose();
+            DesktopIntegration.install();
         } else {
             MainBuilder builder = new MainBuilder().setMainFrame();
             if (file != null)
@@ -2310,6 +2288,7 @@ public final class MainGui extends JFrame implements ClosingWindowListener.Confi
 
                 mainGui.setVisible(true);
                 splashFrame.dispose();
+                DesktopIntegration.install();
                 if (tutorial) {
                     LOGGER.debug("open tutorial dialog");
                     new InitialTutorial(mainGui).setVisible(true);
@@ -2320,12 +2299,34 @@ public final class MainGui extends JFrame implements ClosingWindowListener.Confi
         }
     }
 
-    private static void setMacCopyPasteTo(Object obj) {
-        if (obj instanceof InputMap) {
-            InputMap im = (InputMap) obj;
-            im.put(KeyStroke.getKeyStroke(KeyEvent.VK_C, KeyEvent.META_DOWN_MASK), DefaultEditorKit.copyAction);
-            im.put(KeyStroke.getKeyStroke(KeyEvent.VK_V, KeyEvent.META_DOWN_MASK), DefaultEditorKit.pasteAction);
-            im.put(KeyStroke.getKeyStroke(KeyEvent.VK_X, KeyEvent.META_DOWN_MASK), DefaultEditorKit.cutAction);
+    /** Opens a native document event on the Swing event dispatch thread. */
+    static void openDesktopFile(File file) {
+        if (file.getName().endsWith(".fsm")) {
+            FSMFrame.openFile(file);
+            return;
+        }
+        if (file.getName().endsWith(".tru")) {
+            TableDialog.openFile(file);
+            return;
+        }
+        MainGui emptyEditor = null;
+        for (Frame frame : Frame.getFrames()) {
+            if (frame.isDisplayable() && frame instanceof MainGui) {
+                MainGui editor = (MainGui) frame;
+                if (file.equals(editor.filename)) {
+                    editor.toFront();
+                    editor.requestFocus();
+                    return;
+                }
+                if (editor.filename == null && !editor.isStateChanged())
+                    emptyEditor = editor;
+            }
+        }
+        if (emptyEditor != null) {
+            emptyEditor.open(file, false);
+            emptyEditor.toFront();
+        } else {
+            new MainBuilder().setFileToOpen(file).build().setVisible(true);
         }
     }
 

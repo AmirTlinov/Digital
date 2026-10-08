@@ -1,0 +1,2233 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources>
+    <string name="addr">Адрес</string>
+    <string name="tableOfContent">Оглавление</string>
+    <string name="general">Общие</string>
+    <string name="revision">Версия</string>
+    <string name="date">Дата</string>
+    <string name="maxValue">максимум</string>
+    <string name="settings">Ниже описаны доступные настройки симулятора.</string>
+    <string name="attr_dialogTitle">Атрибуты</string>
+    <string name="attr_openCircuit">Открыть схему</string>
+    <string name="attr_openCircuitLabel">Вложенная схема:</string>
+    <string name="attr_openCircuit_tt">Открывает схему в новом окне.</string>
+    <string name="attr_help">Справка</string>
+    <string name="attr_help_tt">Показывает краткое описание этого элемента.</string>
+    <string name="attr_panel_primary">Основные</string>
+    <string name="attr_panel_secondary">Дополнительные</string>
+    <string name="attr_panel_keybinds">Горячие клавиши</string>
+    <string name="btn_discard">Отменить изменения</string>
+    <string name="btn_edit">Редактировать</string>
+    <string name="btn_editFurther">Продолжить редактирование</string>
+    <string name="btn_load">Загрузить</string>
+    <string name="btn_save">Сохранить</string>
+    <string name="btn_create">Создать</string>
+    <string name="btn_create_tt">Создать схему в отдельном окне</string>
+    <string name="btn_editDetached">Редактировать в отдельном окне</string>
+    <string name="btn_editDetached_tt">Открыть окно редактора, сохранив возможность работать с остальными окнами.</string>
+    <string name="btn_openInBrowser">Открыть в браузере</string>
+    <string name="btn_openInBrowser_tt">Открывает текст справки в браузере. Позволяет распечатать текст.</string>
+    <string name="btn_clearData">Очистить</string>
+    <string name="btn_clearData_tt">Обнулить все значения.</string>
+    <string name="btn_addTransitions">Переходы</string>
+    <string name="btn_addTransitions_tt">Добавить все возможные переходы как тестовые строки для проверки симулятора.</string>
+    <string name="btn_newName">Новое имя</string>
+    <string name="btn_saveAnyway">Всё равно сохранить</string>
+    <string name="btn_overwrite">Перезаписать</string>
+    <string name="btn_apply">Применить</string>
+    <string name="btn_editRom_tt">Редактирует содержимое выбранного ПЗУ / EEPROM</string>
+    <string name="btn_clearRom_tt">Удалить сохранённые данные выбранного ПЗУ. Вместо них будет использовано содержимое, заданное в самом компоненте.</string>
+    <string name="btn_saveTemplate">Шаблон</string>
+    <string name="btn_saveTemplate_tt">Создает шаблон SVG, который затем можно редактировать с помощью Inkscape.</string>
+    <string name="btn_loadSvg">Импорт</string>
+    <string name="btn_loadSvg_tt">Импортировать файл SVG. Чтобы создать подходящий файл, сначала создайте шаблон SVG и отредактируйте его.</string>
+    <string name="msg_warning">Предупреждение</string>
+    <string name="cancel">Отмена</string>
+    <string name="digital">Digital</string>
+    <string name="expression">Выражение</string>
+    <string name="elem_Help_inputs">Входы</string>
+    <string name="elem_Help_outputs">Выходы</string>
+    <string name="elem_Help_attributes">Атрибуты</string>
+    <string name="msg_search">поиск</string>
+    <string name="msg_errorPastingData">Ошибка при вставке данных!</string>
+
+    <!-- logic -->
+
+    <string name="elem_Basic_In">Входное значение {0} для логической операции.</string>
+    <string name="elem_Basic_Out">Возвращает результат логической операции.</string>
+
+    <string name="elem_And">И</string>
+    <string name="elem_And_tt">Логический элемент И. Выход равен 1, только когда все входы равны 1. Для многобитовых шин выполняется поразрядное И: биты с одинаковыми индексами на всех входах объединяются и образуют соответствующий бит выхода.</string>
+    <string name="elem_NAnd">И-НЕ</string>
+    <string name="elem_NAnd_tt">Комбинация И и НЕ. Выход равен 0, только когда все входы равны 1; иначе выход равен 1. Для многобитовых шин операция выполняется поразрядно.</string>
+    <string name="elem_Or">ИЛИ</string>
+    <string name="elem_Or_tt">Логический элемент ИЛИ. Выход равен 1, если хотя бы один вход равен 1; иначе выход равен 0. Для многобитовых шин операция выполняется поразрядно.</string>
+    <string name="elem_NOr">ИЛИ-НЕ</string>
+    <string name="elem_NOr_tt">Комбинация ИЛИ и НЕ. Выход равен 0, если хотя бы один вход равен 1; иначе выход равен 1. Для многобитовых шин операция выполняется поразрядно.</string>
+    <string name="elem_XOr">Исключающее ИЛИ</string>
+    <string name="elem_XOr_tt">При двух входах выход равен 0, если входные биты совпадают, и 1, если они различаются. При большем числе входов операция выполняется последовательно: A XOR B XOR C = (A XOR B) XOR C. Для многобитовых шин операция выполняется поразрядно.</string>
+    <string name="elem_XNOr">Исключающее ИЛИ-НЕ</string>
+    <string name="elem_XNOr_tt">Комбинация исключающего ИЛИ и НЕ. Входы объединяются операцией XOR, затем результат инвертируется. Для многобитовых шин операция выполняется поразрядно.</string>
+    <string name="elem_Not">НЕ</string>
+    <string name="elem_Not_tt">Инвертирует вход: 1 превращается в 0, а 0 — в 1. Для многобитовых шин инвертируется каждый бит.</string>
+    <string name="elem_Not_pin_in">Вход элемента НЕ.</string>
+    <string name="elem_Not_pin_out">Инвертированное входное значение.</string>
+    <string name="elem_LookUpTable">Таблица соответствий</string>
+    <string name="elem_LookUpTable_short">LUT</string>
+    <string name="elem_LookUpTable_tt">Выдаёт значение из сохранённой таблицы. Позволяет реализовать любую комбинационную логическую функцию.</string>
+    <string name="elem_LookUpTable_pin_in">Ввод {0}. Этот вход в сочетании со всеми другими входами определяет
+        адрес возвращаемого сохраненного значения.</string>
+    <string name="elem_LookUpTable_pin_out">Возвращает сохраненное значение по адресу, заданному через входы.</string>
+    <string name="elem_Delay">Задержка</string>
+    <string name="elem_Delay_tt">Задерживает сигнал на заданное число задержек распространения. У остальных компонентов Digital задержка равна одной единице. С помощью этого элемента можно задать необходимую задержку сигнала.</string>
+    <string name="elem_Delay_pin_in">Ввод сигнала для задержки.</string>
+    <string name="elem_Delay_pin_out">Входной сигнал с задержкой распространения одного элемента.</string>
+
+
+    <!-- IO -->
+
+    <string name="elem_Out">Выход</string>
+    <string name="elem_Out_tt">Показывает выходной сигнал в схеме и подключает её к содержащей её схеме. Такое соединение двунаправленное. Также позволяет назначить номер вывода при генерации кода для CPLD или FPGA.</string>
+    <string name="elem_Out_pin_in">Это значение используется для выходного соединения.</string>
+    <string name="elem_LED">Светодиод</string>
+    <string name="elem_LED_tt">Светодиод может использоваться для визуализации выходного значения. Принимает один бит.
+        Загорается, если вход установлен на 1.</string>
+    <string name="elem_LED_pin_in">Светодиодный вход. Светодиод загорается, если вход установлен на 1.</string>
+
+    <string name="elem_RGBLED">RGB-светодиод</string>
+    <string name="elem_RGBLED_tt">Светодиод RGB, цвет которого можно контролировать с помощью трех входов.
+        К каждому из трех входов подключен канал цвета.</string>
+    <string name="elem_RGBLED_pin_R">Канал красного цвета.</string>
+    <string name="elem_RGBLED_pin_G">Канал зеленого цвета.</string>
+    <string name="elem_RGBLED_pin_B">Канал синего цвета.</string>
+
+    <string name="elem_PolarityAwareLED">Светодиод с двумя выводами</string>
+    <string name="elem_PolarityAwareLED_tt">Светодиод с выводами анода и катода. Загорается, если на аноде высокий уровень, а на катоде низкий. Служит только индикатором и не может использоваться как подтягивающий резистор к земле. Нарисованный резистор обозначает последовательный резистор, необходимый для ограничения тока.</string>
+    <string name="elem_PolarityAwareLED_pin_A">Анодное соединение светодиода.</string>
+    <string name="elem_PolarityAwareLED_pin_C">Катодное соединение светодиода.</string>
+
+    <string name="elem_In">Вход</string>
+    <string name="elem_In_tt">Позволяет менять входной сигнал щелчками мыши и подключать схему к содержащей её схеме. Такое соединение двунаправленное. Также позволяет назначить номер вывода при генерации кода для CPLD или FPGA.</string>
+    <string name="elem_In_pin_out">Дает значение, которое связано с этим входом.</string>
+
+    <string name="elem_DipSwitch">DIP-переключатель</string>
+    <string name="elem_DipSwitch_tt">Простой DIP-переключатель, который может выводить как высокий, так и низкий уровень.</string>
+    <string name="elem_DipSwitch_pin_out">Выходное значение переключателя.</string>
+
+    <string name="elem_Clock">Тактовый вход</string>
+    <string name="elem_Clock_tt">Источник тактового сигнала. Может работать автоматически в реальном времени. В зависимости от сложности схемы фактическая частота может быть ниже заданной. При частоте выше 50 Гц схема и цвета проводов обновляются реже, чем на каждом такте. Если автоматический режим отключён, тактовые импульсы подаются щелчками мыши. Также позволяет назначить номер вывода при генерации кода для CPLD или FPGA.</string>
+    <string name="elem_Clock_pin_C">Переключение между 0 и 1 с выбранной тактовой частотой.</string>
+    <string name="elem_Button">Кнопка</string>
+    <string name="elem_Button_tt">Простая кнопка, которая возвращается в исходное состояние при отпускании.</string>
+    <string name="elem_Button_pin_out">Выходной сигнал кнопки.</string>
+    <string name="elem_ButtonLED">Кнопка со светодиодом</string>
+    <string name="elem_ButtonLED_tt">Простая кнопка, которая возвращается в исходное состояние при отпускании.
+        На кнопке есть светодиод, который можно переключать с помощью входного сигнала.</string>
+    <string name="elem_ButtonLED_pin_out">Выходной сигнал кнопки.</string>
+    <string name="elem_ButtonLED_pin_in">Вход для управления светодиодом.</string>
+    <string name="elem_Text">Текст</string>
+    <string name="elem_Text_tt">Показывает текст в цепи.
+        Не влияет на симуляцию.
+        Текст можно изменить в диалоговом окне атрибутов.</string>
+    <string name="elem_Rectangle">Прямоугольник</string>
+    <string name="elem_Rectangle_tt">Показывает прямоугольник в цепи.
+        Не влияет на симуляцию. Если в качестве заголовка используется знак минус, заголовок опускается.</string>
+    <string name="elem_Probe">Зонд</string>
+    <string name="elem_Probe_tt">Значение измерения, которое может отображаться на графике данных или в таблице измерений.
+        Этот компонент можно использовать для простого наблюдения за значениями встроенных схем.
+        Не влияет на симуляцию.</string>
+    <string name="elem_Probe_pin_in">Значение измерения.</string>
+
+
+    <!-- IO - more -->
+
+    <string name="elem_LightBulb">Лампочка</string>
+    <string name="elem_LightBulb_tt">Лампочка с двумя подключениями. Если ток течет, лампочка загорается!
+        Направление тока значения не имеет. Лампа загорается, когда входы имеют разные значения.
+        Лампочка ведет себя аналогично вентилю XOr.</string>
+    <string name="elem_LightBulb_pin_A">Подключение</string>
+    <string name="elem_LightBulb_pin_B">Подключение</string>
+    <string name="elem_Seven-Seg">Семисегментный индикатор</string>
+    <string name="elem_Seven-Seg_tt">Семисегментный дисплей, каждый сегмент имеет свой собственный вход управления.</string>
+    <string name="elem_Seven-Seg_pin_a">Этот ввод управляет верхней горизонтальной линией.</string>
+    <string name="elem_Seven-Seg_pin_b">Этот ввод управляет верхней, правой вертикальной линией.</string>
+    <string name="elem_Seven-Seg_pin_c">Этот ввод управляет нижней правой вертикальной линией.</string>
+    <string name="elem_Seven-Seg_pin_d">Этот ввод контролирует нижнюю горизонтальную линию.</string>
+    <string name="elem_Seven-Seg_pin_e">Этот ввод управляет нижней левой вертикальной линией.</string>
+    <string name="elem_Seven-Seg_pin_f">Этот ввод управляет верхней, левой вертикальной линией.</string>
+    <string name="elem_Seven-Seg_pin_g">Этот ввод управляет средней горизонтальной линией.</string>
+    <string name="elem_Seven-Seg_pin_dp">Этот ввод управляет десятичной точкой.</string>
+    <string name="elem_Seven-Seg_pin_cc">Общий катод. Чтобы включить светодиоды, на этом входе должен быть низкий уровень.</string>
+    <string name="elem_Seven-Seg_pin_ca">Общий анод. Чтобы включить светодиоды, на этом входе должен быть высокий уровень.</string>
+    <string name="elem_Seven-Seg-Hex">Семисегментный шестнадцатеричный индикатор</string>
+    <string name="elem_Seven-Seg-Hex_tt">Семисегментный дисплей с 4-битным шестнадцатеричным входом</string>
+    <string name="elem_Seven-Seg-Hex_pin_d">Значение на этом входе отображается на дисплее.</string>
+    <string name="elem_Seven-Seg-Hex_pin_dp">Этот ввод управляет десятичной запятой.</string>
+
+    <string name="elem_SixteenSeg">16-сегментный индикатор</string>
+    <string name="elem_SixteenSeg_tt">Вход светодиода имеет 16 бит, которые управляют сегментами. Второй вход управляет десятичной точкой.</string>
+    <string name="elem_SixteenSeg_pin_led">16-битная шина для управления светодиодами.</string>
+    <string name="elem_SixteenSeg_pin_dp">Этот ввод управляет десятичной точкой.</string>
+
+    <string name="elem_LedMatrix">Светодиодная матрица</string>
+    <string name="elem_LedMatrix_tt">Матрица светодиодов. Светодиоды отображаются в отдельном окне.
+        Светодиоды столбца дисплея управляются словом данных. На другом входе текущий столбец
+        выбрано. Так реализован мультиплексный дисплей.
+        Во время симуляции светодиоды могут гореть бесконечно, чтобы дисплей не мерцал.</string>
+    <string name="elem_LedMatrix_pin_r-data">Состояние строки светодиодных индикаторов столбца.
+        Каждый бит в этом слове данных представляет состояние строки текущего столбца.</string>
+    <string name="elem_LedMatrix_pin_c-addr">Номер текущего столбца, состояние которого в настоящее время видно на другом входе.</string>
+    <string name="elem_Data">График данных</string>
+    <string name="elem_Data_tt">Показывает график данных прямо на схеме. Можно отображать полные такты или отдельные изменения логических элементов. На симуляцию не влияет.</string>
+    <string name="elem_ScopeTrigger">График с запуском по сигналу</string>
+    <string name="elem_ScopeTrigger_short">Осциллограф</string>
+    <string name="elem_ScopeTrigger_tt">Показывает график измеренных значений, при этом измеренные значения сохраняются только в том случае, если
+        входной сигнал изменится. Сохранение происходит, когда цепь стабилизируется.
+        Триггер не запускает измерения, как в реальном осциллографе, но каждое событие триггера сохраняет одно
+        значение измерения для каждого из показанных сигналов.
+        В качестве прямого входа используется только триггер. Входы и выходы схемы, триггеры, регистры и
+        компонент зонда можно использовать в качестве сигналов. Это можно активировать в соответствующих компонентах.</string>
+    <string name="elem_ScopeTrigger_pin_T">Изменение на этом входе вызывает сохранение измеренных значений.</string>
+
+    <string name="elem_RotEncoder">Поворотный энкодер</string>
+    <string name="elem_RotEncoder_tt">Поворотная ручка с поворотным энкодером. Используется для обнаружения вращательных движений.</string>
+    <string name="elem_RotEncoder_pin_A">сигнал энкодера A</string>
+    <string name="elem_RotEncoder_pin_B">сигнал энкодера B</string>
+
+    <string name="elem_Keyboard">Клавиатура</string>
+    <string name="elem_Keyboard_tt">Клавиатура, которую можно использовать для ввода текста.
+        Этот компонент буферизует ввод, который затем может быть считан.
+        Для ввода текста открывается отдельное окно.</string>
+    <string name="elem_Keyboard_pin_C">Тактовый вход. По переднему фронту из буфера удаляется самый старый символ.</string>
+    <string name="elem_Keyboard_pin_en">При высоком уровне выход D активен и выдаёт один символ. Также разрешается работа тактового входа.</string>
+    <string name="elem_Keyboard_pin_D">Последний набранный символ или ноль, если символ недоступен.
+        Вывод - это 16-битное значение символа Java.</string>
+    <string name="elem_Keyboard_pin_av">Этот вывод показывает, что символы доступны.
+        Его можно использовать для запуска прерывания.</string>
+
+    <string name="elem_Terminal">Терминал</string>
+    <string name="elem_Terminal_tt">Вы можете записывать символы ASCII в этот терминал.
+        Терминал открывает собственное окно для визуализации вывода.</string>
+    <string name="elem_Terminal_pin_C">Тактовый вход. По переднему фронту входное значение записывается в окно терминала.</string>
+    <string name="elem_Terminal_pin_D">Данные для записи в терминал</string>
+    <string name="elem_Terminal_pin_en">Высокий уровень разрешает работу тактового входа.</string>
+
+    <string name="elem_Telnet">Telnet</string>
+    <string name="elem_Telnet_tt">Подключение к схеме по Telnet. Позволяет отправлять и получать символы.</string>
+    <string name="elem_Telnet_pin_out">Выход данных.</string>
+    <string name="elem_Telnet_pin_av">Выдаёт 1, если есть принятые данные.</string>
+    <string name="elem_Telnet_pin_in">Данные для отправки.</string>
+    <string name="elem_Telnet_pin_C">Тактовый вход.</string>
+    <string name="elem_Telnet_pin_wr">Если установлен в 1, отправляется байт со входа данных.</string>
+    <string name="elem_Telnet_pin_rd">Если установлен в 1, выводится принятый байт.</string>
+
+    <string name="elem_VGA">Монитор VGA</string>
+    <string name="elem_VGA_short">VGA</string>
+    <string name="elem_VGA_tt">Анализирует входные видеосигналы и показывает изображение. Поскольку симуляция не работает в реальном времени, кроме видеосигналов требуется тактовый сигнал пикселей.</string>
+    <string name="elem_VGA_pin_R">Компонент красного цвета</string>
+    <string name="elem_VGA_pin_G">Компонент зеленого цвета</string>
+    <string name="elem_VGA_pin_B">Компонент синего цвета</string>
+    <string name="elem_VGA_pin_H">Сигнал горизонтальной синхронизации</string>
+    <string name="elem_VGA_pin_V">Сигнал вертикальной синхронизации</string>
+    <string name="elem_VGA_pin_C">Тактовый сигнал пикселей.</string>
+
+    <string name="elem_MIDI">MIDI</string>
+    <string name="elem_MIDI_tt">Использует систему MIDI для воспроизведения нот.</string>
+    <string name="elem_MIDI_pin_N">Примечание</string>
+    <string name="elem_MIDI_pin_V">Объем</string>
+    <string name="elem_MIDI_pin_OnOff">Если установлено, это означает нажатие клавиши клавиатуры (событие нажатия клавиши),
+        если не установлен, это означает отпускание клавиши (событие нажатия клавиши).</string>
+    <string name="elem_MIDI_pin_en">Включает компонент</string>
+    <string name="elem_MIDI_pin_PC">Если высокий, значение N используется для изменения программы (инструмента).</string>
+    <string name="elem_MIDI_pin_C">Тактовый вход.</string>
+
+    <string name="elem_StepperMotorUnipolar">Шаговый двигатель, униполярный</string>
+    <string name="elem_StepperMotorUnipolar_tt">Униполярный шаговый двигатель с двумя концевыми выключателями.
+        Поддерживаются полный шаговый привод, полушаговый привод и волновой привод.</string>
+    <string name="elem_StepperMotorUnipolar_pin_S0">Переключатель конечного положения 0 становится равным 1, когда угол двигателя равен 0 °.</string>
+    <string name="elem_StepperMotorUnipolar_pin_S1">Переключатель предельного положения 1 становится равным 1, когда угол двигателя составляет 180 °.</string>
+    <string name="elem_StepperMotorUnipolar_pin_P0">Фаза 0</string>
+    <string name="elem_StepperMotorUnipolar_pin_P1">Фаза 1</string>
+    <string name="elem_StepperMotorUnipolar_pin_P2">Фаза 2</string>
+    <string name="elem_StepperMotorUnipolar_pin_P3">Фаза 3</string>
+    <string name="elem_StepperMotorUnipolar_pin_com">Подключение катушки с общим центром</string>
+
+    <string name="elem_StepperMotorBipolar">Шаговый двигатель, биполярный</string>
+    <string name="elem_StepperMotorBipolar_tt">Биполярный шаговый двигатель с двумя концевыми выключателями.
+        Поддерживаются полный шаговый привод, полушаговый привод и волновой привод.</string>
+    <string name="elem_StepperMotorBipolar_pin_S0">Переключатель конечного положения 0, становится 1, когда угол двигателя равен 0 °.</string>
+    <string name="elem_StepperMotorBipolar_pin_S1">Переключатель предельного положения 1 становится равным 1, когда угол двигателя составляет 180 °.</string>
+    <string name="elem_StepperMotorBipolar_pin_A+">Катушка A, положительная</string>
+    <string name="elem_StepperMotorBipolar_pin_A-">Катушка A, отрицательная</string>
+    <string name="elem_StepperMotorBipolar_pin_B+">Катушка B, положительная</string>
+    <string name="elem_StepperMotorBipolar_pin_B-">Катушка B, отрицательная</string>
+
+    <!-- Wires -->
+
+    <string name="elem_Ground">Земля</string>
+    <string name="elem_Ground_tt">Подключение к земле. Вывод всегда равен нулю.</string>
+    <string name="elem_Ground_pin_out">Вывод всегда возвращает 0.</string>
+    <string name="elem_VDD">Напряжение питания</string>
+    <string name="elem_VDD_tt">Подключение к источнику питания. Вывод всегда один.</string>
+    <string name="elem_VDD_pin_out">Этот вывод всегда возвращает 1.</string>
+    <string name="elem_NotConnected">Не подключен</string>
+    <string name="elem_NotConnected_tt">Этот компонент можно использовать для установки провода на High-Z.
+        Если вход логического элемента установлен на высокий Z, значение чтения не определено.
+        Обратите внимание, что на самом деле во многих случаях чрезмерное потребление тока и даже повреждение могут
+        возникает, если для цифрового входа не установлен высокий или низкий уровень, но он остается неподключенным.</string>
+    <string name="elem_NotConnected_pin_out">Этот вывод всегда выводит High-Z.</string>
+    <string name="err_notConnectedNotAllowed">Символ NotConnected здесь недопустим!</string>
+    <string name="elem_Const">Постоянное значение</string>
+    <string name="elem_Const_tt">Компонент, который возвращает заданное значение как простое постоянное значение. Значение можно установить в диалоговом окне атрибута.</string>
+    <string name="elem_Const_pin_out">Возвращает заданное значение как константу.</string>
+    <string name="elem_Tunnel">Туннель</string>
+    <string name="elem_Tunnel_tt">Соединяет компоненты без проводов. Все элементы туннеля, имеющие одно и то же сетевое имя,
+        связаны вместе. Работает только локально, поэтому невозможно подключить разные цепи.
+        Без названия туннели игнорируются.</string>
+    <string name="elem_Tunnel_pin_in">Подключение к туннелю.</string>
+    <string name="elem_Splitter">Разделитель/объединитель</string>
+    <string name="elem_Splitter_tt">Разделяет или объединяет провода в многобитовую шину данных. Например, 16 отдельных соединений можно передать одной 16-битовой шиной. Сигналы проходят через разделитель только в одном направлении.</string>
+    <string name="elem_Splitter_pin_in">Входные биты {0}.</string>
+    <string name="elem_Splitter_pin_in_one">Входной бит {0}.</string>
+    <string name="elem_Splitter_pin_out">Выходные биты {0}.</string>
+    <string name="elem_Splitter_pin_out_one">Выходной бит {0}.</string>
+
+    <string name="elem_BusSplitter">Двунаправленный разделитель</string>
+    <string name="elem_BusSplitter_tt">Может использоваться для шин данных и особенно упрощает создание
+        модули памяти в пакете DIL, так как реализация шины данных упрощается.</string>
+    <string name="elem_BusSplitter_pin_OE">Если установлено, значение на клемме общих данных D выводится в бит
+        выводит D [i], в противном случае биты D [i] выводятся на общий вывод D.</string>
+    <string name="elem_BusSplitter_pin_D">Подключение к общим данным.</string>
+    <string name="elem_BusSplitter_pin_D_N">Бит данных {0} разделителя шины.</string>
+
+    <string name="elem_PullUp">Подтяжка к питанию</string>
+    <string name="elem_PullUp_tt">Если цепь находится в состоянии HighZ, этот резистор поднимает цепь до высокого уровня.
+        В любом другом случае этот компонент не действует.</string>
+    <string name="elem_PullUp_pin_out">"слабый максимум".</string>
+    <string name="elem_PullDown">Подтяжка к земле</string>
+    <string name="elem_PullDown_tt">Если цепь находится в состоянии HighZ, этот резистор подтягивает цепь к земле.
+        В любом другом случае этот компонент не действует.</string>
+    <string name="elem_PullDown_pin_out">"слабый минимум".</string>
+    <string name="elem_Driver">Драйвер</string>
+    <string name="elem_Driver_tt">Драйвер можно использовать для подключения значения сигнала к другому проводу.
+        Драйвер управляется входом sel.
+        Если на входе sel низкий уровень, значит, на выходе высокий уровень z.
+        Если на входе sel высокий уровень, на выходе устанавливается входное значение.</string>
+    <string name="elem_Driver_pin_in">Входное значение драйвера.</string>
+    <string name="elem_Driver_pin_sel">Пин для управления драйвером.
+        Если его значение равно 1, вход устанавливается на выход.
+        Если значение равно 0, выход находится в состоянии высокого z.</string>
+    <string name="elem_Driver_pin_out">Если вход sel равен 1, вход передается этому выходу.
+        Если вход sel равен 0, этот выход находится в состоянии высокого z.</string>
+    <string name="elem_DriverInvSel">Драйвер с инверсным разрешением</string>
+    <string name="elem_DriverInvSel_tt">Для подключения слова данных к другой строке можно использовать драйвер.
+        Драйвер управляется входом sel.
+        Если на входе sel высокий уровень, значит, на выходе высокий уровень z.
+        Если на входе sel низкий уровень, на выходе устанавливается входное значение.</string>
+    <string name="elem_DriverInvSel_pin_in">Входное значение драйвера.</string>
+    <string name="elem_DriverInvSel_pin_sel">Пин-код для управления драйвером.
+        Если его значение равно 0, вход передается на выход.
+        Если значение равно 1, выход находится в состоянии высокого z.</string>
+    <string name="elem_DriverInvSel_pin_out">Если вход sel равен 0, вход передается этому выходу.
+        Если вход sel равен 1, этот выход находится в состоянии высокого z.</string>
+
+    <string name="elem_PinControl">Управление выводом</string>
+    <string name="elem_PinControl_tt">Управляющая логика для двунаправленного вывода.
+        Этот компонент необходим только в контексте генерации VHDL или Verilog, чтобы создать
+        двунаправленный порт HDL!
+        Если вы не хотите использовать двунаправленный порт ввода-вывода на ПЛИС, не используйте этот компонент!
+        Компонент PinControl нельзя использовать во встроенной схеме! Это разрешено только на трассе верхнего уровня!</string>
+    <string name="elem_PinControl_pin_wr">Данные для вывода.</string>
+    <string name="elem_PinControl_pin_oe">Активирует вывод.</string>
+    <string name="elem_PinControl_pin_rd">Данные для чтения.</string>
+    <string name="elem_PinControl_pin_pin">Разъем для фактического контакта. Должен быть подключен только один выход
+        здесь.</string>
+
+    <!-- Plexers  -->
+
+    <string name="elem_Multiplexer">Мультиплексор</string>
+    <string name="elem_Multiplexer_tt">Компонент, который использует значение пина sel, чтобы решить, какое входное значение является
+        установлен на выход.</string>
+    <string name="elem_Multiplexer_input">{0}. ввод данных мультиплексора.</string>
+    <string name="elem_Multiplexer_output">Значение выбранного входа.</string>
+    <string name="elem_Multiplexer_pin_sel">Этот ввод используется для выбора ввода данных, который выводится.</string>
+    <string name="elem_Demultiplexer">Демультиплексор</string>
+    <string name="elem_Demultiplexer_tt">Компонент, который может выводить входное значение на один из выходов.
+        Для остальных выходов установлено значение по умолчанию.</string>
+    <string name="elem_Demultiplexer_pin_sel">Этот вывод выбирает используемый выход.</string>
+    <string name="elem_Demultiplexer_pin_in">Значение этого входа передается выбранному выходу данных.</string>
+    <string name="elem_Demultiplexer_output">Вывод данных {0}.</string>
+    <string name="elem_Decoder">Декодер</string>
+    <string name="elem_Decoder_tt">Один выбираемый выходной контакт - 1, все остальные выходы - 0.</string>
+    <string name="elem_Decoder_output">Вывод {0}. Этот выход равен 1, если выбран входом sel.</string>
+    <string name="elem_Decoder_pin_sel">Этот вход выбирает разрешенный выход.
+        Выбранный выход установлен на 1. Все остальные выходы установлены на 0.</string>
+    <string name="elem_BitSelector">Выбор бита</string>
+    <string name="elem_BitSelector_tt">Выбирает один бит из шины данных.</string>
+    <string name="elem_BitSelector_pin_in">Входная шина</string>
+    <string name="elem_BitSelector_pin_sel">Этот вход выбирает бит</string>
+    <string name="elem_BitSelector_pin_out">Выбранный бит.</string>
+
+    <string name="elem_PriorityEncoder">Приоритетный шифратор</string>
+    <string name="elem_PriorityEncoder_short">Приоритет</string>
+    <string name="elem_PriorityEncoder_tt">Если один из входов установлен, выводится его номер.
+        Если одновременно задано несколько входов, выводится наибольшее число.</string>
+    <string name="elem_PriorityEncoder_pin_num">Номер заданного ввода.</string>
+    <string name="elem_PriorityEncoder_pin_any">Если этот выход установлен, устанавливается по крайней мере один из входов.</string>
+    <string name="elem_PriorityEncoder_input">{0}. ввод приоритетного шифратора.</string>
+
+    <!-- flip flops-->
+
+    <string name="elem_RS_FF_AS">RS-триггер</string>
+    <string name="elem_RS_FF_AS_short">RS</string>
+    <string name="elem_RS_FF_AS_tt">Хранит один бит. Входы «установка» и «сброс» устанавливают и сбрасывают сохранённый бит. Если оба входа равны 1, оба выхода равны 0. Если оба входа одновременно возвращаются в 0, конечное состояние случайно.</string>
+    <string name="elem_RS_FF_AS_pin_S">Установленный ввод.</string>
+    <string name="elem_RS_FF_AS_pin_R">Вход сброса.</string>
+    <string name="elem_RS_FF_AS_pin_Q">Возвращает сохраненное значение.</string>
+    <string name="elem_RS_FF_AS_pin_~Q">Возвращает инвертированное сохраненное значение.</string>
+
+    <string name="elem_RS_FF">RS-триггер, синхронизированный</string>
+    <string name="elem_RS_FF_short">RS</string>
+    <string name="elem_RS_FF_tt">Компонент для хранения одного бита.
+        Предоставляет функции «установить» и «сбросить» для установки или сброса сохраненного бита.
+        Если оба входа (S, R) установлены на переднем фронте тактового сигнала, конечное состояние будет случайным.</string>
+    <string name="elem_RS_FF_pin_S">Установленный ввод.</string>
+    <string name="elem_RS_FF_pin_C">Тактовый вход. Передний фронт вызывает переход состояния.</string>
+    <string name="elem_RS_FF_pin_R">Вход сброса.</string>
+    <string name="elem_RS_FF_pin_Q">Возвращает сохраненное значение.</string>
+    <string name="elem_RS_FF_pin_~Q">Возвращает инвертированное сохраненное значение.</string>
+    <string name="elem_JK_FF">JK-триггер</string>
+    <string name="elem_JK_FF_short">JK</string>
+    <string name="elem_JK_FF_tt">Имеет возможность сохранять (J = K = 0), устанавливать (J = 1, K = 0), сбрасывать (J = 0, K = 1) или переключать (J = K = 1) ) сохраненное значение.
+        Изменение состояния происходит только при нарастающем фронте тактового входа C.</string>
+    <string name="elem_JK_FF_pin_J">Установленный вход триггера.</string>
+    <string name="elem_JK_FF_pin_C">Тактовый вход. Передний фронт вызывает изменение состояния.</string>
+    <string name="elem_JK_FF_pin_K">Вход сброса триггера.</string>
+    <string name="elem_JK_FF_pin_Q">Возвращает сохраненное значение.</string>
+    <string name="elem_JK_FF_pin_~Q">Возвращает инвертированное сохраненное значение.</string>
+    <string name="elem_D_FF">D-триггер</string>
+    <string name="elem_D_FF_short">D</string>
+    <string name="elem_D_FF_tt">Компонент, используемый для хранения значения.
+        Значение на выводе D сохраняется на переднем фронте тактового вывода C.
+        Можно выбрать разрядность, что позволяет хранить несколько бит.</string>
+    <string name="elem_D_FF_pin_D">Ввод бита для сохранения.</string>
+    <string name="elem_D_FF_pin_C">Тактовый вход. По переднему фронту сохраняется значение входа D.</string>
+    <string name="elem_D_FF_pin_Q">Возвращает сохраненное значение.</string>
+    <string name="elem_D_FF_pin_~Q">Возвращает инвертированное сохраненное значение.</string>
+    <string name="elem_T_FF">T-триггер</string>
+    <string name="elem_T_FF_short">T</string>
+    <string name="elem_T_FF_tt">Хранит один бит. Переключает состояние по нарастающему фронту на входе C.</string>
+    <string name="elem_T_FF_pin_T">Включает функцию переключения.</string>
+    <string name="elem_T_FF_pin_C">Тактовый вход. По переднему фронту выход переключается, если T = 1.</string>
+    <string name="elem_T_FF_pin_Q">Возвращает сохраненное значение.</string>
+    <string name="elem_T_FF_pin_~Q">Возвращает инвертированное сохраненное значение.</string>
+    <string name="elem_JK_FF_AS">JK-триггер, асинхронный</string>
+    <string name="elem_JK_FF_AS_short">JK-AS</string>
+    <string name="elem_JK_FF_AS_tt">Имеет возможность сохранять (J = K = 0), устанавливать (J = 1, K = 0), сбрасывать (J = 0, K = 1) или переключать (J = K = 1) ) сохраненное значение.
+        Изменение состояния происходит только при нарастающем фронте тактового входа C.
+        Есть два дополнительных входа, которые устанавливают или сбрасывают состояние немедленно без тактового сигнала.</string>
+    <string name="elem_JK_FF_AS_pin_J">Установленный вход триггера.</string>
+    <string name="elem_JK_FF_AS_pin_C">Тактовый вход. Передний фронт вызывает изменение состояния.</string>
+    <string name="elem_JK_FF_AS_pin_K">Вход сброса триггера.</string>
+    <string name="elem_JK_FF_AS_pin_Q">Возвращает сохраненное значение.</string>
+    <string name="elem_JK_FF_AS_pin_~Q">Возвращает инвертированное сохраненное значение.</string>
+    <string name="elem_JK_FF_AS_pin_Set">асинхронный набор. Высокое значение на этом входе устанавливает триггер.</string>
+    <string name="elem_JK_FF_AS_pin_Clr">асинхронная очистка. Высокое значение на этом входе очищает триггер.</string>
+    <string name="elem_D_FF_AS">D-триггер, асинхронный</string>
+    <string name="elem_D_FF_AS_short">D-AS</string>
+    <string name="elem_D_FF_AS_tt">Компонент, используемый для хранения значения.
+        Значение на выводе D сохраняется на переднем фронте тактового вывода C.
+        Есть два дополнительных входа, которые устанавливают или сбрасывают состояние немедленно без тактового сигнала.
+        Можно выбрать разрядность, что позволяет хранить несколько бит.</string>
+    <string name="elem_D_FF_AS_pin_D">Ввод бита для сохранения.</string>
+    <string name="elem_D_FF_AS_pin_C">Пин управления для хранения бита. Бит на входе D сохраняется на переднем фронте этого вывода.</string>
+    <string name="elem_D_FF_AS_pin_Q">Возвращает сохраненное значение.</string>
+    <string name="elem_D_FF_AS_pin_~Q">Возвращает инвертированное сохраненное значение.</string>
+    <string name="elem_D_FF_AS_pin_Set">асинхронный набор. Если установлено в единицу, все сохраненные биты устанавливаются в единицу.</string>
+    <string name="elem_D_FF_AS_pin_Clr">асинхронная очистка. Если установлено в единицу, все сохраненные биты устанавливаются в ноль.</string>
+
+    <string name="elem_Monoflop">Одновибратор</string>
+    <string name="elem_Monoflop_short">Одновибр.</string>
+    <string name="elem_Monoflop_tt">Одновибратор устанавливается по переднему фронту тактового входа и автоматически сбрасывается через заданное время. Повторный запуск продлевает импульс. Для измерения времени в схеме должен быть ровно один тактовый генератор.</string>
+    <string name="elem_Monoflop_pin_R">Сбросить ввод. Высокое значение очищает монофлоп.</string>
+    <string name="elem_Monoflop_pin_C">Тактовый вход. Передний фронт запускает одновибратор.</string>
+    <string name="elem_Monoflop_pin_Q">вывод</string>
+    <string name="elem_Monoflop_pin_~Q">инвертированный вывод</string>
+
+    <!-- Memory -->
+
+    <string name="elem_Register">Регистр</string>
+    <string name="elem_Register_short">Регистр</string>
+    <string name="elem_Register_tt">Хранит слово данных заданной разрядности. В отличие от D-триггера имеет вход разрешения тактового сигнала.</string>
+    <string name="elem_Register_pin_D">Входной контакт слова данных для сохранения.</string>
+    <string name="elem_Register_pin_C">Тактовый вход. По переднему фронту сохраняется значение входа D.</string>
+    <string name="elem_Register_pin_en">Включить вывод. Сохранение значения работает, только если этот вывод установлен в высокий уровень.</string>
+    <string name="elem_Register_pin_Q">Возвращает сохраненное значение.</string>
+
+    <string name="elem_ROM">ПЗУ</string>
+    <string name="elem_ROM_tt">Компонент энергонезависимой памяти.
+        Сохраненные данные можно редактировать в диалоговом окне атрибутов.</string>
+    <string name="elem_ROM_pin_A">Этот вывод определяет адрес слова данных для вывода.</string>
+    <string name="elem_ROM_pin_D">Выбранное слово данных, если вход sel высокий.</string>
+    <string name="elem_ROM_pin_sel">Если вход высокий, выход активируется. Если он низкий, выходные данные находятся в состоянии высокого Z.</string>
+
+    <string name="elem_ROMDualPort">Двухпортовое ПЗУ</string>
+    <string name="elem_ROMDualPort_short">ПЗУ</string>
+    <string name="elem_ROMDualPort_tt">Компонент энергонезависимой памяти.
+        Сохраненные данные можно редактировать в диалоговом окне атрибутов.</string>
+    <string name="elem_ROMDualPort_pin_A1">Этот вывод определяет адрес слова данных, которое будет выводиться на D1.</string>
+    <string name="elem_ROMDualPort_pin_D1">Выбранное слово данных, если на входе s1 высокий уровень.</string>
+    <string name="elem_ROMDualPort_pin_s1">Если на входе высокий уровень, активируется выход D1. Если он низкий, выходные данные находятся в состоянии высокого Z.</string>
+    <string name="elem_ROMDualPort_pin_A2">Этот вывод определяет адрес слова данных, которое будет выводиться на D2.</string>
+    <string name="elem_ROMDualPort_pin_D2">Выбранное слово данных, если на входе s2 высокий уровень.</string>
+    <string name="elem_ROMDualPort_pin_s2">Если на входе высокий уровень, активируется выход D2. Если он низкий, выходные данные находятся в состоянии высокого Z.</string>
+
+    <string name="elem_RAMDualPort">ОЗУ, отдельные порты</string>
+    <string name="elem_RAMDualPort_short">ОЗУ</string>
+    <string name="elem_RAMDualPort_tt">Модуль RAM с отдельными входами для хранения и выходом для чтения сохраненных данных.</string>
+    <string name="elem_RAMDualPort_pin_A">Адрес для чтения или записи.</string>
+    <string name="elem_RAMDualPort_pin_C">Тактовый вход.</string>
+    <string name="elem_RAMDualPort_pin_Din">Данные, которые будут храниться в ОЗУ.</string>
+    <string name="elem_RAMDualPort_pin_D">Вывод вывода данных</string>
+    <string name="elem_RAMDualPort_pin_ld">Если этот вход высокий, выход активируется, и данные видны на выходе.</string>
+    <string name="elem_RAMDualPort_pin_str">При высоком уровне данные записываются по переднему фронту тактового сигнала.</string>
+
+    <string name="elem_BlockRAMDualPort">Блочное ОЗУ, раздельные порты</string>
+    <string name="elem_BlockRAMDualPort_short">ОЗУ</string>
+    <string name="elem_BlockRAMDualPort_tt">Модуль RAM с отдельными входами для хранения и выходом для чтения
+        сохраненные данные. Это ОЗУ обновляет свой вывод только по нарастающему фронту тактового сигнала.
+        Это позволяет использовать блочную ОЗУ на ПЛИС.</string>
+    <string name="elem_BlockRAMDualPort_pin_A">Адрес для чтения или записи.</string>
+    <string name="elem_BlockRAMDualPort_pin_C">Тактовый вход.</string>
+    <string name="elem_BlockRAMDualPort_pin_Din">Данные, которые будут храниться в ОЗУ.</string>
+    <string name="elem_BlockRAMDualPort_pin_D">Вывод вывода данных</string>
+    <string name="elem_BlockRAMDualPort_pin_str">При высоком уровне данные записываются по переднему фронту тактового сигнала.</string>
+
+    <string name="elem_EEPROMDualPort">EEPROM, раздельные порты</string>
+    <string name="elem_EEPROMDualPort_short">EEPROM</string>
+    <string name="elem_EEPROMDualPort_tt">Модуль EEPROM с отдельными входами для хранения и выходом для чтения сохраненных данных.</string>
+    <string name="elem_EEPROMDualPort_pin_A">Адрес для чтения или записи.</string>
+    <string name="elem_EEPROMDualPort_pin_C">Тактовый вход.</string>
+    <string name="elem_EEPROMDualPort_pin_Din">Данные, которые будут сохранены в EEPROM.</string>
+    <string name="elem_EEPROMDualPort_pin_D">Вывод вывода данных</string>
+    <string name="elem_EEPROMDualPort_pin_ld">Если этот вход высокий, выход активируется, и данные видны на выходе.</string>
+    <string name="elem_EEPROMDualPort_pin_str">При высоком уровне данные записываются по переднему фронту тактового сигнала.</string>
+
+    <string name="elem_RAMSinglePort">ОЗУ, двунаправленный порт</string>
+    <string name="elem_RAMSinglePort_short">ОЗУ</string>
+    <string name="elem_RAMSinglePort_tt">Модуль RAM с двунаправленным выводом для чтения и записи данных.</string>
+    <string name="elem_RAMSinglePort_pin_A">Адрес для чтения и записи.</string>
+    <string name="elem_RAMSinglePort_pin_C">Тактовый вход.</string>
+    <string name="elem_RAMSinglePort_pin_D">Двунаправленное соединение для передачи данных.</string>
+    <string name="elem_RAMSinglePort_pin_ld">Если этот вход высокий, выход активируется, и данные видны на выходе.</string>
+    <string name="elem_RAMSinglePort_pin_str">При высоком уровне данные записываются по переднему фронту тактового сигнала.</string>
+    <string name="elem_RAMSinglePortSel">ОЗУ с выбором микросхемы</string>
+    <string name="elem_RAMSinglePortSel_short">ОЗУ</string>
+    <string name="elem_RAMSinglePortSel_tt">Модуль RAM с двунаправленным соединением для чтения и записи данных.
+        Если на входе CS низкий уровень, компонент отключен.
+        Это позволяет создать большую оперативную память из нескольких меньших ОЗУ и декодера адресов.
+        Цикл записи работает следующим образом: при установке CS на высокий уровень выбирается компонент.
+        Передний фронт в WE фиксирует адрес, а следующий за ним задний фронт в WE сохраняет данные.</string>
+    <string name="elem_RAMSinglePortSel_pin_A">Адрес для чтения и записи.</string>
+    <string name="elem_RAMSinglePortSel_pin_WE">Если установлено высокое значение, данные записываются в ОЗУ.</string>
+    <string name="elem_RAMSinglePortSel_pin_D">Двунаправленное соединение для передачи данных.</string>
+    <string name="elem_RAMSinglePortSel_pin_CS">Если этот вход высокий, это ОЗУ включено. В противном случае выход всегда находится в состоянии высокого Z.</string>
+    <string name="elem_RAMSinglePortSel_pin_OE">Если этот вход высокий, сохраненное значение выводится.</string>
+    <string name="elem_EEPROM">EEPROM</string>
+    <string name="elem_EEPROM_tt">Модуль EEPROM с двунаправленным соединением для чтения и записи данных.
+        Если на входе CS низкий уровень, компонент отключен.
+        Содержимое данных хранится как в ПЗУ. Таким образом, он сохраняется при завершении и перезапуске моделирования.
+        Цикл записи работает следующим образом: при установке CS на высокий уровень выбирается компонент.
+        Передний фронт в WE фиксирует адрес, а следующий за ним задний фронт в WE сохраняет данные.</string>
+    <string name="elem_EEPROM_pin_A">Адрес для чтения и записи.</string>
+    <string name="elem_EEPROM_pin_WE">Если установлено высокое значение, данные записываются в EEPROM.</string>
+    <string name="elem_EEPROM_pin_D">Двунаправленное соединение для передачи данных.</string>
+    <string name="elem_EEPROM_pin_CS">Если этот вход высокий, эта EEPROM включена. В противном случае выход всегда находится в состоянии высокого Z.</string>
+    <string name="elem_EEPROM_pin_OE">Если этот вход высокий, сохраненное значение выводится.</string>
+    <string name="elem_GraphicCard">Графическое ОЗУ</string>
+    <string name="elem_GraphicCard_short">Граф. ОЗУ</string>
+    <string name="elem_GraphicCard_tt">Используется для отображения растрового изображения. Этот элемент ведет себя как оперативная память. Вдобавок это
+        показывает его содержимое на графическом экране. Каждый пиксель представлен адресом памяти. Сохраненное значение определяет
+        цвет пикселя с использованием фиксированной цветовой палитры. Для поддержки страницы реализованы два экранных буфера.
+        листать. Вход B выбирает отображаемый буфер. Таким образом, общий объем памяти составляет dx * dy * 2 слова.
+        Используемая палитра структурирована следующим образом: индексы 0-9 соответствуют цветам: белый, черный, красный, зеленый,
+        синий, желтый, голубой, пурпурный, оранжевый и розовый. Индексы 32-63 отображают значения серого, а индексы 64-127
+        представляют 64 значения цвета, каждое с двумя битами на канал цвета.
+        В результате получается простая палитра, к которой можно обращаться только с помощью 7-битного кода.
+        Если архитектура поддерживает 16-битный индекс, начиная с индекса 0x8000, режим высокого цвета с 5 битами на цветовой канал
+        может использоваться, что позволяет использовать 32768 цветов.</string>
+    <string name="elem_GraphicCard_pin_A">Адрес для чтения и записи.</string>
+    <string name="elem_GraphicCard_pin_str">При высоком уровне данные записываются по переднему фронту тактового сигнала.</string>
+    <string name="elem_GraphicCard_pin_C">Тактовый вход.</string>
+    <string name="elem_GraphicCard_pin_ld">Если этот вход высокий, выход активируется, и данные видны на выходе.</string>
+    <string name="elem_GraphicCard_pin_B">Выбирает экранный буфер для отображения.</string>
+    <string name="elem_GraphicCard_pin_D">Двунаправленное соединение для передачи данных.</string>
+
+    <string name="elem_RAMDualAccess">Двухпортовое ОЗУ</string>
+    <string name="elem_RAMDualAccess_short">ОЗУ</string>
+    <string name="elem_RAMDualAccess_tt">RAM с одним портом, который позволяет записывать и читать из RAM, а второй
+        порт только для чтения.
+        Этот второй порт можно использовать для предоставления некоторой графической логики доступа к содержимому памяти. Таким образом, процессор
+        может записывать в ОЗУ, а графическая логика может одновременно читать из ОЗУ.</string>
+    <string name="elem_RAMDualAccess_pin_1D">Порт вывода 1</string>
+    <string name="elem_RAMDualAccess_pin_2D">Выходной порт 2</string>
+    <string name="elem_RAMDualAccess_pin_1A">Адрес, по которому выполняется чтение или запись в порт 1.</string>
+    <string name="elem_RAMDualAccess_pin_2A">Адрес, используемый для чтения через порт 2.</string>
+    <string name="elem_RAMDualAccess_pin_C">Тактовый вход.</string>
+    <string name="elem_RAMDualAccess_pin_1Din">Данные, которые будут храниться в ОЗУ.</string>
+    <string name="elem_RAMDualAccess_pin_ld">Если этот вход высокий, выход активируется, и данные видны на выходе 1D.</string>
+    <string name="elem_RAMDualAccess_pin_str">При высоком уровне данные записываются по переднему фронту тактового сигнала.</string>
+
+    <string name="elem_RAMAsync">Асинхронное ОЗУ</string>
+    <string name="elem_RAMAsync_tt">Пока мы настроены, он сохраняется. Соответствует очень простой RAM, где
+        линии адреса и данных напрямую подключены к декодерам ячеек памяти.</string>
+    <string name="elem_RAMAsync_pin_A">Адрес, по которому происходит чтение или запись.</string>
+    <string name="elem_RAMAsync_pin_D">Данные для сохранения.</string>
+    <string name="elem_RAMAsync_pin_we">Разрешение записи. Пока этот вход установлен на 1, значение, применяемое к D, равно
+        сохраняется по адресу, применяемому к A при изменении A или D.</string>
+    <string name="elem_RAMAsync_pin_Q">Вывод сохраненных данных.</string>
+
+    <string name="elem_RegisterFile">Регистровый файл</string>
+    <string name="elem_RegisterFile_short">Регистр</string>
+    <string name="elem_RegisterFile_tt">Память с одним портом для записи и двумя портами для чтения из
+        память одновременно. Может использоваться для реализации регистров процессора.
+        Два регистра могут быть прочитаны одновременно, а третий может быть записан.</string>
+    <string name="elem_RegisterFile_pin_Da">Порт вывода a</string>
+    <string name="elem_RegisterFile_pin_Db">Выходной порт b</string>
+    <string name="elem_RegisterFile_pin_Ra">Регистр, который виден на порту а.</string>
+    <string name="elem_RegisterFile_pin_Rb">Регистр, который виден на порту b.</string>
+    <string name="elem_RegisterFile_pin_Rw">Регистр, в который записываются данные.</string>
+    <string name="elem_RegisterFile_pin_we">При высоком уровне данные записываются по переднему фронту тактового сигнала.</string>
+    <string name="elem_RegisterFile_pin_C">Тактовый вход.</string>
+    <string name="elem_RegisterFile_pin_Din">Данные, которые будут сохранены в регистре Rw.</string>
+
+    <string name="elem_Counter">Счетчик</string>
+    <string name="elem_Counter_short">Счетчик</string>
+    <string name="elem_Counter_tt">Простой счётчик: передний фронт тактового сигнала увеличивает значение, вход clr сбрасывает его в 0. Разрядность задаётся в атрибутах.</string>
+    <string name="elem_Counter_pin_C">Тактовый вход. Передний фронт увеличивает счётчик.</string>
+    <string name="elem_Counter_pin_clr">Синхронный сброс счетчика, если он установлен на 1.</string>
+    <string name="elem_Counter_pin_out">Возвращает подсчитанное значение.</string>
+    <string name="elem_Counter_pin_ovf">Вывод переполнения. Этот вывод устанавливается в 1, если счетчик находится на максимальном значении.
+        а вход en установлен на 1.</string>
+    <string name="elem_Counter_pin_en">Если установлено в 1, счетчик включен!</string>
+
+    <string name="elem_CounterPreset">Счетчик с предустановкой</string>
+    <string name="elem_CounterPreset_tt">Счетчик, значение которого можно установить. Кроме того, максимальное значение и подсчет
+        направление можно указать.</string>
+    <string name="elem_CounterPreset_short">Счетчик</string>
+    <string name="elem_CounterPreset_pin_out">Возвращает подсчитанное значение.</string>
+    <string name="elem_CounterPreset_pin_ovf">Вывод переполнения. Он установлен в 1, если вход 'en' установлен в 1 и если
+        счетчик достигает максимального значения при обратном отсчете или достиг 0 при обратном отсчете.</string>
+    <string name="elem_CounterPreset_pin_C">Тактовый вход. Передний фронт увеличивает или уменьшает счётчик.</string>
+    <string name="elem_CounterPreset_pin_clr">Синхронный сброс счетчика, если установлено значение 1.</string>
+    <string name="elem_CounterPreset_pin_en">Если установлено в 1, счетчик включен!</string>
+    <string name="elem_CounterPreset_pin_dir">Задает направление счета. 0 означает вверх.</string>
+    <string name="elem_CounterPreset_pin_ld">Если вход активен, по следующему тактовому сигналу счётчик загружает значение входа «in».</string>
+    <string name="elem_CounterPreset_pin_in">Это слово данных сохраняется в счетчике, когда установлен ld.</string>
+
+
+    <!--Arithmetic -->
+
+    <string name="elem_Add">Сумматор</string>
+    <string name="elem_Add_short">Сумма</string>
+    <string name="elem_Add_tt">Компонент для простых вычислений сложения.
+        Складывает два целых числа из ввода a и ввода b (a + b).
+        Результат будет увеличен на единицу, если установлен ввод переноса.</string>
+    <string name="elem_Add_pin_a">Первый ввод для добавления.</string>
+    <string name="elem_Add_pin_b">Второй ввод для добавления.</string>
+    <string name="elem_Add_pin_c_i">Перенести ввод, если установлено, результат увеличивается на единицу.</string>
+    <string name="elem_Add_pin_s">Результат добавления</string>
+    <string name="elem_Add_pin_c_o">Перенести вывод. Если установлено, произошло переполнение.</string>
+    <string name="elem_Sub">Вычитатель</string>
+    <string name="elem_Sub_short">Разность</string>
+    <string name="elem_Sub_tt">Компонент для простого вычитания.
+        Вычитает двоичные числа на входе a и входе b (a-b).
+        Если вход переноса установлен на 1, результат уменьшается на 1.</string>
+    <string name="elem_Sub_pin_c_i">Перенести ввод, если установлено, результат уменьшается на единицу.</string>
+    <string name="elem_Sub_pin_a">Введите a для вычитания.</string>
+    <string name="elem_Sub_pin_b">Введите b для вычитания.</string>
+    <string name="elem_Sub_pin_s">Вывод возвращает результат вычитания.</string>
+    <string name="elem_Sub_pin_c_o">Вывод возвращает 1, если произошло переполнение.</string>
+    <string name="elem_Mul">Умножитель</string>
+    <string name="elem_Mul_short">Умнож.</string>
+    <string name="elem_Mul_tt">Компонент для умножения.
+        Умножает целые числа на входном контакте a и входном контакте b.</string>
+    <string name="elem_Mul_pin_a">Введите a для умножения.</string>
+    <string name="elem_Mul_pin_b">Введите b для умножения.</string>
+    <string name="elem_Mul_pin_mul">Вывод результата умножения.</string>
+    <string name="elem_Div">Деление</string>
+    <string name="elem_Div_short">Деление</string>
+    <string name="elem_Div_tt">Компонент для разделения.
+        Делит целое число, примененное к входу a, на целое число, примененное к входу b.
+        Если делитель равен нулю, вместо этого он делится на единицу.
+        В знаковом делении остаток всегда положительный.</string>
+    <string name="elem_Div_pin_a">дивиденд</string>
+    <string name="elem_Div_pin_b">делитель</string>
+    <string name="elem_Div_pin_q">частное</string>
+    <string name="elem_Div_pin_r">остаток</string>
+    <string name="elem_BarrelShifter">Многобитовый сдвигатель</string>
+    <string name="elem_BarrelShifter_short">Сдвиг</string>
+    <string name="elem_BarrelShifter_tt">Компонент для сдвига битов.
+        Сдвигает входное значение на количество бит, заданное входом сдвига.</string>
+    <string name="elem_BarrelShifter_pin_in">Ввод с битами, которые нужно сдвинуть.</string>
+    <string name="elem_BarrelShifter_pin_shift">Ввод с шириной сдвига.</string>
+    <string name="elem_BarrelShifter_pin_out">Вывод со смещенным значением.</string>
+    <string name="elem_Comparator">Компаратор</string>
+    <string name="elem_Comparator_tt">Компонент для сравнения битовых значений.
+        Сравнивает двоичные числа на входном контакте a и входном контакте b и устанавливает соответствующие выходы.</string>
+    <string name="elem_Comparator_pin_a">Введите a для сравнения.</string>
+    <string name="elem_Comparator_pin_b">Введите b для сравнения.</string>
+    <string name="elem_Comparator_pin_=">Вывод равен 1, если ввод a равен вводу b</string>
+    <string name="elem_Comparator_pin_&gt;">Выход равен 1, если значение входа a больше значения входа b.</string>
+    <string name="elem_Comparator_pin_&lt;">Выход равен 1, если значение входа a меньше значения входа b.</string>
+    <string name="elem_Neg">Смена знака</string>
+    <string name="elem_Neg_short">Смена знака</string>
+    <string name="elem_Neg_tt">Отрицание во 2-м дополнении</string>
+    <string name="elem_Neg_pin_in">Ввод слова данных, которое должно быть инвертировано во 2-м дополнении</string>
+    <string name="elem_Neg_pin_out">Возвращает результат отрицания во 2-м дополнении.</string>
+    <string name="elem_BitExtender">Знаковое расширение</string>
+    <string name="elem_BitExtender_short">Расширение</string>
+    <string name="elem_BitExtender_tt">Увеличивает разрядность значения со знаком, сохраняя знак значения.
+        Если на входе один бит, этот бит будет выводиться на всех выходных битах.</string>
+    <string name="elem_BitExtender_pin_in">Входное значение.
+        Ширина входного бита должна быть меньше ширины выходного бита!</string>
+    <string name="elem_BitExtender_pin_out">Расширенное входное значение.
+        Ширина входного бита должна быть меньше ширины выходного бита!</string>
+    <string name="elem_BitCount">Счётчик единичных битов</string>
+    <string name="elem_BitCount_short">Количество бит</string>
+    <string name="elem_BitCount_tt">Возвращает количество единиц во входном значении.</string>
+    <string name="elem_BitCount_pin_in">Вход, для которого подсчитываются 1-биты.</string>
+    <string name="elem_BitCount_pin_out">Выводит количество 1-битов.</string>
+
+    <string name="elem_PRNG">Генератор случайных чисел</string>
+    <string name="elem_PRNG_tt">Может использоваться для генерации случайных чисел.
+        Когда моделирование запускается, генератор повторно инициализируется, так что новое псевдослучайное число
+        последовательность генерируется при каждом запуске.
+        Генератор может быть инициализирован в текущем моделировании с определенным начальным значением для генерации
+        определенная последовательность псевдослучайных чисел.</string>
+    <string name="elem_PRNG_short">PRNG</string>
+    <string name="elem_PRNG_pin_S">Новое начальное значение генератора.</string>
+    <string name="elem_PRNG_pin_se">Если установлено, генератор случайных чисел повторно инициализируется новым начальным значением при следующем нарастающем фронте тактового сигнала.</string>
+    <string name="elem_PRNG_pin_ne">Если установлено, новое случайное число выводится при следующем нарастающем фронте тактового сигнала.</string>
+    <string name="elem_PRNG_pin_C">Тактовый вход.</string>
+    <string name="elem_PRNG_pin_R">Вывод псевдослучайного числа.</string>
+
+    <!-- Switches -->
+
+    <string name="elem_DiodeForward">Диод к VDD</string>
+    <string name="elem_DiodeForward_tt">Упрощённый однонаправленный диод для подтяжки провода к VDD и реализации монтажного ИЛИ. На выходе необходим подтягивающий резистор к земле. В симуляции диод работает как активный элемент: при высоком входе выход высокий, иначе выход имеет высокое сопротивление (Z). Два встречно-параллельных диода могут удерживать друг друга в высоком состоянии, чего реальные диоды не делают. Диод идеален: при прямом смещении падение напряжения отсутствует.</string>
+    <string name="elem_DiodeForward_pin_in">Если вход высокий, то и выход высокий. Во всех остальных случаях выход находится в состоянии высокого z.</string>
+    <string name="elem_DiodeForward_pin_out">Если вход высокий, то и выход высокий. Во всех остальных случаях выход находится в состоянии высокого z.</string>
+    <string name="elem_DiodeBackward">Диод к земле</string>
+    <string name="elem_DiodeBackward_tt">Упрощенный однонаправленный диод, используемый для заземления провода. Он используется для
+        реализовать проводное И.
+        Поэтому к выходу диодов необходимо подключить подтягивающий резистор.
+        Если вход низкий, выход также низкий. В других случаях (вход высокий или высокий z) выход имеет высокий z
+        государственный.
+        Таким образом, два антипараллельно соединенных диода могут удерживать друг друга в низком состоянии, что невозможно с настоящими диодами.
+        Итак, это идеальный диод: на диоде с прямым смещением нет падения напряжения.</string>
+    <string name="elem_DiodeBackward_pin_in">Если на входе низкий уровень, на выходе также низкий уровень. Во всех остальных случаях выход находится в состоянии высокого z.</string>
+    <string name="elem_DiodeBackward_pin_out">Если на входе низкий уровень, на выходе также низкий уровень. Во всех остальных случаях выход находится в состоянии высокого z.</string>
+    <string name="elem_Switch">Переключатель</string>
+    <string name="elem_Switch_tt">Простой переключатель. Изменение сигнала проходит немедленно, без задержки распространения.</string>
+    <string name="elem_Switch_pin">Одно из соединений переключателя.</string>
+
+    <string name="elem_SwitchDT">Перекидной переключатель</string>
+    <string name="elem_SwitchDT_tt">Перекидной переключатель. Изменение сигнала проходит немедленно, без задержки распространения.</string>
+
+    <string name="elem_Fuse">Предохранитель</string>
+    <string name="elem_Fuse_tt">Предохранитель, используемый для создания одноразовой программируемой памяти.</string>
+    <string name="elem_Fuse_pin_out1">Одно из соединений предохранителя.</string>
+    <string name="elem_Fuse_pin_out2">Одно из соединений предохранителя.</string>
+    <string name="elem_Relay">Реле</string>
+    <string name="elem_Relay_tt">Переключатель, управляемый катушкой. Когда через катушку течёт ток, контакты замыкаются или размыкаются. Защитного диода нет, поэтому направление тока не имеет значения. Реле срабатывает, когда значения входов катушки различаются; управление похоже на функцию XOR.</string>
+    <string name="elem_Relay_pin_in1">Один из входов для управления реле.</string>
+    <string name="elem_Relay_pin_in2">Один из входов для управления реле.</string>
+    <string name="elem_RelayDT">Перекидное реле</string>
+    <string name="elem_RelayDT_tt">Перекидное реле, управляемое катушкой. Когда через катушку течёт ток, контакты переключаются. Защитного диода нет, поэтому направление тока не имеет значения. Реле срабатывает, когда значения входов катушки различаются; управление похоже на функцию XOR.</string>
+    <string name="elem_RelayDT_pin_in1">Один из входов для управления реле.</string>
+    <string name="elem_RelayDT_pin_in2">Один из входов для управления реле.</string>
+    <string name="elem_PFET">P-канальный полевой транзистор</string>
+    <string name="elem_PFET_tt">P-канальный полевой транзистор. Подложка подключена к положительной шине питания. Моделируется без встроенного диода.</string>
+    <string name="elem_PFET_pin_G">Затвор.</string>
+    <string name="elem_PFET_pin_S">Источник</string>
+    <string name="elem_PFET_pin_D">Слив</string>
+    <string name="elem_NFET">N-канальный полевой транзистор</string>
+    <string name="elem_NFET_tt">N-канальный полевой транзистор. Подложка подключена к земле. Моделируется без встроенного диода.</string>
+    <string name="elem_NFET_pin_G">Затвор.</string>
+    <string name="elem_NFET_pin_S">Источник</string>
+    <string name="elem_NFET_pin_D">Слив</string>
+    <string name="elem_FGPFET">P-канальный полевой транзистор с плавающим затвором</string>
+    <string name="elem_FGPFET_tt">P-канальный полевой транзистор с плавающим затвором. Подложка подключена к земле, встроенный диод не моделируется. Заряд на плавающем затворе блокирует проводимость даже при низком уровне на затворе.</string>
+    <string name="elem_FGPFET_pin_G">Затвор.</string>
+    <string name="elem_FGPFET_pin_S">Источник</string>
+    <string name="elem_FGPFET_pin_D">Слив</string>
+    <string name="elem_FGNFET">N-канальный полевой транзистор с плавающим затвором</string>
+    <string name="elem_FGNFET_tt">N-канальный полевой транзистор с плавающим затвором. Подложка подключена к земле, встроенный диод не моделируется. Заряд на плавающем затворе блокирует проводимость даже при высоком уровне на затворе.</string>
+    <string name="elem_FGNFET_pin_G">Затвор.</string>
+    <string name="elem_FGNFET_pin_S">Источник</string>
+    <string name="elem_FGNFET_pin_D">Слив</string>
+    <string name="elem_TransGate">Передающий ключ</string>
+    <string name="elem_TransGate_tt">Передающий ключ состоит всего из двух транзисторов, поэтому часто применяется для сокращения их числа при реализации на кристалле.</string>
+    <string name="elem_TransGate_pin_A">введите A</string>
+    <string name="elem_TransGate_pin_B">вход B</string>
+    <string name="elem_TransGate_pin_S">управляющий ввод.</string>
+    <string name="elem_TransGate_pin_~S">инвертированный управляющий вход</string>
+
+
+    <!-- Misc -->
+
+    <string name="elem_Testcase">Тестовый набор</string>
+    <string name="elem_Testcase_tt">Описывает тестовый пример.
+        В тестовом примере вы можете описать, как должна себя вести схема. Затем можно автоматически проверить,
+        поведение схемы фактически соответствует этому описанию. Если это не так,
+        отображается сообщение об ошибке.
+        В справочном тексте редактора тестовых примеров подробно описано, как можно создать такой тестовый пример.</string>
+    <string name="elem_GenericInitCode">Инициализация параметров</string>
+    <string name="elem_GenericInitCode_tt">Код, который выполняется для непосредственного запуска общей схемы.
+        Если общая схема должна быть запущена напрямую, такой компонент должен присутствовать.</string>
+    <string name="elem_GenericCode">Код</string>
+    <string name="elem_GenericCode_tt">Код, который выполняется при генерации общей схемы.
+        Может использоваться, например, для добавления компонентов или проводов в схему.</string>
+
+    <string name="elem_AsyncSeq">Асинхронная синхронизация</string>
+    <string name="elem_AsyncSeq_tt">Настраивает временные характеристики асинхронной последовательностной схемы, например конвейера Мюллера. Схема должна запускаться в режиме шагов по одному элементу и достигать устойчивого состояния. Затем её можно запустить вручную или элементом сброса. Обычный тактовый генератор в этом режиме недопустим.</string>
+    <string name="elem_PowerSupply">Питание</string>
+    <string name="elem_PowerSupply_tt">Не имеет функции. Убедитесь, что VDD и GND подключены.
+        Может использоваться в схемах 74xx для генерации контактов для источника напряжения, которые проверяются на правильность подключения.</string>
+    <string name="elem_PowerSupply_pin_VDD">Должен быть подключен к VDD!</string>
+    <string name="elem_PowerSupply_pin_GND">Должен быть подключен к GND!</string>
+    <string name="elem_Reset">Сброс</string>
+    <string name="elem_Reset_pin_Reset">Сбросить вывод.</string>
+    <string name="elem_Reset_tt">Выходной сигнал этого компонента удерживается на высоком уровне во время инициализации схемы.
+        После того, как цепь стабилизируется, на выходе будет низкий уровень.
+        Если выход инвертирован, он ведет себя противоположным образом.</string>
+    <string name="elem_Break">Точка останова</string>
+    <string name="elem_Break_pin_brk">Останавливает быструю синхронизацию симуляции при обнаружении нарастающего фронта.</string>
+    <string name="elem_Break_tt">Включает кнопку «Выполнить до точки останова» между запуском и остановкой. Она тактирует схему до обнаружения переднего фронта на входе этого элемента. Это удобно для отладки и реализации команды ассемблера BRK: программа выполняется до следующей такой команды. Автоматический тактовый генератор должен быть отключён.</string>
+    <string name="elem_Stop">Остановка</string>
+    <string name="elem_Stop_tt">Нарастающий фронт на входе останавливает симуляцию.
+        Имеет тот же эффект, что и нажатие кнопки «Стоп» на панели инструментов.</string>
+    <string name="elem_Stop_pin_stop">Нарастающий фронт останавливает моделирование.</string>
+
+    <string name="elem_External">Внешний</string>
+    <string name="elem_External_tt">Компонент для выполнения внешнего процесса для вычисления логической функции.
+        Используется для определения поведения компонента с помощью VHDL или Verilog.
+        Фактическое моделирование поведения должно выполняться с помощью внешнего симулятора.
+        В настоящее время поддерживаются только симулятор VHDL ghdl и симулятор Verilog Icarus Verilog.
+        Метка компонента должна соответствовать имени объекта или модуля!</string>
+    <string name="elem_ExternalFile">Внешний файл</string>
+    <string name="elem_ExternalFile_tt">Компонент для выполнения внешнего процесса для вычисления логической функции.
+        Используется для определения поведения компонента с помощью VHDL или Verilog.
+        Фактическое моделирование поведения должно выполняться с помощью внешнего симулятора.
+        В настоящее время поддерживаются только симулятор VHDL ghdl и симулятор Verilog Icarus Verilog.
+        Метка компонента должна соответствовать имени объекта или модуля!</string>
+
+    <string name="elem_Diode">Диод</string>
+    <string name="elem_Diode_tt">Упрощенный двунаправленный диод. Он используется для реализации проводного И или проводного ИЛИ.
+        Это идеальный диод: на диоде с прямым смещением нет падения напряжения.</string>
+
+
+    <string name="error">Ошибка</string>
+    <string name="err_N_isNotInputOrOutput">Контакт {0} в компоненте {1} не является входом или выходом</string>
+    <string name="err_aSingleClockNecessary">Нужен ровно один тактовый генератор. Все триггеры должны использовать его сигнал.</string>
+    <string name="err_analyseNoInputs">Схема не имеет помеченных входов</string>
+    <string name="err_analyseNoOutputs">Схема не имеет маркированных выходов</string>
+    <string name="err_breakTimeOut">Не обнаружено перерывов после {0} циклов в точке останова ''{1}''.
+        Возможно, следует увеличить количество циклов тайм-аута в компоненте прерывания.</string>
+    <string name="err_builder_exprNotSupported">Выражение {0} не поддерживается</string>
+    <string name="err_builder_operationNotSupported">Операция {0} не поддерживается</string>
+    <string name="err_builder_couldNotFillLUT">Ошибка при создании таблицы поиска.</string>
+    <string name="err_burnError">На проводе активно более одного выхода, что вызывает короткое замыкание.</string>
+    <string name="err_pullUpAndDown">Нельзя подключать подтяжки к питанию и к земле к одной цепи.</string>
+    <string name="err_cannotAnalyse_N">Невозможно проанализировать узел {0}</string>
+    <string name="err_containsVarAndNotVar">Содержит [var] и [not var]</string>
+    <string name="err_duplicatePinLabel">Вывод ''{0}'' в компоненте ''{1}'' встречается дважды.</string>
+    <string name="err_element_N_notFound">Компонент {0} не найден</string>
+    <string name="err_exact_N0_valuesNecessaryNot_N1">Требуются точные значения {0}, а не {1}</string>
+    <string name="err_ffNeedsToBeConnectedToClock">Триггер должен быть подключён к тактовому генератору.</string>
+    <string name="err_invalidFileFormat">Неверный формат файла</string>
+    <string name="err_isAlreadyInitialized">Логика уже инициализирована</string>
+    <string name="err_labelNotConnectedToNet_N">Туннель {0} не подключен!</string>
+    <string name="err_moreThanOneClockFound">Найдено несколько тактовых генераторов.</string>
+    <string name="err_clockIsNotUsed">Тактовый генератор не используется!</string>
+    <string name="err_needs_N0_bits_found_N2_bits">Требуется {0} бит, но найдено {1} бит</string>
+    <string name="err_netOfPin_N_notFound">Сеть контактов {0} не найдена</string>
+    <string name="err_noClockFound">Тактовый генератор не найден.</string>
+    <string name="err_noInputsAvailable">Нет доступных входов для установки</string>
+    <string name="err_noShapeFoundFor_N">Не найдена фигура для компонента {0}</string>
+    <string name="err_noValueSetFor_N0_atElement_N1">Ничего не связано с входом ''{0}'' в компоненте ''{1}''. Открытые вводы не допускаются.</string>
+    <string name="err_notAllOutputsSameBits">Не все подключенные выходы имеют одинаковое количество битов</string>
+    <string name="err_notAllOutputsSupportHighZ">Если несколько выходов соединены вместе, все они должны быть
+        выходы с тремя состояниями.</string>
+    <string name="err_noOutConnectedToWire">Нет выхода, подключенного к проводу ({0}). Состояние провода не определено.</string>
+    <string name="err_oneResultIsRequired">Таблица слишком мала: требуется один результат!</string>
+    <string name="err_output_N_notDefined">Вывод {0} не определен</string>
+    <string name="err_pinMap_NoNameForPin_N">Нет метки для вывода {0}</string>
+    <string name="err_pinMap_Pin_N_AssignedTwicePin">Пин {0} назначен дважды!</string>
+    <string name="err_pinMap_noEqualsfound">Нет = найдено!</string>
+    <string name="err_pinMap_pin_N0_isNotAnInput">Пин {0} не является вводом!</string>
+    <string name="err_pinMap_pin_N0_isNotAnOutput">Пин {0} не является выходом!</string>
+    <string name="err_pinMap_toMannyInputsDefined">Использовано слишком много входных данных!</string>
+    <string name="err_pinMap_toMannyOutputsDefined">Использовано слишком много выходов!</string>
+    <string name="err_pinNotPresent">Пин отсутствует</string>
+    <string name="err_pinWithoutName">Найден значок без метки.</string>
+    <string name="err_clockWithoutName">У тактового генератора нет метки. Во вложенной схеме метка обязательна.</string>
+    <string name="err_pin_N0_atElement_N1_notFound">Контакт {0} не найден в компоненте {1}</string>
+    <string name="err_pin_N_notFound">Пин {0} не найден</string>
+    <string name="err_customShapeHasNoPin_N">Пользовательская форма не определяет булавку {0}</string>
+    <string name="err_pin_N_unknown">Пин {0} неизвестно</string>
+    <string name="err_seemsToOscillate">Логика колеблется.
+        Для анализа вы можете запустить схему в пошаговом режиме с одним вентилем.</string>
+    <string name="err_portIsInUse">Удаленный порт уже используется! Есть ли другой запущенный экземпляр?</string>
+    <string name="err_selectorInputCountMismatch">Количество входов не соответствует количеству битов селектора</string>
+    <string name="err_spitterDefSyntaxError">Синтаксическая ошибка в определении разделителя {0}</string>
+    <string name="err_splitterBitsMismatch">Количество битов разделителя не совпадает</string>
+    <string name="err_splitterNotAllBitsDefined">Не все входные биты определены!</string>
+    <string name="err_splitterNotUnambiguously">Входные биты определяются несколько раз!</string>
+    <string name="err_spitterToManyBits">В разделителе разрешено только 64 бита!</string>
+    <string name="err_tableBecomesToSmall">Требуются два ввода!</string>
+    <string name="err_toManyInputs_max_N0_is_N1">Слишком много переменных (входы + триггеры), {0} разрешены, но {1} были
+        нашел.</string>
+    <string name="err_toManyInputsIn_N0_max_N1_is_N2">Слишком много переменных используется в {0},
+        {1} - допустимые переменные, но найдено {2}.</string>
+    <string name="err_varNotAllowedInCUPL_N">Переменная {0} не разрешена в источнике CUPL!</string>
+    <string name="err_varNotDefined_N">Переменная {0} не определена</string>
+    <string name="err_parserUnexpectedToken_N">Неожиданный токен {0}</string>
+    <string name="err_parserMissingClosedParenthesis">Отсутствует закрытая скобка</string>
+    <string name="err_notANumber_N0_inLine_N1">Значение {0} в строке {1} не является числом!</string>
+    <string name="err_testDataExpected_N0_found_N1_numbersInLine_N2">Ожидается {0}, но найдено {1} значений в строке {2}!</string>
+    <string name="err_unexpectedToken_N0_inLine_N1">Неожиданный токен ({0}) в строке {1}.</string>
+    <string name="err_variable_N0_notFound">Переменная {0} не найдена!</string>
+    <string name="err_noTestInputSignalsDefined">В тестовом векторе не определены входные сигналы!</string>
+    <string name="err_noTestOutputSignalsDefined">В тестовом векторе не определены выходные сигналы!</string>
+    <string name="err_noTestData">Тестовых данных не найдено.</string>
+    <string name="err_pullUpAndDownNotAllowed">Нельзя подключать подтяжки к питанию и к земле к одному проводу.</string>
+    <string name="err_openingDocumentation">Не удалось открыть браузер.</string>
+    <string name="err_couldNotCreateFolder_N0">Не удалось создать папку "{0}"!</string>
+    <string name="err_switchHasNoNet">Запрещается подключать к коммутатору только входы.</string>
+    <string name="err_file_N0_ExistsTwiceBelow_N1">Файл {0} существует несколько раз под {1}.</string>
+    <string name="err_couldNotFindIncludedFile_N0">Не удалось найти файл {0}.</string>
+    <string name="err_postProcessErrorIn_N0">Ошибка при выполнении "{0}".</string>
+    <string name="err_processDoesNotTerminate_N">Процесс "{0}" не возвращается!</string>
+    <string name="err_processExitedWithError_N1_N2">Процесс возвращает ненулевое значение {0}: {1}</string>
+    <string name="err_errorRunningFitter">Ошибка при запуске внешнего установщика!</string>
+    <string name="err_noExpressionsAvailable">Нет свернутых уравнений!</string>
+    <string name="msg_optimizationInProgress">Уравнения рассчитываются! Пожалуйста, подождите!</string>
+    <string name="err_varName_N_UsedTwice">Переменная {0} используется дважды!</string>
+    <string name="err_fileNeedsToBeSaved">Файл необходимо сохранить!</string>
+    <string name="err_recursiveNestingAt_N0">Схема {0} импортирует себя!</string>
+    <string name="err_minimizationFailed">Результат минимизации неверен!
+        Имена переменных не могут быть уникальными.</string>
+    <string name="err_toManyIterations">Слишком много итераций в цикле.</string>
+    <string name="err_diodeNeedsPullUpResistorAtOutput">Диоду требуется подтягивающий резистор на выходе!</string>
+    <string name="err_diodeNeedsPullDownResistorAtOutput">На выходе диода нужна подтяжка к земле!</string>
+    <string name="err_testSignal_N_notFound">Тестовый сигнал {0} не найден в цепи!</string>
+    <string name="err_toManyBits_Found_N0_maxIs_N1">Разрешено только {1} бит, но найдено {0} бит!</string>
+    <string name="err_MultiBitFlipFlopFound">Триггеры с более чем одним битом не допускаются!</string>
+    <string name="err_invalidTransmissionGateState">Два управляющих входа передающего ключа должны иметь противоположные значения!</string>
+    <string name="err_nameUsedTwice_N">Сигнал {0} используется дважды!</string>
+    <string name="err_errorParsingTestdata">Ошибка анализа тестовых данных.</string>
+    <string name="err_backtrackOf_N_isImpossible">Компонент модели {0} не может быть проанализирован.</string>
+    <string name="err_errorInPowerSupply">Ошибка подключения источника питания к {0}.</string>
+    <string name="err_pinIsNotANumber_N">Пин-номер {0} не является целым числом!</string>
+    <string name="err_vhdlExporting">Ошибка при экспорте в VHDL.</string>
+    <string name="err_vhdlNoEntity_N">Код VHDL для {0} недоступен!</string>
+    <string name="err_verilogNoElement_N">Код Verilog для {0} недоступен!</string>
+    <string name="err_vhdlErrorWritingTestBench">Ошибка при создании тестового стенда!</string>
+    <string name="err_vhdlValuesOfType_N_notAllowed">Значения типа {0} недопустимы!</string>
+    <string name="err_vhdlANameIsMissing">Имя отсутствует. Например, все пины набор меток?</string>
+    <string name="err_hdlMultipleOutputsConnectedToNet_N_N_N">Несколько выходов подключены друг к другу.
+        Этот тип соединения не поддерживается для экспорта HDL. ({0}, {1}, {2}).</string>
+    <string name="err_hdlTestCaseHasGenericCode">Тестовые случаи с общей параметризацией не поддерживаются в HDL.
+        экспорт!</string>
+    <string name="err_unnamedNet">безымянная сеть</string>
+    <string name="err_toManyVars">Слишком много переменных!</string>
+    <string name="err_invalidExpression">Недействительное выражение!</string>
+    <string name="err_function_N0_notFoundInLine_N1">Функция {0} не найдена в строке {1}!</string>
+    <string name="err_wrongNumOfArgsIn_N0_InLine_N1_found_N2_expected_N3">Количество аргументов в функции {0} в строке {1} неверно (найдено {2}, ожидается {3})!</string>
+    <string name="err_invalidValue_N0_inFunction_N1">Недопустимое значение {0} в функции {1}!</string>
+    <string name="err_Node_N_isAComponent">Имя {0} не является элементом пути.</string>
+    <string name="err_loadingLibrary">Ошибка при загрузке библиотеки.</string>
+    <string name="err_noManifestFound">Файл JAR не содержит манифеста!</string>
+    <string name="err_noMainFoundInManifest">Манифест не содержит записи основного класса!</string>
+    <string name="err_mainClass_N_NotFound">Не удалось найти класс {0}!</string>
+    <string name="err_couldNotInitializeMainClass_N">Не удалось создать экземпляр класса {0}!</string>
+    <string name="err_notMoreOutBitsThanInBits">Входных битов должно быть больше, чем выходных!</string>
+    <string name="err_constantsNotAllowed">Невозможно установить для физических выводов постоянные значения!</string>
+    <string name="err_invalidNumberFormat_N_N">Строка {0} не является допустимым числом (поз. {1})!</string>
+    <string name="err_invalidPinName_N">Имя "{0}" недопустимо!</string>
+    <string name="err_whiteSpaceNotAllowedInTT2Name">В имени файла TT2 нельзя использовать пробелы!</string>
+    <string name="err_tableHasToManyResultColumns">В таблице слишком много столбцов!</string>
+    <string name="err_errorExportingZip">Ошибка записи ZIP-файла.</string>
+    <string name="err_moreThanOneFastClock">Разрешен только один тактовый компонент с высокой частотой.</string>
+    <string name="err_circuitHasCycles">Схема содержит циклы. Анализировать такую схему невозможно.
+        Циклы возникают, если выход элемента возвращается на один из входов того же элемента.
+        Использование переключателей, полевых транзисторов или реле также вызывает циклы.</string>
+    <string name="err_monoflopRequiresOneClock">При использовании одновибратора нужен ровно один тактовый генератор!</string>
+    <string name="err_centralDefinedRomsAreNotSupported">ПЗУ, определенные в настройках, не поддерживаются!</string>
+    <string name="err_couldNotCreateElement_N">Не удалось создать компонент типа {0}!</string>
+
+    <string name="err_errorWritingDataToProcess">Не удалось записать значения во внешний процесс!</string>
+    <string name="err_errorReadingDataFromProcess">Не удалось прочитать значения из внешнего процесса!</string>
+    <string name="err_errorCreatingProcess">Не удалось создать внешний процесс!</string>
+    <string name="err_timeoutReadingData_O">Тайм-аут чтения данных из внешнего процесса!
+        {0}</string>
+    <string name="err_notEnoughDataReceived_O">Получено недостаточно данных!
+        {0}</string>
+    <string name="err_invalidCharacterReceived_N_O">Полученный текст содержит недопустимый символ: {0}!
+        {1}</string>
+    <string name="err_processTerminatedUnexpected_O">Процесс неожиданно завершился!
+        {0}</string>
+    <string name="err_couldNotTerminateProcess">Не удалось завершить процесс!</string>
+    <string name="err_couldNotStartProcess_N">Не удалось запустить процесс: {0}</string>
+    <string name="err_exitValueNotNull_N_O">Статус выхода приложения был не 0, а {0}:
+        {1}</string>
+    <string name="err_canOnlyExportExternalVHDL">Внешний код можно экспортировать, только если это VHDL!</string>
+    <string name="err_canOnlyExportExternalVerilog">Внешний код можно экспортировать, только если это Verilog!</string>
+    <string name="err_ifExternalComponentIsUsedTwiceCodeMustBeIdentical_N">Если внешний компонент используется несколько раз, код должен быть идентичным! Эффекты: {0}</string>
+    <string name="err_writingToStdOut_O">Не удалось записать в stdOut:
+        {0}</string>
+    <string name="err_ghdlNotInstalled">Симулятор VHDL ghdl, похоже, не установлен. Установите ghdl (http://ghdl.free.fr/) и попробуйте еще раз.
+        Если проблемы по-прежнему возникают, проверьте путь к исполняемому файлу ghdl в цифровых настройках.</string>
+    <string name="err_iverilogNotInstalled">Симулятор Verilog Icarus вроде не устанавливается. Установите IVerilog (http://iverilog.icarus.com/) и
+        попробуй еще раз.
+        Если проблемы по-прежнему возникают, проверьте путь к исполняемому файлу IVerilog в цифровых настройках.</string>
+    <string name="err_errorLoadingHDLFile_N">Ошибка при загрузке файла HDL {0}</string>
+    <string name="err_emptyLabelIsNotAllowed">Пустая метка недопустима!</string>
+
+    <string name="err_errorAnalysingCircuit_N">Ошибка при анализе схемы: {0}</string>
+    <string name="err_romNeedsALabelToBeExported">Каждому ПЗУ требуется уникальная метка для экспорта!</string>
+    <string name="err_lutNeedsALabelToBeExported">Каждой LUT требуется уникальная метка для экспорта!</string>
+    <string name="err_counterNeedsMoreBits">Счетчику требуется как минимум два бита.</string>
+    <string name="err_namesAreNotUnique_N">Имя "{0}" не уникально!</string>
+    <string name="err_clocksNotAllowedInAsyncMode">В асинхронном режиме тактовые генераторы недопустимы.</string>
+    <string name="err_verilogExporting">Ошибка при экспорте в Verilog.</string>
+    <string name="err_noRomFound">Память для программ не найдена! Программная память должна быть отмечена как таковая.</string>
+    <string name="err_multipleRomsFound">Обнаружено несколько программных ячеек! Допускается только одна программная память.</string>
+    <string name="err_noMemoryFound">В модели не обнаружено памяти "{0}"!</string>
+    <string name="err_multipleMemoriesFound">В модели обнаружено несколько воспоминаний "{0}"!</string>
+    <string name="err_errorLoadingRomData">Ошибка загрузки памяти программы.</string>
+    <string name="err_parsingSVG">Ошибка при чтении файла SVG.</string>
+    <string name="err_morePinsDefinedInSVGAsNeeded">Файл SVG содержит контакты, которых нет в цепи.</string>
+    <string name="err_allMemoriesNeedToHaveTheSameByteWidth">Все ячейки памяти, в которые должны быть загружены данные, требуют одинаковой разрядности.</string>
+    <string name="err_ProgMemLabelsNotDifferent">Если программы должны быть загружены в несколько RAM, все RAM должны иметь
+        разные имена. Затем лексический порядок определяет порядок RAM.</string>
+    <string name="err_midiSystemNotAvailable">MIDI-система недоступна.</string>
+    <string name="err_midiChannel_N_NotAvailable">MIDI-канал {0} недоступен.</string>
+    <string name="err_midiInstrument_N_NotAvailable">MIDI-инструмент {0} недоступен.</string>
+    <string name="err_midiInstrumentsNotAvailable">MIDI-инструменты недоступны.</string>
+    <string name="err_whileExecutingTests_N0">Во время выполнения тестов "{0}" произошла ошибка!</string>
+    <string name="err_hdlNotKnown_N">HDL неизвестен: {0}</string>
+    <string name="msg_errorStartCommand_N">Ошибка при запуске команды {0}</string>
+    <string name="err_thereIsAUnnamedIO">Имеется безымянный ввод или вывод!</string>
+    <string name="err_NameOfIOIsInvalidOrNotUnique_N">Имя сигнала "{0}" недействительно или используется несколько раз!</string>
+    <string name="err_substitutingError">Ошибка при замене компонентов для анализа.</string>
+    <string name="err_evaluatingGenericsCode_N_N">Ошибка при оценке общего кода схемы. Код
+        {1}
+        в компоненте: {0}</string>
+    <string name="msg_errParsingGenerics">Ошибка при синтаксическом анализе кода универсальных шаблонов.</string>
+    <string name="err_noGenericInitCode">Нет кода инициализации для общих компонентов.
+        Для запуска в схему необходимо добавить соответствующий компонент.</string>
+    <string name="err_multipleGenericInitCodes">Несколько кодов инициализации для общих элементов.</string>
+    <string name="err_inGenericInitCode">Ошибка при анализе универсального кода инициализации.</string>
+    <string name="err_writeInCodeComponentsOnly">Глобальные переменные могут быть записаны только в компонентах кода.</string>
+
+    <string name="err_ROM_noFileGivenToLoad">Нет имени файла, доступного для автоматической перезагрузки!</string>
+    <string name="err_virtualSignal_N_DeclaredTwiceInLine_N">Виртуальный сигнал {0} объявлен дважды в строке {1}!</string>
+
+    <string name="err_csvNoHeaderFound">Заголовок не найден!</string>
+    <string name="err_csvNoOutputValuesFound">Выходных значений не найдено!</string>
+    <string name="err_csvNotEnoughValues">Недостаточно значений в одной строке!</string>
+    <string name="err_csvToManyValues">Слишком много значений в одной строке!</string>
+    <string name="err_errorWritingFile_N">Ошибка записи файла {0}.</string>
+    <string name="err_circuitContainsNoComponents">Схема не содержит компонентов!</string>
+    <string name="err_couldNotCreateServer">Не удалось запустить сервер!</string>
+
+    <string name="key_AddrBits">Разрядность адреса</string><!-- ROM, RAMDualPort, RAMSinglePort, RAMSinglePortSel, EEPROM -->
+    <string name="key_AddrBits_tt">Количество используемых битов адреса.</string>
+    <string name="key_Bits">Разрядность данных</string>
+    <string name="key_Bits_tt">Количество используемых битов данных.</string>
+    <string name="key_Color">Цвет</string><!-- LED, LightBulb, Seven-Seg, Seven-Seg-Hex, LedMatrix -->
+    <string name="key_Color_tt">Цвет элемента.</string>
+    <string name="key_backgroundColor">Цвет фона</string>
+    <string name="key_backgroundColor_tt">Цвет фона схемы, когда она встроена в другую схему. Не является
+        используется для пакетов DIL.</string>
+    <string name="key_Cycles">Число тактов до тайм-аута</string><!-- Break -->
+    <string name="key_Cycles_tt">Если это количество циклов достигается без сигнала прерывания, создается ошибка.</string>
+    <string name="key_Data">Данные</string><!-- LookUpTable, ROM, EEPROM -->
+    <string name="key_Data_tt">Значения, хранящиеся в этом элементе.</string>
+    <string name="key_Default">По умолчанию</string><!-- Demultiplexer, RS_FF, JK_FF, D_FF, T_FF, JK_FF_AS, D_FF_AS -->
+    <string name="key_Default_tt">Это значение устанавливается, если цепь запущена.
+        В демультиплексоре это значение устанавливается для невыбранных выходов.</string>
+    <string name="key_InDefault">По умолчанию</string><!-- In -->
+    <string name="key_InDefault_tt">Это значение устанавливается, если цепь запущена. "Z" означает высокий уровень z.</string>
+    <string name="key_isHighZ">Вход с тремя состояниями</string><!-- In, Splitter -->
+    <string name="key_isHighZ_tt">Если установлено, вход может находиться в состоянии высокого z. На входном компоненте это
+        также разрешено, если в качестве значения по умолчанию установлено high-z ("Z").</string>
+    <string name="key_avoidActiveLow">Не выводить 0</string>
+    <string name="key_avoidActiveLow_tt">Избегает нулевого вывода. Это особенно полезно при настройке цепей реле.
+        Может быть активирован, только если разрешен вывод с высоким z.</string>
+    <string name="key_Description">Описание</string><!-- Out, In, Text -->
+    <string name="key_Description_tt">Краткое описание этого элемента и его использования.</string>
+    <string name="key_Frequency">Частота/Гц</string><!-- Clock -->
+    <string name="key_Frequency_tt">Частота автоматического тактового генератора в реальном времени.</string>
+    <string name="key_IEEEShapes">Использовать графические обозначения IEEE 91-1984</string>
+    <string name="key_IEEEShapes_tt">Использовать графические обозначения IEEE 91-1984 вместо прямоугольных IEC</string>
+    <string name="key_Inputs">Количество входов</string><!-- And, NAnd, Or, NOr, XOr, XNOr, LookUpTable -->
+    <string name="key_Inputs_tt">Количество используемых входов. Каждый вход должен быть подключен.</string>
+    <string name="key_Label">Метка</string><!-- Out, LED, In, Clock, Button, Probe, LightBulb, LedMatrix, RotEncoder, Keyboard, Terminal, RS_FF, JK_FF, D_FF, T_FF, JK_FF_AS, D_FF_AS, Register, ROM, RAMDualPort, RAMSinglePort, RAMSinglePortSel, EEPROM, GraphicCard, Counter, Add, Sub, Mul, BarrelShifter, Comparator, Switch, Relay, PFET, NFET, FGPFET, FGNFET, Testcase, PowerSupply, Reset, Break -->
+    <string name="key_Label_tt">Имя этого элемента.</string>
+    <string name="key_Size">Размер</string><!-- LED, SevenSeg -->
+    <string name="key_Size_tt">Размер фигуры в цепи.</string>
+    <string name="key_small">Компактное обозначение</string>
+    <string name="key_small_tt">Использовать уменьшенное обозначение элемента.</string>
+    <string name="key_Language">Язык</string>
+    <string name="key_Language_tt">Язык графического интерфейса. Вступит в силу только после перезапуска.</string>
+    <string name="key_NetName">Имя цепи</string><!-- Tunnel -->
+    <string name="key_NetName_tt">Все сети с одинаковым именем соединяются вместе.</string>
+    <string name="key_InputSplitting">Разбиение входа</string><!-- Splitter -->
+    <string name="key_InputSplitting_tt">Если, например, четыре бита, два бита и два дополнительных бита должны использоваться в качестве входов,
+        это можно настроить с помощью «4,2,2». Число указывает количество бит. Для удобства звездочка
+        можно использовать: 16 бит можно настроить с помощью «[Биты] * [Число]» как «1 * 16».
+        Также возможно указать биты, которые будут использоваться напрямую и в любом порядке.
+        Например, «4-7,0-3» конфигурирует биты 4-7 и 0-3. Это обозначение допускает любое расположение битов.
+        Входные биты должны быть указаны полностью и однозначно.</string>
+    <string name="key_OutputSplitting">Разбиение выхода</string><!-- Splitter -->
+    <string name="key_OutputSplitting_tt">Если, например, четыре бита, два бита и два дополнительных бита должны использоваться в качестве выходов,
+        это можно настроить с помощью «4,2,2». Число указывает количество бит. Для удобства звездочка
+        можно использовать: 16 бит можно настроить с помощью «[Биты] * [Число]» как «1 * 16».
+        Также возможно указать биты, которые будут использоваться напрямую и в любом порядке.
+        Например, «4-7,0-3» конфигурирует биты 4-7 и 0-3. Это обозначение допускает любое расположение битов.
+        Выходные биты также могут выводиться несколько раз: «0-7,1-6,4-7».</string>
+    <string name="key_SelectorBits">Количество битов селектора</string><!-- Multiplexer, Demultiplexer, Decoder -->
+    <string name="key_SelectorBits_tt">Количество битов, используемых для ввода селектора.</string>
+    <string name="key_Signed">Операция со знаком</string><!-- Comparator, Div -->
+    <string name="key_Signed_tt">Если выбрано, операция выполняется со значениями со знаком (2-е дополнение).</string>
+    <string name="key_remainderPositive">Остаток всегда положительный</string>
+    <string name="key_remainderPositive_tt">Если установлено, остаток от деления со знаком всегда положительный.</string>
+    <string name="key_Closed">Замкнут</string><!-- Switch -->
+    <string name="key_Closed_tt">Устанавливает начальное состояние переключателя.</string>
+    <string name="key_Value">Значение</string><!-- Const -->
+    <string name="key_Value_tt">Значение константы.</string>
+    <string name="key_Width">Ширина</string>
+    <string name="key_Width_tt">Ширина символа, если эта цепь используется в качестве компонента в другой цепи.</string>
+    <string name="key_Height">Высота</string>
+    <string name="key_Height_tt">Высота символа, если эта цепь используется в качестве компонента в другой цепи.</string>
+    <string name="key_autoReload">Перезагружать при запуске модели</string><!-- ROM -->
+    <string name="key_autoReload_tt">Перезагружает HEX-файл каждый раз при запуске модели.</string>
+    <string name="key_lastDataFile">Файл</string>
+    <string name="key_lastDataFile_tt">Файл для загрузки в ПЗУ.</string>
+    <string name="key_flipSelPos">Отразить положение селектора</string><!-- Driver, DriverInvSel, Multiplexer, Demultiplexer, Decoder -->
+    <string name="key_flipSelPos_tt">Этот параметр позволяет переместить штифт селектора на противоположную сторону
+        плексер.</string>
+    <string name="key_intFormat">Формат числа</string><!-- Probe -->
+    <string name="key_intFormat_tt">Формат, используемый для отображения чисел.</string>
+    <string name="key_intFormat_ascii">ASCII</string>
+    <string name="key_intFormat_bin">Двоичный</string>
+    <string name="key_intFormat_dec">Десятичный</string>
+    <string name="key_intFormat_decSigned">Десятичное число со знаком</string>
+    <string name="key_intFormat_def">По умолчанию</string>
+    <string name="key_intFormat_hex">Шестнадцатеричный</string>
+    <string name="key_intFormat_oct">Восьмеричный</string>
+    <string name="key_intFormat_fixed">С фиксированной запятой</string>
+    <string name="key_intFormat_fixedSigned">С фиксированной запятой и знаком</string>
+    <string name="key_intFormat_floating">С плавающей запятой</string>
+    <string name="key_fixedPoint">Число разрядов после запятой</string>
+    <string name="key_fixedPoint_tt">Количество дробных двоичных цифр</string>
+    <string name="key_barrelSigned">Величина сдвига со знаком</string><!-- BarrelShifter -->
+    <string name="key_barrelSigned_tt">входные данные сдвига имеют два дополнительных формата</string>
+    <string name="key_barrelShifterMode">Режим</string><!-- BarrelShifter -->
+    <string name="key_barrelShifterMode_tt">Режим сдвига ствола</string>
+    <string name="key_barrelShifterMode_logical">Логический</string>
+    <string name="key_barrelShifterMode_rotate">Циклический сдвиг</string>
+    <string name="key_barrelShifterMode_arithmetic">Арифметический</string>
+    <string name="key_direction">Направление</string><!-- BarrelShifter -->
+    <string name="key_direction_tt">Установить направление.</string>
+    <string name="key_direction_left">влево</string>
+    <string name="key_direction_right">вправо</string>
+    <string name="key_maxStepCount">Максимальное количество шагов для отображения</string><!-- Data -->
+    <string name="key_maxStepCount_tt">Максимальное количество сохраняемых значений.
+        Если достигается максимальное количество, самые старые значения отбрасываются.</string>
+    <string name="key_microStep">Показывать шаги отдельных элементов</string><!-- Data -->
+    <string name="key_microStep_tt">Показывает все пошаговые шаги на графике.</string>
+    <string name="key_rotation">Вращение</string><!-- And, NAnd, Or, NOr, XOr, XNOr, Not, LookUpTable, Delay, Out, LED, In, Clock, Button, Probe, LightBulb, LedMatrix, RotEncoder, Keyboard, Terminal, Ground, VDD, Const, Tunnel, Splitter, PullUp, PullDown, Driver, DriverInvSel, Multiplexer, Demultiplexer, Decoder, RS_FF, JK_FF, D_FF, T_FF, JK_FF_AS, D_FF_AS, Register, ROM, RAMDualPort, RAMSinglePort, RAMSinglePortSel, EEPROM, GraphicCard, Counter, Add, Sub, Mul, BarrelShifter, Comparator, Neg, BitCount, DiodeForward, DiodeBackward, Switch, Fuse, Relay, PFET, NFET, FGPFET, FGNFET, TransGate, PowerSupply, Reset, Break -->
+    <string name="key_rotation_tt">Ориентация элемента в цепи.</string>
+    <string name="key_mirror">Зеркало</string>
+    <string name="key_mirror_tt">Зеркально отображает компонент в цепи.</string>
+    <string name="key_runRealTime">Запускать тактовый генератор автоматически</string><!-- Clock -->
+    <string name="key_runRealTime_tt">Автоматически запустить тактовый генератор при запуске схемы.</string>
+    <string name="key_showDataGraph">Показать график измерений при запуске моделирования</string>
+    <string name="key_showDataGraph_tt">При запуске моделирования отображается график с измеренными значениями.</string>
+    <string name="key_showDataGraphMicro">Показывать график по отдельным элементам при запуске моделирования</string>
+    <string name="key_showDataGraphMicro_tt">При запуске моделирования показать график со всеми изменениями отдельных логических элементов.</string>
+    <string name="key_addValueToGraph">Показать на графике измерений</string>
+    <string name="key_addValueToGraph_tt">Показывает значение на графике измерения.</string>
+    <string name="key_showDataTable">Показывать значения измерений при запуске моделирования</string>
+    <string name="key_showDataTable_tt">При запуске моделирования отображается таблица с измеренными значениями.</string>
+    <string name="key_termHeight">Строки</string><!-- Terminal -->
+    <string name="key_termHeight_tt">Количество отображаемых строк.</string>
+    <string name="key_termWidth">Символов в строке</string><!-- Terminal -->
+    <string name="key_termWidth_tt">Количество символов, отображаемых в одной строке.</string>
+    <string name="key_valueIsProbe">Использовать как значение измерения</string><!-- RS_FF, JK_FF, D_FF, T_FF, JK_FF_AS, D_FF_AS, Register -->
+    <string name="key_valueIsProbe_tt">Если установлено, значение является значением измерения и отображается на графике и в таблице данных.
+        Кроме того, должна быть указана метка, которая может служить идентификатором значения.</string>
+    <string name="key_Testdata">Тестовые данные</string><!-- Testcase -->
+    <string name="key_Testdata_tt">Описание тестового примера.
+        Подробности синтаксиса можно найти в диалоговом окне справки редактора тестовых данных.</string>
+    <string name="key_graphicWidth">Ширина в пикселях</string><!-- GraphicCard -->
+    <string name="key_graphicWidth_tt">Ширина экрана в пикселях.</string>
+    <string name="key_graphicHeight">Высота в пикселях</string><!-- GraphicCard -->
+    <string name="key_graphicHeight_tt">Высота экрана в пикселях.</string>
+    <string name="key_isProgramMemory">Память программ</string><!-- ROM -->
+    <string name="key_isProgramMemory_tt">Делает это ПЗУ в памяти программ. Таким образом, к нему можно получить доступ из внешней IDE.</string>
+    <string name="key_isProgramCounter">Программный счетчик</string>
+    <string name="key_isProgramCounter_tt">Делает этот регистр программным счетчиком. Возвращается значение этого регистра
+        во внешнюю среду разработки ассемблера, чтобы пометить текущую строку кода во время отладки.</string>
+    <string name="key_Blown">Запрограммированный</string><!-- DiodeForward, DiodeBackward, Fuse, FGPFET, FGNFET -->
+    <string name="key_Blown_tt">Если установлено, диод "перегорел" или "запрограммирован".
+        На полевом транзисторе с плавающим затвором заряжается плавающий затвор.
+        Вы можете изменить эту настройку с помощью клавиши [P].</string>
+    <string name="key_ExpressionFormat">Формат</string>
+    <string name="key_ExpressionFormat_tt">Экранный формат выражений.</string>
+    <string name="key_relayNormallyClosed">Нормально замкнутое реле</string><!-- Relay -->
+    <string name="key_relayNormallyClosed_tt">Если установлено, реле закрывается, если на входе низкий уровень.</string>
+    <string name="key_poles">Число полюсов</string><!-- Relay -->
+    <string name="key_poles_tt">Количество доступных полюсов.</string>
+    <string name="key_commonCathode">Общий вывод</string><!-- Seven-Seg -->
+    <string name="key_commonCathode_tt">Если этот параметр выбран, также моделируется общий ввод катода или анода.</string>
+    <string name="key_commonConnectionType">Общий вывод</string>
+    <string name="key_commonConnectionType_tt">Тип обычного подключения.</string>
+    <string name="key_commonConnectionType_cathode">Катод</string>
+    <string name="key_commonConnectionType_anode">Анод</string>
+
+    <string name="key_ledPersistence">Избегать мерцания</string><!-- Seven-Seg, LedMatrix -->
+    <string name="key_ledPersistence_tt">Включить послесвечение, чтобы подавить мерцание. Светодиоды остаются включёнными даже при переходе одного из выводов в состояние высокого сопротивления (Z). Это имитирует частоту выше порога слияния мерцаний.</string>
+    <string name="key_atf1502Fitter">Установщик ATF15xx</string>
+    <string name="key_atf1502Fitter_tt">Путь к установщику ATF15xx.
+        Войдите в каталог, содержащий файлы fit15xx.exe, предоставленные Microchip (ранее ATMEL).</string>
+    <string name="key_pin">Номер вывода</string>
+    <string name="key_pin_tt">Пустое поле означает, что этот сигнал не назначен контакту.</string>
+    <string name="key_rowDataBits">Строки</string><!-- LedMatrix -->
+    <string name="key_rowDataBits_tt">Задает количество строк, указав количество битов в слове-строке.</string>
+    <string name="key_colAddrBits">Адресные биты столбцов</string><!-- LedMatrix -->
+    <string name="key_colAddrBits_tt">Адреса отдельным столбцам. Три бита означают восемь столбцов.</string>
+    <string name="key_lockedMode">Модификация заблокирована</string>
+    <string name="key_lockedMode_tt">Схема заблокирована. Возможна настройка диодов и FGF-FET.</string>
+    <string name="key_pinNumber">Номер вывода</string><!-- Out, In, Clock -->
+    <string name="key_pinNumber_tt">Номер этого пина. Используется для представления схемы в виде пакета DIL и
+        назначение контактов при программировании CPLD.
+        Если битов несколько, все номера контактов можно указать в виде списка, разделенного запятыми.</string>
+    <string name="key_pinCount">Число выводов корпуса DIL</string>
+    <string name="key_pinCount_tt">Количество контактов. Ноль означает, что количество выводов определяется автоматически.</string>
+    <string name="key_defTreeSelect">Древовидное представление компонентов отображается при запуске.</string>
+    <string name="key_defTreeSelect_tt">Если установлено, представление дерева компонентов включается при запуске.</string>
+    <string name="key_inverterConfig">Инвертированные входы</string><!-- And, NAnd, Or, NOr, XOr, XNOr, RS_FF, JK_FF, D_FF, T_FF, JK_FF_AS, D_FF_AS, Counter -->
+    <string name="key_inverterConfig_tt">Вы можете выбрать входы, которые нужно инвертировать.</string>
+    <string name="key_fontSize">Размер шрифта меню [%]</string>
+    <string name="key_fontSize_tt">Размер шрифтов, используемых в меню, в процентах от размера по умолчанию.</string>
+    <string name="key_withEnable">Вход разрешения</string><!-- T_FF -->
+    <string name="key_withEnable_tt">Если установлено, доступен разрешающий вход (T).</string>
+    <string name="key_unidirectional">Однонаправленный</string><!-- PFET, NFET -->
+    <string name="key_unidirectional_tt">Однонаправленные транзисторы распространяют сигнал только от истока к стоку. Они
+        находятся
+        намного быстрее моделировать, чем двунаправленные транзисторы. Поскольку нет обратной связи от стока к источнику, в этом
+        В режиме транзистор не может закоротить подключенные провода, когда он является проводящим. Таким образом, этот режим необходим для
+        имитировать определенные схемы CMOS.</string>
+    <string name="key_activeLow">Активный низкий уровень</string><!-- Button -->
+    <string name="key_activeLow_tt">Если выбрано, вывод будет низким, если компонент активен.</string>
+    <string name="key_libraryPath">Библиотека</string>
+    <string name="key_libraryPath_tt">Папка, которая содержит библиотеку с предопределенными подсхемами.
+        Содержит, например, компоненты серии 74xx. Вы также можете добавить свои собственные схемы, сохранив
+        их в этом месте.
+        Необходимо убедиться, что имена всех файлов в этой папке и во всех подпапках уникальны.</string>
+    <string name="key_grid">Показать сетку</string>
+    <string name="key_grid_tt">Показывает сетку в главном окне.</string>
+    <string name="key_wireToolTips">Подсказки проводов</string>
+    <string name="key_wireToolTips_tt">Если установлено, линии выделяются при наведении на них указателя мыши.</string>
+    <string name="key_mapToKey">Клавиша управления</string><!-- Button -->
+    <string name="key_mapToKey_tt">Кнопка привязана к клавиатуре.
+        Чтобы использовать клавиши курсора, используйте кнопки ВВЕРХ, ВНИЗ, ВЛЕВО или ВПРАВО в качестве метки.</string>
+    <string name="key_jarPath">Библиотека Java</string>
+    <string name="key_jarPath_tt">Файл jar, содержащий дополнительные компоненты, реализованные на Java.</string>
+    <string name="key_showWireBits">Показывать разрядность шин</string>
+    <string name="key_showWireBits_tt">ВНИМАНИЕ: значение обновляется только при запуске моделирования.</string>
+    <string name="key_inputBits">Входная разрядность</string><!-- BitExtender -->
+    <string name="key_inputBits_tt">Количество выходных битов должно быть больше количества входных битов.</string>
+    <string name="key_outputBits">Выходная разрядность</string><!-- BitExtender -->
+    <string name="key_outputBits_tt">Количество выходных битов должно быть больше количества входных битов.</string>
+    <string name="key_textFontSize">Размер шрифта</string>
+    <string name="key_textFontSize_tt">Устанавливает размер шрифта для этого текста.</string>
+    <string name="key_delayTime">Продолжительность</string>
+    <string name="key_delayTime_tt">Время задержки в единицах задержки распространения логического элемента.</string>
+    <string name="key_invertOutput">Инверсный выход</string>
+    <string name="key_invertOutput_tt">Если выбрано, вывод инвертируется.</string>
+    <string name="key_timerDelay">Длительность импульса</string>
+    <string name="key_timerDelay_tt">Ширина импульса измеряется в тактах.</string>
+    <string name="key_splitterSpreading">Расстояние между выводами</string>
+    <string name="key_splitterSpreading_tt">Настраивает разброс входов и выходов в схеме.</string>
+    <string name="key_romContent">Содержимое ПЗУ</string>
+    <string name="key_romContent_tt">Содержимое всех используемых ПЗУ</string>
+
+    <string name="key_applicationType">Приложение</string>
+    <string name="key_applicationType_tt">Определяет, какое приложение использовать.</string>
+    <string name="key_applicationType_Generic">Универсальное</string>
+    <string name="key_applicationType_GHDL">GHDL</string>
+    <string name="key_applicationType_IVERILOG">IVerilog</string>
+    <string name="key_externalInputs">Входы</string>
+    <string name="key_externalInputs_tt">Входные данные внешнего процесса.
+        Это список имен сигналов, разделенных запятыми. Для каждого имени сигнала количество битов, разделенных двоеточием.
+        можно указать. Таким образом, входы 8-битного сумматора можно описать как «a: 8, b: 8, c_in».</string>
+    <string name="key_externalOutputs">Выходы</string>
+    <string name="key_externalOutputs_tt">Выходные данные внешнего процесса.
+        Это список имен сигналов, разделенных запятыми. Для каждого имени сигнала количество битов, разделенных двоеточием.
+        можно указать. Таким образом, выходы 8-битного сумматора можно описать как «s: 8, c_out».</string>
+    <string name="key_Code">Программный код</string>
+    <string name="key_Code_tt">Программный код, выполняемый внешним приложением.</string>
+    <string name="key_CodeFile">Программный код</string>
+    <string name="key_CodeFile_tt">Файл, содержащий программный код, который будет выполняться внешним приложением.</string>
+    <string name="attr_panel_Options">Параметры</string>
+    <string name="key_ghdlPath">GHDL</string>
+    <string name="key_ghdlPath_tt">Путь к исполняемому файлу ghdl. Требуется только в том случае, если вы хотите использовать ghdl для моделирования
+        компоненты, определенные с помощью VHDL.</string>
+    <string name="key_ghdlOptions">Параметры GHDL</string>
+    <string name="key_ghdlOptions_tt">Параметры, которые используются GHDL для всех этапов обработки.</string>
+    <string name="key_iverilogOptions">Параметры IVerilog</string>
+    <string name="key_iverilogOptions_tt">Параметры, которые используются IVerilog на всех этапах обработки.</string>
+
+    <string name="key_iverilogPath">IVerilog</string>
+    <string name="key_iverilogPath_tt">Путь к папке установки Icarus Verilog. Требуется только в том случае, если вы хотите использовать
+        iverilog для моделирования
+        компоненты, определенные с помощью Verilog.</string>
+    <string name="key_maxValue">Максимальное значение</string>
+    <string name="key_maxValue_tt">Если вводится ноль, используется максимально возможное значение (все биты равны единице).</string>
+
+    <string name="key_dipDefault">Высокий уровень на выходе</string>
+    <string name="key_dipDefault_tt">Выходное значение DIP-переключателя по умолчанию при запуске моделирования.</string>
+
+    <string name="key_macMouse">Использовать правила щелчков macOS</string>
+    <string name="key_macMouse_tt">Использует щелчок с нажатой клавишей CTRL вместо щелчка правой кнопкой мыши.</string>
+    <string name="key_tunnelRenameDialog">Показать диалог для автоматического переименования туннелей.</string>
+    <string name="key_tunnelRenameDialog_tt">Если установлено, диалоговое окно для автоматического переименования всех туннелей с тем же именем отображается после
+        туннель был переименован.</string>
+    <string name="key_renameLabels">Увеличивать номера в метках при копировании</string>
+    <string name="key_renameLabels_tt">При копировании увеличивать число в конце метки компонента.</string>
+
+    <string name="key_ATMISP">ATMISP</string>
+    <string name="key_ATMISP_tt">Путь к исполняемому файлу ATMISP.exe. Если установлено, программное обеспечение ATMISP может запускаться автоматически!</string>
+
+    <string name="key_customShape">Пользовательская форма</string>
+    <string name="key_customShape_tt">Импорт файла SVG</string>
+
+    <string name="key_preloadProgram">Предварительная загрузка памяти программы при запуске.</string>
+    <string name="key_preloadProgram_tt">При моделировании процессора, который использует устройство RAM в качестве памяти программ,
+        этот процессор сложно запустить, потому что содержимое RAM всегда инициализируется нулями в начале
+        моделирования. Этот параметр позволяет загружать данные в память программы при запуске.
+        Программная память в моделировании должна быть отмечена как таковая.</string>
+    <string name="key_preloadProgramFile">Программный файл</string>
+    <string name="key_preloadProgramFile_tt">Файл, который должен быть загружен в память программы в начале
+        моделирование.</string>
+
+    <string name="key_RectWidth">Ширина</string>
+    <string name="key_RectWidth_tt">Ширина в единицах сетки</string>
+    <string name="key_RectHeight">Высота</string>
+    <string name="key_RectHeight_tt">Высота в единицах сетки</string>
+    <string name="key_RectInside">Текст внутри</string>
+    <string name="key_RectInside_tt">Поместите текст внутри прямоугольника.</string>
+    <string name="key_RectBottom">Текст внизу</string>
+    <string name="key_RectBottom_tt">Поместите текст внизу прямоугольника.</string>
+    <string name="key_RectRight">Текст справа</string>
+    <string name="key_RectRight_tt">Поместите текст справа от прямоугольника.</string>
+
+    <string name="key_wideShape">Широкая форма</string>
+    <string name="key_wideShape_tt">Использовать более широкое обозначение элемента.</string>
+
+    <string name="key_shapeType">Форма</string>
+    <string name="key_shapeType_tt">Обозначение схемы внутри другой схемы. В простом режиме входы находятся слева, выходы справа. В режиме «Макет» положение и ориентация входов и выходов определяют расположение выводов, в том числе сверху и снизу. В режиме «Корпус DIL» расположение выводов определяется их номерами.</string>
+    <string name="key_shapeType_DEFAULT">По умолчанию</string>
+    <string name="key_shapeType_SIMPLE">Простой</string>
+    <string name="key_shapeType_DIL">Корпус DIL</string>
+    <string name="key_shapeType_LAYOUT">Макет</string>
+    <string name="key_shapeType_CUSTOM">Определяется пользователем</string>
+    <string name="key_shapeType_MINIMIZED">Уменьшенная схема</string>
+
+    <string name="key_textOrientation">Ориентация</string>
+    <string name="key_textOrientation_tt">Положение координаты относительно текста.</string>
+    <string name="key_textOrientation_LEFTBOTTOM">слева внизу</string>
+    <string name="key_textOrientation_CENTERBOTTOM">по центру внизу</string>
+    <string name="key_textOrientation_RIGHTBOTTOM">справа внизу</string>
+    <string name="key_textOrientation_RIGHTCENTER">справа по центру</string>
+    <string name="key_textOrientation_RIGHTTOP">справа вверху</string>
+    <string name="key_textOrientation_CENTERTOP">по центру вверху</string>
+    <string name="key_textOrientation_LEFTTOP">слева вверху</string>
+    <string name="key_textOrientation_LEFTCENTER">левый центр</string>
+    <string name="key_textOrientation_CENTERCENTER">по центру</string>
+
+    <string name="key_midiChannel">MIDI-канал</string>
+    <string name="key_midiChannel_tt">Выбирает MIDI-канал для использования.</string>
+    <string name="key_midiInstrument">MIDI-инструмент</string>
+    <string name="key_midiInstrument_tt">Используемый MIDI-инструмент.</string>
+    <string name="key_midiProgChange">Разрешить изменение программы</string>
+    <string name="key_midiProgChange_tt">Добавляет новый входной ПК. Если этот вход установлен на высокий,
+        значение на входе N используется для изменения программы (инструмента).</string>
+
+    <string name="key_enabled">Включено</string>
+    <string name="key_enabled_tt">Включает или отключает этот компонент.</string>
+
+    <string name="key_toolChainConfig">Конфигурация цепочки инструментов</string>
+    <string name="key_toolChainConfig_tt">Используется для настройки интеграции цепочки инструментов.
+        Позволяет запускать внешние инструменты, например для программирования FPGA или подобного.</string>
+
+    <string name="key_generic">Параметризация схемы</string>
+    <string name="key_generic_tt">Операторы, используемые для создания схемы.</string>
+
+    <string name="key_isGeneric">Параметризованная схема</string>
+    <string name="key_isGeneric_tt">Позволяет создать общую схему.</string>
+
+    <string name="key_showTutorial">Показывать обучение при запуске</string>
+    <string name="key_showTutorial_tt">Включает руководство.</string>
+
+    <string name="key_switchActsAsInput">Переключатель ведет себя как вход</string>
+    <string name="key_switchActsAsInput_tt">Если модель анализируется, переключатель ведет себя как вход, где «open» соответствует «0», а «closed» - «1».</string>
+
+    <string name="menu_exportSVGSettings">Настройки экспорта SVG</string>
+    <string name="key_SVG_LaTeX">Текст в нотации LaTeX</string>
+    <string name="key_SVG_LaTeX_tt">Текст вставлен в нотации LaTeX. Для дальнейшей обработки требуется Inkscape.</string>
+    <string name="key_SVG_pinsInMathMode">Метки выводов в математическом режиме</string>
+    <string name="key_SVG_pinsInMathMode_tt">Для меток контактов используйте математический режим, даже если индексы отсутствуют.</string>
+    <string name="key_SVG_hideTest">Скрыть тестовые наборы</string>
+    <string name="key_SVG_hideTest__">Тестовые наборы не экспортируются.</string>
+    <string name="key_SVG_noShapeFilling">Фигуры не закрашены</string>
+    <string name="key_SVG_noShapeFilling_tt">Полигоны не заполнены.</string>
+    <string name="key_SVG_smallIO">Небольшие входы и выходы</string>
+    <string name="key_SVG_smallIO_tt">Входы и выходы представлены в виде маленьких кружков.</string>
+    <string name="key_SVG_noPinMarker">Не указывать маркер вывода</string>
+    <string name="key_SVG_noPinMarker_tt">Синие и красные маркеры булавки на символах опущены.</string>
+    <string name="key_SVG_highContrast">Высокая контрастность</string>
+    <string name="key_SVG_highContrast_tt">Провода и текст контактов отображаются черным цветом.</string>
+    <string name="key_SVG_monochrome">Монохромный</string>
+    <string name="key_SVG_monochrome_tt">Используются только серые цвета.</string>
+    <string name="key_SVG_thinnerLines">Тонкие линии</string>
+    <string name="key_SVG_thinnerLines_tt">Если установлено, линии рисуются немного тоньше.</string>
+
+    <string name="key_equalsInsteadOfPlus">Использовать клавишу «=»</string>
+    <string name="key_equalsInsteadOfPlus_tt">Используйте клавишу равенства вместо клавиши плюса.
+        Это всегда полезно, если знак плюса не является первичным ключом, а является вторым назначением ключа.
+        равно символ, например для американской или французской раскладки клавиатуры.</string>
+
+    <string name="key_snapToGrid">Привязка к сетке</string>
+    <string name="key_snapToGrid_tt">Если установлено, компонент выравнивается по сетке.</string>
+
+    <string name="key_layoutShapeDelta">Расстояние между выводами</string>
+    <string name="key_layoutShapeDelta_tt">Используется типом формы макета. Устанавливает расстояние до предыдущей булавки.</string>
+
+    <string name="key_trigger">Триггер</string>
+    <string name="key_trigger_tt">Условие запуска для записи данных.</string>
+    <string name="key_trigger_rising">Передний фронт</string>
+    <string name="key_trigger_falling">Задний фронт</string>
+    <string name="key_trigger_both">Оба фронта</string>
+
+    <string name="key_probeMode">Режим отображения</string>
+    <string name="key_probeMode_tt">Показывать значение сигнала или счётчик переключений.</string>
+    <string name="key_probeMode_VALUE">Значение сигнала</string>
+    <string name="key_probeMode_UP">Счёт по переднему фронту</string>
+    <string name="key_probeMode_DOWN">Счёт по заднему фронту</string>
+    <string name="key_probeMode_BOTH">Счёт по обоим фронтам</string>
+
+    <string name="key_persistTime">Длительность послесвечения</string>
+    <string name="key_persistTime_tt">Чем больше значение, тем дольше длится послесвечение.</string>
+
+    <string name="key_oscillationDetectionCounter">Обнаружение колебаний</string>
+    <string name="key_oscillationDetectionCounter_tt">Число задержек распространения сигнала, после которого обнаруживаются колебания, если схема ещё не стабилизировалась.</string>
+    <string name="key_recoverFromOscillation">При колебаниях продолжать со случайными значениями</string>
+    <string name="key_recoverFromOscillation_tt">При колебаниях поведение симуляции становится непредсказуемым и очень медленным.</string>
+
+    <string name="key_telnetEscape">Режим Telnet</string>
+    <string name="key_telnetEscape_tt">Обрабатывать управляющие команды Telnet и отправлять команды SGA и ECHO. Если параметр отключён, сервер работает как обычный TCP-сервер.</string>
+    <string name="key_port">Порт</string>
+    <string name="key_port_tt">Порт, который открывает сервер.</string>
+
+    <string name="key_openRemotePort">Разрешить удалённое подключение</string>
+    <string name="key_openRemotePort_tt">Открыть порт TCP/IP для удалённого управления симулятором.</string>
+    <string name="key_remotePort">Номер порта</string>
+    <string name="key_remotePort_tt">Порт сервера удалённого управления.</string>
+
+    <string name="key_skipHDL">Пропустить при экспорте в Verilog/VHDL</string>
+    <string name="key_skipHDL_tt">Не экспортировать внутреннее устройство схемы в Verilog/VHDL. Ссылки на схему сохраняются, чтобы можно было подставить другую реализацию.</string>
+
+    <string name="msg_bigEndian">Big-Endian</string>
+    <string name="key_bigEndian">Импортировать в порядке Big-Endian</string>
+    <string name="key_bigEndian_tt">При импорте использовать порядок байтов от старшего к младшему.</string>
+
+    <string name="key_colorScheme">Цветовая схема</string>
+    <string name="key_colorScheme_DEFAULT">Светлая</string>
+    <string name="key_colorScheme_DARK">Тёмная</string>
+    <string name="key_colorScheme_COLOR_BLIND">Для нарушений красно-зелёного цветовосприятия</string>
+    <string name="key_colorScheme_CUSTOM">Пользовательская</string>
+    <string name="key_customColorScheme">Пользовательские цвета</string>
+    <string name="menu_colorSchemePreset">Готовая схема</string>
+    <string name="colorName_BACKGROUND">Фон</string>
+    <string name="colorName_MAIN">Передний план</string>
+    <string name="colorName_WIRE">Провод</string>
+    <string name="colorName_WIRE_HIGH">Провод: высокий уровень</string>
+    <string name="colorName_WIRE_LOW">Провод: низкий уровень</string>
+    <string name="colorName_WIRE_VALUE">Значение на проводе</string>
+    <string name="colorName_WIRE_OUT">Выход</string>
+    <string name="colorName_WIRE_Z">Провод: высокое сопротивление (Z)</string>
+    <string name="colorName_ERROR">Ошибка</string>
+    <string name="colorName_PASSED">ОК</string>
+    <string name="colorName_PINS">Выводы</string>
+    <string name="colorName_GRID">Сетка</string>
+    <string name="colorName_TESTCASE">Тестовый набор</string>
+    <string name="colorName_DISABLED">Отключено</string>
+    <string name="colorName_ASYNC">Асинхронный</string>
+    <string name="colorName_HIGHLIGHT">Выделено</string>
+
+    <string name="mod_insertWire">Вставленный провод.</string>
+    <string name="mod_insertCopied">Вставить из буфера обмена.</string>
+    <string name="mod_setKey_N0_in_element_N1">Значение ''{0}'' в компоненте ''{1}'' изменено.</string>
+    <string name="mod_setAttributesIn_N">Атрибуты компонента ''{0}'' изменены.</string>
+    <string name="mod_wireDeleted">Провод удален.</string>
+    <string name="mod_movedOrRotatedElement_N">Компонент ''{0}'' перемещен или повернут.</string>
+    <string name="mod_movedWire">Провод перемещен.</string>
+    <string name="mod_deletedSelection">Выделение удалено.</string>
+    <string name="mod_insertedElement_N">Компонент ''{0}'' вставлен.</string>
+    <string name="mod_deletedElement_N">Компонент ''{0}'' удален.</string>
+    <string name="mod_insertedWire">Провод вставлен.</string>
+    <string name="mod_movedSelected">Выделение перемещено.</string>
+    <string name="mod_undo_N">Отменить: {0}</string>
+    <string name="mod_redo_N">Повторить: {0}</string>
+    <string name="mod_circuitAttrModified">Измененные атрибуты цепи.</string>
+    <string name="mod_modifiedMeasurementOrdering">Порядок измерений.</string>
+    <string name="mod_groupEdit">Измененные атрибуты выбранных компонентов.</string>
+    <string name="mod_splitWire">Разделяет одиночный провод на два провода.</string>
+    <string name="mod_modifiedByRunningModel">Изменения, внесенные в ходе моделирования.</string>
+
+    <string name="lib_Logic">Логика</string>
+    <string name="lib_arithmetic">Арифметика</string>
+    <string name="lib_flipFlops">Триггеры</string>
+    <string name="lib_io">Ввод-вывод</string>
+    <string name="lib_memory">Память</string>
+    <string name="lib_mux">Мультиплексоры</string>
+    <string name="lib_wires">Провода</string>
+    <string name="lib_switching">Переключатели</string>
+    <string name="lib_misc">Разное</string>
+    <string name="lib_more">Ещё</string>
+    <string name="lib_displays">Индикаторы</string>
+    <string name="lib_mechanic">Электромеханика</string>
+    <string name="lib_peripherals">Периферийные устройства</string>
+    <string name="lib_ram">ОЗУ</string>
+    <string name="lib_eeprom">EEPROM</string>
+    <string name="lib_decoration">Оформление</string>
+    <string name="lib_generic">Параметризованные схемы</string>
+    <string name="lib_hdl">VHDL/Verilog</string>
+
+    <string name="cli_cli">Интерфейс командной строки</string>
+    <string name="cli_nonOptionalArgumentMissing_N">Отсутствует обязательный аргумент {0}.</string>
+    <string name="cli_notABool_N">Значение {0} не является логическим.</string>
+    <string name="cli_notANumber_N">Значение {0} не является числом.</string>
+    <string name="cli_noArgument_N_available">Аргумент {0} не определен.</string>
+    <string name="cli_notEnoughArgumentsGiven">Недостаточно аргументов.</string>
+    <string name="cli_toMuchArguments">Слишком много аргументов.</string>
+    <string name="cli_invalidType_N">Недействительный тип.</string>
+    <string name="cli_command_N_hasNoSubCommand_N">Команда {0} не имеет подкоманды {1}.</string>
+    <string name="cli_options">Параметры:</string>
+
+    <string name="cli_help_test">Первое имя файла определяет схему, которую нужно протестировать.
+        Если указано второе имя файла, тестовые примеры выполняются из этого файла.
+        Если второе имя файла не указано, тесты выполняются из первого файла.</string>
+    <string name="cli_help_test_circ">Имя файла для тестирования.</string>
+    <string name="cli_help_test_tests">Имя файла с тестовыми примерами.</string>
+    <string name="cli_help_test_allowMissingInputs">Разрешает отсутствие входов в цепи, которые
+        определено в тестовом примере. Это может быть полезно, если есть несколько возможных решений, которые могут
+        зависят от разных входов.</string>
+    <string name="cli_help_test_verbose">При ошибке выводить таблицу значений.</string>
+    <string name="cli_thereAreTestFailures">Тесты не прошли.</string>
+    <string name="cli_errorExecutingTests">Произошла ошибка во время выполнения тестов.</string>
+
+    <string name="cli_help_svg">Может использоваться для создания файла SVG из схемы.</string>
+    <string name="cli_help_svg_dig">Имя файла схемы.</string>
+    <string name="cli_help_svg_svg">Имя записываемого файла SVG.</string>
+    <string name="cli_help_svg_ieee">Используйте символы IEEE.</string>
+    <string name="cli_errorCreatingSVG">Ошибка при создании файла SVG!</string>
+
+    <string name="cli_help_stats">Создает файл CSV, содержащий статистику схемы.
+        Все используемые компоненты перечислены в файле CSV.</string>
+    <string name="cli_help_stats_dig">Имя файла схемы.</string>
+    <string name="cli_help_stats_csv">Имя создаваемого файла CSV.
+        Если этот параметр отсутствует, таблица записывается в стандартный вывод.</string>
+    <string name="cli_errorCreatingStats">Ошибка при создании файла статистики!</string>
+
+    <string name="cli_run_noClock">В схеме нет работающего тактового генератора!</string>
+    <string name="cli_errorRunningCircuit">Ошибка при запуске схемы!</string>
+    <string name="cli_help_run">Запуск схемы без графического интерфейса.</string>
+    <string name="cli_help_run_dig">Имя файла схемы.</string>
+
+    <string name="menu_window">Окна</string>
+    <string name="menu_about">О программе</string>
+    <string name="menu_analyse">Анализ</string>
+    <string name="menu_analyse_tt">Анализирует текущую схему</string>
+    <string name="menu_cut">Вырезать</string>
+    <string name="menu_copy">Копировать</string>
+    <string name="menu_copy_tt">Копировать в буфер обмена</string>
+    <string name="menu_custom">Пользовательский</string>
+    <string name="menu_library">Библиотека</string>
+    <string name="menu_delete">Удалить компоненты</string>
+    <string name="menu_delete_tt">Удалить выбранный отдельный компонент или группу компонентов.</string>
+    <string name="menu_edit">Правка</string>
+    <string name="menu_editAttributes">Параметры схемы</string>
+    <string name="menu_editAttributes_tt">Параметры текущей схемы, например её обозначение при использовании внутри других схем. Сохраняются вместе со схемой.</string>
+    <string name="menu_editSettings">Настройки</string>
+    <string name="menu_editSettings_tt">Общие настройки симулятора: язык, графические обозначения компонентов и пути к внешним инструментам.</string>
+    <string name="menu_element">Остановить моделирование</string>
+    <string name="menu_element_tt">Останавливает моделирование и позволяет редактировать схему.</string>
+    <string name="menu_elements">Компоненты</string>
+    <string name="menu_export">Экспорт</string>
+    <string name="menu_exportPNGLarge">Экспорт большого PNG</string>
+    <string name="menu_exportPNGSmall">Экспорт маленького PNG</string>
+    <string name="menu_exportSVG">Экспорт SVG</string>
+    <string name="menu_exportAnimatedGIF">Экспорт анимированного GIF</string>
+    <string name="menu_fast">Выполнить до точки останова</string>
+    <string name="menu_fast_tt">Выполнять схему до сигнала от компонента точки останова (BRK).</string>
+    <string name="menu_file">Файл</string>
+    <string name="menu_help">Справка</string>
+    <string name="menu_update">Обновить</string>
+    <string name="menu_update_tt">Обновляет меню компонентов.</string>
+    <string name="menu_maximize">По размеру окна</string>
+    <string name="menu_micro">Шаг по одному элементу</string>
+    <string name="menu_micro_tt">Запустить моделирование с шагами по отдельным логическим элементам.</string>
+    <string name="menu_new">Создать</string>
+    <string name="menu_new_tt">Создать новую пустую схему.</string>
+    <string name="menu_newSub">Создать вложенную схему</string>
+    <string name="menu_newSub_tt">Открыть новое окно для создания вложенной схемы, которую можно использовать в текущей.</string>
+    <string name="menu_open">Открыть</string>
+    <string name="menu_openRecent">Недавние файлы</string>
+    <string name="menu_openRecentNewWindow">Недавние файлы в новом окне</string>
+    <string name="menu_openWin">Открыть в новом окне</string>
+    <string name="menu_openWin_tt">Открывает схему в новом окне</string>
+    <string name="menu_orderInputs">Порядок входов</string>
+    <string name="menu_orderInputs_tt">Задать порядок входов при использовании схемы как вложенной.</string>
+    <string name="menu_orderMeasurements">Порядок измерений</string>
+    <string name="menu_orderMeasurements_tt">Порядок измеренных значений в графическом и табличном виде</string>
+    <string name="menu_orderOutputs">Порядок выходов</string>
+    <string name="menu_orderOutputs_tt">Задать порядок выходов при использовании схемы как вложенной.</string>
+    <string name="menu_paste">Вставить</string>
+    <string name="menu_insertAsNew">Вставить в новом окне</string>
+    <string name="menu_insertAsNew_tt">Содержимое буфера обмена вставляется в новое окно.</string>
+    <string name="menu_rotate">Повернуть</string>
+    <string name="menu_sim">Моделирование</string>
+    <string name="menu_run">Запустить моделирование</string>
+    <string name="menu_run_tt">Запускает симуляцию схемы.</string>
+    <string name="menu_save">Сохранить</string>
+    <string name="menu_saveAs">Сохранить как</string>
+    <string name="menu_saveData">Сохранить данные</string>
+    <string name="menu_saveData_tt">Сохранить данные как файл CSV</string>
+    <string name="menu_speedTest">Тест скорости</string>
+    <string name="menu_speedTest_tt">Определить максимальную тактовую частоту для оценки скорости моделирования.</string>
+    <string name="menu_step">Шаг моделирования</string>
+    <string name="menu_step_tt">Вычислить один шаг изменения логических элементов.</string>
+    <string name="menu_runToBreakMicro">До точки останова по одному элементу</string>
+    <string name="menu_runToBreakMicro_tt">Выполнять шаги отдельных элементов до переднего фронта на компоненте точки останова. Если такого компонента нет, выполнить оставшиеся шаги.</string>
+    <string name="menu_synthesise">Синтез</string>
+    <string name="menu_synthesise_tt">Создает минимальные логические выражения, описываемые таблицей истинности.</string>
+    <string name="menu_scale">Задать масштаб</string>
+
+    <string name="menu_table_N_variables">Переменных: {0}</string>
+    <string name="menu_table_create">Создать</string>
+    <string name="menu_table_createCUPL_tt">Создать исходный файл CUPL с описанием схемы.</string>
+    <string name="menu_table_createTT2_tt">Создает файл, содержащий схему, аналогичную формату обмена логикой Беркли (BLIF).
+        После этого запускается установщик Atmel для создания файла JEDEC.</string>
+    <string name="menu_table_createCircuit">Схема</string>
+    <string name="menu_table_createCircuitMore">Варианты схемы</string>
+    <string name="menu_table_maxInputs_N">Использовать элементы максимум с {0} входами</string>
+    <string name="menu_table_createCircuit_tt">Создает схему, воспроизводящую таблицу истинности.</string>
+    <string name="menu_table_createCircuitJK">Схема с триггерами JK</string>
+    <string name="menu_table_createCircuitJK_tt">Создать схему по таблице истинности с использованием JK-триггеров.</string>
+    <string name="menu_table_createCircuitLUT">Схема с LUT</string>
+    <string name="menu_table_createCircuitLUT_tt">Создать схему по таблице истинности с использованием таблиц соответствий (LUT).</string>
+    <string name="menu_table_createNAnd">Схема на элементах И-НЕ</string>
+    <string name="menu_table_createNAndTwo">Схема на двухвходовых элементах И-НЕ</string>
+    <string name="menu_table_createNAndTwo_tt">Использовать только двухвходовые элементы И-НЕ.</string>
+    <string name="menu_table_createNAnd_tt">Создать схему по таблице истинности только на элементах И-НЕ.</string>
+    <string name="menu_table_createNOr">Схема на элементах ИЛИ-НЕ</string>
+    <string name="menu_table_createNOrTwo">Схема на двухвходовых элементах ИЛИ-НЕ</string>
+    <string name="menu_table_createNOrTwo_tt">Использовать только двухвходовые элементы ИЛИ-НЕ.</string>
+    <string name="menu_table_createNOr_tt">Создать схему по таблице истинности только на элементах ИЛИ-НЕ.</string>
+    <string name="menu_table_create_hardware">Устройство</string>
+    <string name="menu_table_create_jedec_tt">Создает файл JEDEC для устройства</string>
+    <string name="menu_table_exportTableLaTeX">Экспорт LaTeX</string>
+    <string name="menu_table_exportTablePlainText">Экспорт обычного текста</string>
+    <string name="menu_table_createFunctionFixture">Экспорт тестового набора</string>
+    <string name="menu_table_createFunctionFixture_tt">Создать описание теста, которое можно использовать в тестовом наборе.</string>
+    <string name="menu_table_createFunctionFixture_isSequential">Тестовый набор работает только для полностью комбинационной схемы!</string>
+
+    <string name="menu_table_exportHex">HEX</string>
+    <string name="menu_table_exportHex_tt">Вы можете загрузить HEX-файл в ПЗУ или LUT.</string>
+    <string name="menu_table_exportCSV">CSV</string>
+    <string name="menu_table_exportCSV_tt">Файл CSV, содержащий полную таблицу истинности.</string>
+    <string name="menu_table_exportCSVCondensed">CSV, основные импликанты</string>
+    <string name="menu_table_exportCSVCondensed_tt">Файл CSV, содержащий только основные импликанты.</string>
+    <string name="menu_table_new">Новый</string>
+    <string name="menu_table_new_combinatorial">Комбинационная</string>
+    <string name="menu_table_new_sequential">Последовательностная</string>
+    <string name="menu_table_new_sequential_bidir">Последовательностная с двунаправленными сигналами</string>
+    <string name="menu_table_reorder_inputs">Изменить порядок / удалить входные переменные</string>
+    <string name="menu_table_columnsAddVariable">Добавить входную переменную</string>
+    <string name="menu_table_columnsAddVariable_tt">Добавляет новую входную переменную в таблицу.</string>
+    <string name="menu_table_reorder_outputs">Порядок и удаление выходных столбцов</string>
+    <string name="menu_table_columnsAdd">Добавить выходной столбец</string>
+    <string name="menu_table_columnsAdd_tt">Добавляет новый столбец результатов в таблицу.</string>
+    <string name="menu_table_setXTo0">Установить X равным 0</string>
+    <string name="menu_table_setXTo0_tt">Заменить безразличные значения (X) на 0.</string>
+    <string name="menu_table_setXTo1">Установить X равным 1</string>
+    <string name="menu_table_setXTo1_tt">Заменить безразличные значения (X) на 1.</string>
+    <string name="menu_table_JK">Создать выражения J / K</string>
+    <string name="menu_table_setAllToX">Установить все в X</string>
+    <string name="menu_table_setAllToX_tt">Установить все значения в безразличное состояние (X).</string>
+    <string name="menu_table_setAllTo0">Установить все на 0</string>
+    <string name="menu_table_setAllTo0_tt">Установить все значения на ноль.</string>
+    <string name="menu_table_setAllTo1">Установить все на 1</string>
+    <string name="menu_table_setAllTo1_tt">Установить все значения в 1.</string>
+    <string name="menu_table_invert">Инвертировать все биты</string>
+    <string name="menu_table_invert_tt">Заменить 1 на 0 и наоборот. Безразличные значения (X) сохраняются.</string>
+    <string name="menu_table_showAllSolutions">Показать диалоговое окно результатов</string>
+    <string name="menu_table_showAllSolutions_tt">Снова показывает диалоговое окно результатов, если оно было закрыто вручную.</string>
+    <string name="menu_terminalDelete">Удалить</string>
+    <string name="menu_terminalDelete_tt">Удалить содержимое терминала.</string>
+    <string name="menu_view">Вид</string>
+    <string name="menu_zoomIn">Увеличить</string>
+    <string name="menu_zoomOut">Уменьшить</string>
+    <string name="menu_expression">Выражение</string>
+    <string name="menu_expression_tt">Создать схему из выражения.</string>
+    <string name="menu_runTests">Выполнить тесты</string>
+    <string name="menu_runTests_tt">Выполнить все тестовые наборы в схеме.</string>
+    <string name="menu_actualToDefault">Сохранить текущие входы как значения по умолчанию</string>
+    <string name="menu_actualToDefault_tt">Использовать текущие входные значения как новые значения по умолчанию.</string>
+    <string name="menu_restoreAllFuses">Сбросить все диоды и FGFET</string>
+    <string name="menu_restoreAllFuses_tt">Сбросить программирование всех диодов, предохранителей и FGFET. Текущая конфигурация теряется!</string>
+    <string name="menu_programDiode">Запрограммировать диод</string>
+    <string name="menu_help_elements">Компоненты</string>
+    <string name="menu_help_elements_tt">Показывает список всех доступных компонентов.</string>
+    <string name="menu_viewHelp">Диалог справки</string>
+    <string name="menu_viewHelp_tt">Показывает диалоговое окно справки, описывающее текущую схему.</string>
+    <string name="menu_probe_memory">Память</string>
+    <string name="menu_probe_memory_tt">Показывает содержимое компонентов памяти.</string>
+    <string name="menu_treeSelect">Дерево компонентов</string>
+    <string name="menu_treeSelect_tt">Показывает древовидное представление доступных компонентов слева.</string>
+    <string name="menu_presentationMode">Режим презентации</string>
+    <string name="menu_presentationMode_tt">Упрощённый вид: скрывает тестовые наборы и другие детали, которые могут мешать презентации.</string>
+
+    <string name="menu_karnaughMap">Карта Карно</string>
+    <string name="menu_karnaughMap_tt">Показать таблицу в виде карты Карно.</string>
+
+    <string name="menu_special">Специальные функции 74xx</string>
+    <string name="menu_addPrefix">Добавить префикс ввода-вывода</string>
+    <string name="menu_addPrefix_tt">Префикс добавляется ко всем выбранным входам и выходам.
+        Используется для упрощения дублирования схем в схеме 74xx.</string>
+    <string name="menu_removePrefix">Удалить префикс ввода-вывода</string>
+    <string name="menu_removePrefix_tt">Первый символ из меток входов и выходов удаляется.
+        Используется для упрощения дублирования схем в схеме 74xx.</string>
+    <string name="menu_numbering">Мастер нумерации выводов</string>
+    <string name="menu_numbering_tt">Мастер для присвоения номеров контактов входам и выходам.</string>
+    <string name="menu_removePinNumbers">Удалить номера контактов</string>
+    <string name="menu_removePinNumbers_tt">Удалить все номера контактов в цепи</string>
+    <string name="msg_pin_numbering_N">Выбрать контакт {0}:</string>
+
+    <string name="menu_undo">Отменить</string>
+    <string name="menu_undo_tt">Отменить последнее изменение</string>
+    <string name="menu_redo">Повторить</string>
+    <string name="menu_redo_tt">Применить последнее отмененное изменение еще раз.</string>
+    <string name="menu_showDataAsGraph">Показать график</string>
+    <string name="menu_showDataAsGraph_tt">Показать данные в виде графика.</string>
+    <string name="menu_showDataAsTable">Показать таблицу</string>
+    <string name="menu_showDataAsTable_tt">Показывает значения в виде таблицы.</string>
+    <string name="menu_addPowerSupply">Добавить источник питания</string>
+    <string name="menu_addPowerSupply_tt">Добавляет источник питания в схему.</string>
+    <string name="menu_exportVHDL">Экспорт в VHDL</string>
+    <string name="menu_exportVHDL_tt">Экспортирует схему в VHDL</string>
+    <string name="menu_exportVerilog">Экспорт в Verilog</string>
+    <string name="menu_exportVerilog_tt">Экспортирует схему в Verilog</string>
+    <string name="menu_pdfDocumentation">Документация</string>
+    <string name="menu_openPdfDocumentation">Открыть {0}</string>
+    <string name="msg_errorOpeningDocumentation">Ошибка при открытии файла PDF!</string>
+
+    <string name="menu_showDataGraph">Показать график измерений</string>
+    <string name="menu_showDataGraph_tt">Показывает график с измеренными значениями в отдельном окне.</string>
+    <string name="menu_showDataTable">Показать таблицу значений измерения</string>
+    <string name="menu_showDataTable_tt">Показать таблицу с измеренными значениями в отдельном окне.</string>
+    <string name="menu_exportZIP">Экспорт в ZIP-файл</string>
+    <string name="menu_exportZIP_tt">Экспортирует схему как ZIP-файл.
+        Таким образом, ZIP-файл содержит все файлы, необходимые для работы схемы.</string>
+    <string name="menu_labelPins">Метки входов и выходов</string>
+    <string name="menu_labelPins_tt">Установить метку для всех входов и выходов без метки.</string>
+
+    <string name="menu_find">Найти</string>
+    <string name="menu_find_tt">Поиск меток, имён цепей и номеров выводов.</string>
+
+    <string name="menu_tutorial">Начать обучение</string>
+    <string name="menu_tutorial_tt">Запускает руководство для начинающих.</string>
+
+    <string name="menu_stats">Статистика схемы</string>
+    <string name="menu_stats_tt">Показывает список используемых компонентов.</string>
+    <string name="stat_number">Число</string>
+    <string name="stat_part">Компонент</string>
+    <string name="stat_inputs">Входы</string>
+    <string name="stat_bits">Биты</string>
+    <string name="stat_addrBits">Разрядность адреса</string>
+
+    <string name="menu_calcMaxPathLen">Максимальная длина пути</string>
+    <string name="menu_calcMaxPathLen_tt">Самый длинный путь между одним из входов и одним из выходов схемы.</string>
+    <string name="msg_maxPathLen">Самый длинный путь содержит {0} логических элементов.</string>
+    <string name="msg_couldNotCalculateMaxPathLen">Не удалось вычислить длину пути.</string>
+
+    <string name="msg_keyAsGenericAttribute">Имя для использования в общих схемах: {0}</string>
+    <string name="attr_createConcreteCircuitLabel">Создать конкретную схему</string>
+    <string name="attr_createConcreteCircuit">Создать</string>
+    <string name="attr_createConcreteCircuit_tt">Создает конкретную схему из этой общей схемы, используя
+        параметры, указанные в этом элементе.</string>
+    <string name="attr_createConcreteCircuitErr">Ошибка при создании конкретной схемы!</string>
+
+    <string name="message"><![CDATA[<h1>Digital</h1>
+        <p>Простой симулятор цифровых схем.</p>
+        <p>Автор: Хельмут Ниманн, 2016–2023.</p>
+        <p>Значки взяты из проекта <a href="http://tango.freedesktop.org">Tango Desktop Project</a>.</p>
+        <p>Страница проекта на <a href="https://github.com/hneemann/[[name]]">GitHub</a>. Там можно <a href="https://github.com/hneemann/[[name]]/releases/latest">скачать</a>
+        последний выпуск.</p>
+        <p>Там же можно сообщить об <a href="https://github.com/hneemann/[[name]]/issues/new?body=version:%20[[version]]&labels=bug">ошибке</a>
+        или предложить <a href="https://github.com/hneemann/[[name]]/issues/new?labels=enhancement">улучшение</a>.</p>
+        <p>Современный интерфейс и русская локализация: <a href="https://github.com/AmirTlinov/Digital">Digital — единая версия</a>.</p>]]></string>
+    <string name="msg_N_nodes">{0} узлов</string>
+    <string name="msg_analyseErr">Ошибка при анализе схемы</string>
+    <string name="msg_color">Цвет</string>
+    <string name="msg_errorCalculatingStep">Ошибка при вычислении шага</string>
+    <string name="msg_errorCreatingModel">Ошибка при создании схемы</string>
+    <string name="msg_errorDuringCalculation">Ошибка при упрощении</string>
+    <string name="msg_errorDuringHardwareExport">Ошибка при создании конфигурации оборудования.</string>
+    <string name="msg_errorEditingValue">Ошибка при редактировании значения атрибута</string>
+    <string name="msg_errorImportingModel_N0">Ошибка при импорте схемы {0}!</string>
+    <string name="msg_errorUpdatingLibrary">Ошибка при обновлении библиотеки компонентов !!</string>
+    <string name="msg_errorReadingFile">Ошибка чтения файла</string>
+    <string name="msg_errorWritingFile">Ошибка записи файла</string>
+    <string name="msg_frequency_N">Максимальная частота: {0} кГц</string>
+    <string name="msg_missingShape_N">Форма {0} отсутствует</string>
+    <string name="msg_pins">Назначение выводов</string>
+    <string name="msg_pinMap_pin_N_is_N">Вывод {0}: {1}</string>
+    <string name="msg_restartNeeded">Чтобы изменения вступили в силу, требуется перезапуск!</string>
+    <string name="msg_remoteUnknownCommand">Неизвестная команда {0}!</string>
+    <string name="msg_enterAnExpression">Введите выражение:</string>
+    <string name="msg_runningTestError">Ошибка при запуске тестов:</string>
+    <string name="msg_testResult">Результат теста</string>
+    <string name="msg_test_N_Passed">{0} пройдено</string>
+    <string name="msg_test_N_Failed">{0} не удалось</string>
+    <string name="msg_testExp_N0_found_N1">E: {0} / F: {1}</string>
+    <string name="msg_creatingHelp">Ошибка при создании справки!</string>
+    <string name="msg_clipboardContainsNoImportableData">Буфер обмена не содержит импортируемых данных!</string>
+    <string name="msg_selectAnEmptyFolder">Выберите пустую папку!</string>
+    <string name="msg_fitterResult">Сообщение от внешнего установщика</string>
+    <string name="msg_startExternalFitter">Выполнение внешнего установщика</string>
+    <string name="msg_actualCircuit">Текущая схема</string>
+    <string name="msg_fileNotAccessible">Выбранное имя файла не может быть импортировано из текущего проекта!</string>
+    <string name="msg_fileIsNotUnique">Имя файла не уникально!
+Все файлы в рабочем каталоге и во всех подкаталогах должны иметь уникальные имена. Это также относится к
+папка библиотеки. Если в вашем рабочем каталоге есть файл 7400.dig, вы не можете использовать этот файл или файл 7400.dig из
+библиотеки, потому что это имя файла больше не может быть однозначно присвоено.</string>
+    <string name="msg_duplicateLibraryFiles">Есть несколько файлов с одинаковыми именами, которые не могут быть
+однозначно назначено! Затронуты:</string>
+    <string name="msg_and_N_More">и еще {0}.</string>
+    <string name="msg_fileNotImportedYet">Файл еще не импортирован.</string>
+    <string name="msg_fileExists">Файл {0} уже существует! Хотите перезаписать файл?</string>
+    <string name="msg_test_missingLines">(Слишком много записей!)</string>
+    <string name="msg_test_missingLines_tt">Все тестовые примеры выполняются, но отображаются не все результаты.
+Тем не менее, оценка результата верна!</string>
+    <string name="msg_isLocked">Редактирование схемы отключено. Вы можете снять блокировку на
+"{0} -&gt; {1} -&gt; {2}".
+Однако копирование компонентов и конфигурация диодов и полевых транзисторов FGFET с помощью клавиши [P] также возможно в
+заблокированный режим.</string>
+    <string name="msg_speedTestError">Ошибка во время теста скорости!</string>
+    <string name="msg_pin_N">Вывод {0}</string>
+    <string name="msg_numberingWizard">Мастер нумерации</string>
+    <string name="msg_framesWritten_N">Записано кадров: {0}</string>
+    <string name="msg_errorWritingGif">Ошибка записи в файл GIF!</string>
+    <string name="btn_gifComplete">Готово</string>
+    <string name="btn_gifComplete_tt">Файл GIF завершен и закрыт.</string>
+    <string name="msg_gifExport">Экспорт GIF</string>
+    <string name="msg_errCausedBy">вызвано</string>
+    <string name="msg_inputsToInvert">Инвертируемые входы</string>
+    <string name="msg_none">нет</string>
+    <string name="msg_errGettingPinNames">Не удалось определить имена контактов.</string>
+    <string name="msg_errInFile_N">Возникло в файле {0}.</string>
+    <string name="msg_affectedComponentsAre_N">Затронуто: {0}.</string>
+    <string name="msg_signal_N">Сигнал {0}</string>
+    <string name="msg_thereAreMissingPinNumbers">Нет номеров контактов, назначенных контактам {0}!
+Бесплатные пины назначаются автоматически. Поэтому в большинстве случаев схему нельзя использовать на реальном оборудовании!</string>
+    <string name="msg_modelHasErrors">Вы можете экспортировать схему только без ошибок!</string>
+    <string name="msg_noKVMapAvailable">Нет карты KV!</string>
+    <string name="msg_dataNotUpdatedAnymore">Данные больше не будут обновляться!</string>
+    <string name="msg_modifyThisAttribute">Изменить это значение</string>
+    <string name="msg_invalidEditorValue">Одно из полей содержит недопустимое значение!</string>
+    <string name="msg_create CHNFile">Создание файла CHN.</string>
+    <string name="msg_tableHasManyRowsConfirm">Таблица очень большая, экспорт может занять некоторое время.
+Все равно начать экспорт?</string>
+    <string name="msg_circuitIsRequired">Чтобы создать описание оборудования, сначала необходимо создать и проанализировать схему.
+Автономную таблицу истинности нельзя использовать для создания описания оборудования.</string>
+    <string name="win_romDialog">Включенные ПЗУ</string>
+
+    <string name="msg_noData">нет данных</string>
+    <string name="key_source">Источник данных</string>
+    <string name="key_source_noData">Не загружать данные</string>
+    <string name="key_source_file">Файл</string>
+    <string name="key_source_dataField">Сохранённые данные</string>
+    <string name="err_could_not_load_rom">Не удалось загрузить данные ПЗУ!</string>
+
+    <string name="msg_errorClosingExternalProcess">Не удалось закрыть внешний процесс!</string>
+
+    <string name="msg_checkResult">Результат проверки:</string>
+    <string name="btn_checkCode">Проверить</string>
+    <string name="btn_checkCode_tt">Запускает приложение для проверки правильности введенного кода.
+Если это не так, отображается сообщение об ошибке внешнего приложения.
+Если возможно, определения ввода и вывода также адаптируются к текущему коду.</string>
+    <string name="msg_codeNotConsistent">Определения ввода и вывода не могут быть созданы автоматически.
+Пожалуйста, проверьте настройки!</string>
+    <string name="msg_applicationFileNotFound">Исполняемый файл "{0}" не найден!</string>
+    <string name="msg_enterText">Введите текст!</string>
+
+    <string name="btn_startATMISP">Запустить ATMISP</string>
+    <string name="btn_startATMISP_tt">Запустить внешнюю программу ATMISP. Она должна быть установлена заранее.</string>
+    <string name="msg_errorStartingATMISP">Ошибка при запуске ATMISP!
+В настройках указан правильный путь к исполняемому файлу ATMISP.exe?</string>
+    <string name="msg_ATMISPIsStillRunning">ATMISP все еще работает!
+Когда это диалоговое окно закрывается, ATMISP закрывается!
+Перед закрытием этого диалогового окна убедитесь, что процесс прошивки завершен!</string>
+
+    <string name="menu_runAllTests">Запустить все тесты</string>
+    <string name="menu_runAllTests_tt">Выполняет все тесты в текущей папке.</string>
+    <string name="msg_testPassed_N">Пройдено {0} тестовых строк</string>
+    <string name="msg_testFile">Файл протестирован</string>
+    <string name="msg_truthTable">Таблица истинности</string>
+    <string name="msg_truthTableCSV">Значения, разделенные запятыми, CSV</string>
+    <string name="msg_errorImportingSvg">Ошибка при импорте файла SVG.</string>
+    <string name="msg_errorCreatingSvgTemplate">Ошибка при создании шаблона SVG.</string>
+    <string name="msg_couldNotCreateStats">Не удалось создать статистику.</string>
+    <string name="msg_errorReadingToolchainConfig_N">Ошибка при чтении конфигурации цепочки инструментов {0}</string>
+    <string name="msg_commandStarted_N">Команда "{0}" запущена! Обработка может занять некоторое время!</string>
+    <string name="msg_commandEnded_N">Команда "{0}" выполнена!</string>
+
+    <string name="msg_renameNet">Переименовать сеть</string>
+    <string name="msg_renameNet_N_OLD_NEW">Есть еще {0} туннелей с сетевым именем ''{1}''.
+Вы хотите переименовать все {0} в "{2}"?</string>
+
+    <string name="msg_dataWillBeLost_n">Вы действительно хотите отменить изменения в поле "{0}"?</string>
+
+    <string name="msg_supportsHDL">Возможность экспорта в VHDL / Verilog.</string>
+    <string name="msg_errorSettingModelToTestCase">Ошибка при установке строки тестового примера.</string>
+
+    <string name="err_vgaModeNotDetected_N">Режим видео не обнаружен ({0})</string>
+
+    <string name="menu_createBehavioralFixture">Создать тест по поведению схемы</string>
+    <string name="menu_createBehavioralFixture_tt">Создать тестовый набор, который фиксирует текущее поведение схемы.</string>
+    <string name="msg_fixesCreated_N">Тестовых строк: {0}</string>
+    <string name="btn_createTestLine">Добавить тестовую строку</string>
+    <string name="btn_createTestLine_tt">Добавить новую строку в тестовый набор.</string>
+    <string name="btn_BehavioralFixtureComplete">Завершить</string>
+    <string name="btn_BehavioralFixtureComplete_tt">Создать компонент тестового набора.</string>
+    <string name="msg_errorCreatingTestCase">Ошибка при создании тестового примера.</string>
+
+    <string name="ok">ОК</string>
+    <string name="rot_0">0 °</string>
+    <string name="rot_180">180 °</string>
+    <string name="rot_270">270 °</string>
+    <string name="rot_90">90 °</string>
+    <string name="stat_clocks">Остановка после {0} полутактов в точке ''{1}''.</string>
+    <string name="tt_deleteItem">Удаляет выбранный элемент</string>
+    <string name="tt_moveItemDown">Переместить элемент вниз</string>
+    <string name="tt_moveItemUp">Переместить элемент вверх</string>
+    <string name="win_allSolutions">Все возможные решения</string>
+    <string name="win_confirmExit">Подтвердите выход!</string>
+    <string name="win_measures">Измерения</string>
+    <string name="win_measures_fullstep">Измерения по полным тактам</string>
+    <string name="win_measures_microstep">Измерения по отдельным элементам</string>
+    <string name="win_saveChanges">Сохранить изменения?</string>
+    <string name="win_stateChanged">Состояние изменено!</string>
+    <string name="win_table">Таблица</string>
+    <string name="win_table_exportDialog">Экспорт</string>
+    <string name="win_itempicker_title">Выбрать</string>
+    <string name="win_testdata_N">Тестовые данные {0}</string>
+    <string name="win_data">Данные</string>
+    <string name="win_valueInputTitle_N">Вход {0}</string>
+    <string name="win_karnaughMap">Карта Карно</string>
+
+    <string name="btn_help">Справка</string>
+    <string name="btn_copyToClipboard">Буфер обмена</string>
+    <string name="btn_copyToClipboard_tt">Копирует текст в буфер обмена.</string>
+
+    <string name="win_romDialogHelpTitle">Содержимое центрального ПЗУ</string>
+    <string name="msg_romDialogHelp"><![CDATA[<html>
+    <h3>Мотивация</h3>
+    Когда схема, содержащая компонент ПЗУ, встраивается несколько раз, содержимое ПЗУ
+    обычно используется для каждого экземпляра этой цепи. При определенных обстоятельствах
+    однако может быть желательно, чтобы такая схема была встроена несколько раз,
+    но для каждого экземпляра используется разное содержимое ПЗУ. <br/>
+    Эта проблема возникает, например, если ПЗУ 74xx используется несколько раз, но с разными
+    содержимое памяти. <br/>
+    <h3>Функция</h3>
+    Таким образом, в этом месте можно определить содержимое для всех ПЗУ в схеме.
+    При создании имитационной модели каждое ПЗУ инициализируется сохраненным содержимым.
+    прямо в соответствующем ПЗУ. Затем проверяется, есть ли альтернативный контент.
+    определено здесь. В этом случае определенное здесь содержимое загружается в соответствующее ПЗУ.
+    <h3>Использование</h3>
+    Следует отметить, что для каждого ПЗУ требуется уникальное имя, используемое для идентификации ПЗУ.
+    Для этого используйте звездочку ('*') в метке ПЗУ. Затем звездочка заменяется полным
+    путь, построенный из имен встроенных схем.
+    Если схема содержит только один компонент ПЗУ, достаточно использовать только звездочку в качестве метки для него.
+    Все встроенные схемы должны быть названы так, чтобы можно было сформировать уникальное имя для каждого компонента ПЗУ.
+</html>]]></string>
+
+    <string name="msg_newRelease_N"><![CDATA[<html>
+    <h1>Новая версия {0} доступна</h1>
+    <p>Доступна новая версия симулятора.</p>
+    <p>В примечаниях к выпуску <a href="https://github.com/hneemann/[[name]]/releases/latest">release notes</a>
+        вы можете найти изменения и улучшения. </p>
+    <p>Здесь вы можете <a href="https://github.com/hneemann/[[name]]/releases/latest">download</a> новую версию.</p>
+</html>]]></string>
+
+    <string name="msg_expressionHelpTitle">Выражения</string>
+    <string name="msg_expressionHelp">&lt;p&gt;Для определения выражения вы можете использовать все наиболее распространенные обозначения:&lt;/p&gt;
+&lt;p&gt;
+    И: «&amp;», «&amp;&amp;», «*», «∧» &lt;br/&gt;
+    Или: «|», «||», «+», «∨», «#» &lt;br/&gt;
+    XOr: «^», «⊻» &lt;br/&gt;
+    Не: «!», «~», «¬»
+&lt;/p&gt;
+&lt;p&gt;Как обычно, AND предшествует OR и XOr.&lt;/p&gt;
+&lt;p&gt; Несколько выражений можно разделить знаком «,» или «;».
+    Если вы хотите назвать выражения, вы можете использовать
+    Команда let: «пусть U = A + B, пусть V = A * B». &lt;/p&gt;</string>
+    <string name="msg_testVectorHelpTitle">Тестовые векторы</string>
+    <string name="msg_testVectorHelp"><![CDATA[<html>
+    <head><style>pre { background-color: #E0E0E0;}</style></head>
+    <body>
+<h3>Общие сведения</h3>
+<p>Первая строка содержит имена входов и выходов, следующие — ожидаемые значения. «X» означает безразличное значение, «Z» — высокое сопротивление. Если используется «C», сначала задаются остальные значения, затем выполняется тактовый цикл и сравниваются результаты. Это удобно для проверки последовательностной логики. Строка, начинающаяся с «#», является комментарием.</p>
+
+<p>Тест для двухбитового счётчика может выглядеть так:</p>
+
+<pre>
+C Q1 Q0
+0 0  0
+C 0  1
+C 1  0
+C 1  1
+C 0  0
+</pre>
+
+<p>Тесты запускаются через меню «Моделирование → Выполнить тесты».</p>
+<p>
+Инструкция repeat([n]) помогает создавать много тестовых строк. Если строка начинается с repeat([n]), создаётся [n] строк. Переменная n используется для вычисления тестовых данных: repeat(16) создаёт 16 строк со значениями n от 0 до 15. Чтобы задать несколько битовых входов одним двоичным значением, используйте bits([bits], [value]): инструкция выделяет [bits] битов значения [value].</p>
+
+<p>Пример теста для четырёхбитового сумматора:</p>
+
+<pre>
+           C_i-1  A_3 A_2 A_1 A_0  B_3 B_2 B_1 B_0  C_i S_3 S_2 S_1 S_0
+repeat(256)  0    bits(4,n>>4)     bits(4,n)        bits(5,(n>>4)+(n&15))
+repeat(256)  1    bits(4,n>>4)     bits(4,n)        bits(5,(n>>4)+(n&15)+1)
+</pre>
+
+<p>Входы — перенос C_i-1 и восемь битов A_3–A_0 и B_3–B_0. Инструкция bits задаёт четыре входных бита и результат C_i, S_3–S_0. Первая строка проверяет C_i-1 = 0, следующая — C_i-1 = 1. Так создаются 512 тестовых строк, охватывающих все комбинации входных значений.</p>
+<p>Для повторения нескольких строк или создания вложенных циклов используйте loop. Предыдущий пример можно записать так:</p>
+
+<pre>
+           C_i-1  A_3 A_2 A_1 A_0  B_3 B_2 B_1 B_0  C_i S_3 S_2 S_1 S_0
+loop(a,16)
+  loop(b,16)
+             0    bits(4,a)        bits(4,b)        bits(5,a+b)
+             1    bits(4,a)        bits(4,b)        bits(5,a+b+1)
+  end loop
+end loop
+</pre>
+
+<p>Иногда тест должен учитывать начальное состояние схемы. Для этого в тесте доступны сигналы схемы. Например, счётчик с неопределённым начальным состоянием можно тактировать до заданного состояния:</p>
+
+<pre>C Q_3 Q_2 Q_1 Q_0
+
+# clock counter to 1111
+while(!(Q_3 & Q_2 & Q_1 & Q_0))
+C x x x x
+end while
+
+# start the test execution
+repeat(16) C bits(4,n)
+</pre>
+
+<p>Для генерации случайных чисел используется random([n]). Результат не меньше 0 и меньше [n]. Полная проверка 16-битового умножителя потребовала бы 2^32 входных комбинаций. Вместо неё можно выполнить регрессионный тест на 100000 случайных парах:</p>
+
+<pre>
+   A    B      Y
+loop(i,100000)
+  let a = random(1&lt;&lt;16);
+  let b = random(1&lt;&lt;16);
+  (a)  (b)   (a*b)
+end loop
+</pre>
+
+<p>Вход с поддержкой высокого сопротивления также можно проверять как выход. Чтобы прочитать и проверить его текущее значение, добавьте к имени сигнала суффикс «_out». Сам вход при этом должен находиться в состоянии высокого сопротивления («Z»).</p>
+
+<pre>OE CLK D D_out
+0   0  0 0
+0   C  1 1
+1   0  z 1
+0   C  0 0
+1   0  z 0
+</pre>
+
+<p>У схемы в этом тесте один вход «D», поддерживающий высокое сопротивление. Для проверки его значения доступен сигнал «D_out».</p>
+
+<p>Иногда для проверки нужно вычислить новый сигнал из сигналов схемы. Например, можно выделить один бит многобитовой шины и проверять его независимо от остальных. Такой сигнал создаётся прямо в тесте.</p>
+<p>Для этого используется инструкция declare:</p>
+<pre>A B Bit
+
+declare Bit = (Bus>>3)&1;
+
+0 0  0
+0 1  0
+1 0  1
+1 1  0
+</pre>
+<p>В примере бит с индексом 3 сигнала «Bus» выделяется в сигнал «Bit», доступный тесту. В самой схеме выхода «Bit» нет.</p>
+<h3>Функции</h3>
+<p>Доступные функции:
+<dl>
+<dt>signExt([bits],[value])</dt>
+<dd>Расширяет [value] до [bits] битов с сохранением знака.</dd>
+<dt>random([max])</dt>
+<dd>Возвращает случайное целое число. Верхняя граница задаётся параметром [max].</dd>
+<dt>ite([cond],[then],[else])</dt>
+<dd>Если условие [cond] истинно, возвращает [then], иначе — [else].</dd>
+</dl>
+</p>
+
+<h3>Процессоры</h3>
+<p>Перед проверкой процессора обычно требуется инициализация. Её можно выполнить в самом тесте: так несколько тестов одной схемы используют собственные начальные данные. Доступны три инструкции:</p>
+<ul>
+<li>Инструкция program перезаписывает память программ процессора. Вызов <pre>program(0x8000,0x2d11,0x8000,0x2f21)</pre> записывает четыре слова в начало памяти программ и обнуляет остальные слова.</li>.
+<li>Инструкция memory записывает значение в компонент ОЗУ:
+<pre>memory mem(3)=7;</pre>
+В примере значение 7 записывается в память с меткой «mem» по адресу 3.</li>
+<li> Инструкция init задаёт значение регистра по его метке.
+<pre>init R0=22;</pre>
+В примере регистр с меткой «R0» получает значение 22.</li>
+</ul>
+<p>Все инструкции инициализации выполняются один раз перед запуском теста независимо от их положения. Они должны находиться после строки заголовка с именами сигналов.</p>.
+</body></html>]]></string>
+
+    <string name="fsm_title">Конечный автомат</string>
+    <string name="fsm_noMove">Без перемещения</string>
+    <string name="fsm_moveTrans">Переходы</string>
+    <string name="fsm_moveStates">Переходы и состояния</string>
+    <string name="fsm_set_N">установить {0}</string>
+    <string name="menu_fsm">Конечный автомат</string>
+    <string name="menu_fsm_tt">Открыть редактор конечного автомата.</string>
+    <string name="menu_fsm_create">Создать</string>
+    <string name="menu_fsm_create_table">Таблица переходов состояний</string>
+    <string name="menu_fsm_create_counter">Создать счётчик</string>
+    <string name="menu_fsm_create_counter_N">Состояний: {0}</string>
+    <string name="menu_fsm_Help_tt">Справка по редактору конечного автомата.</string>
+    <string name="err_notDeterministic_N">Конечный автомат недетерминирован: {0}</string>
+    <string name="err_fsmNumberUsedTwice_N">Номер состояния {0} используется дважды.</string>
+    <string name="err_fsmNoInitialState">Нет начального состояния с номером 0.</string>
+    <string name="err_fsmState_N_notFound">Состояние ''{0}'' не найдено!</string>
+    <string name="err_fsmInvalidOutputAssignment_N">Неверное присваивание выходу (''{0}'')!</string>
+    <string name="err_fsmErrorInCondition_N">Ошибка в условии ''{0}''!</string>
+    <string name="key_stateNum">Номер состояния</string>
+    <string name="key_stateNum_tt">Число, представляющее это состояние.</string>
+    <string name="key_isInitialState">Начальное состояние</string>
+    <string name="key_isInitialState_tt">Сделать это состояние начальным.</string>
+    <string name="key_defaultsDC">Неопределённые значения считать DC</string>
+    <string name="key_defaultsDC_tt">Считать все неопределённые значения следующего состояния и выходов безразличными (Don't Care).</string>
+    <string name="key_stateValues">Выходы</string>
+    <string name="key_stateValues_tt">Задать выходы присваиваниями вида «A=1, B=0». Для многобитовых выходов используйте запись вида «A=101». В состояниях незаданные выходы равны 0. В переходах незаданные выходы сохраняют своё значение.</string>
+    <string name="key_transCond">Условие</string>
+    <string name="key_transCond_tt">Логическое выражение.</string>
+    <string name="key_transRad">Радиус</string>
+    <string name="key_transRad_tt">Радиус окружности на диаграмме.</string>
+    <string name="msg_fsmCantCreateTable">Не удалось создать таблицу переходов состояний.</string>
+    <string name="msg_fsmTransition">Переход</string>
+    <string name="msg_fsmState">Состояние</string>
+    <string name="msg_fsmNewState">Новое состояние</string>
+    <string name="msg_fsm_errorLoadingFile">Ошибка при загрузке файла!</string>
+    <string name="msg_fsm_errorStoringFile">Ошибка при сохранении файла!</string>
+    <string name="msg_fsmHelpTitle">Справка по редактору конечного автомата</string>
+
+    <string name="msg_fsm_optimizer">Оптимизация конечного автомата</string>
+    <string name="menu_fsm_optimize_state_numbers">Оптимизировать номера состояний</string>
+    <string name="menu_fsm_optimize_state_numbers_tt">Подобрать номера состояний для наиболее простой реализации. Время работы быстро растёт со сложностью автомата: O(n!).</string>
+    <string name="menu_fsm_optimize_state_numbers_err">Ошибка при оптимизации!</string>
+    <string name="menu_fsm_oneBitPerState">Один бит на состояние</string>
+    <string name="menu_fsm_oneBitPerState_tt">Каждое состояние представлено отдельным битом или триггером.</string>
+    <string name="msg_fsm_optimizer_initial">Начальная сложность:</string>
+    <string name="msg_fsm_optimizer_best">Лучший результат:</string>
+
+    <string name="msg_fsmHelp"><![CDATA[<html><head></head>
+<body>
+  <h3>Управление мышью</h3>
+  <dl>
+    <dt>Создать состояние:</dt>
+    <dd>Щёлкните правой кнопкой мыши на свободном месте.</dd>
+    <dt>Создать переход:</dt>
+    <dd>Нажмите правую кнопку на исходном состоянии и перетащите указатель к целевому состоянию.</dd>
+    <dt>Удалить состояние или переход:</dt>
+    <dd>Наведите указатель на объект и нажмите [Del].</dd>
+    <dt>Переместить состояние или переход:</dt>
+    <dd>Перетащите объект левой кнопкой мыши.</dd>
+    <dt>Редактировать состояние или переход:</dt>
+    <dd>Щёлкните правой кнопкой мыши на состоянии или переходе.</dd>
+  </dl>
+  <h3>Автоматическое расположение</h3>
+  <dl>
+    <dt>Без перемещения:</dt>
+    <dd>Автоматическое расположение отключено.</dd>
+    <dt>Переходы:</dt>
+    <dd>Стрелки переходов перемещаются, чтобы избежать наложений.</dd>
+    <dt>Переходы и состояния</dt>
+    <dd>Состояния и стрелки переходов перемещаются для равномерного расположения диаграммы.</dd>
+  </dl>
+  <h3>Правила переходов</h3>
+  Безусловный переход выполняется, только если не сработало ни одно условие других переходов из этого состояния. Поэтому у одного состояния могут быть условные переходы и один безусловный: последний задаёт поведение по умолчанию. Если безусловного перехода нет и ни одно условие не выполнено, автомат остаётся в текущем состоянии.
+</body></html>]]></string>
+
+    <string name="msg_graphHelpTitle">График измерений</string>
+    <string name="msg_graphHelp"><![CDATA[<html><body>
+        <h3>Что показывает график?</h3>
+        По оси X отображается счётчик изменений состояния схемы. При каждом изменении счётчик увеличивается, и новое состояние добавляется на график.<br/>
+        Это похоже на логический анализатор, который сохраняет данные только при изменении сигналов. По такому графику нельзя определить, сколько времени прошло между двумя изменениями.<br/>
+        Симуляция вычисляет изменения состояния до полной стабилизации схемы. Затем применяется следующее изменение и снова вычисляется его результат. Счётчик этих изменений отображается по оси X.<br/>
+        По этой причине схема не может быть разогнана сверх предела: результат заднего фронта тактового сигнала вычисляется только после стабилизации схемы от предыдущего переднего фронта.
+        </body></html>]]></string>
+
+    <string name="tutorial">Обучение</string>
+    <string name="tutorial1">Это короткое обучение поможет собрать первую простую схему.
+
+Добавьте вход из меню «Компоненты → Ввод-вывод».</string>
+    <string name="tutorial2">Добавьте второй вход. Можно нажать значок входа на панели инструментов.
+
+Разместите его чуть ниже первого. Чтобы перемещать схему, удерживайте правую кнопку мыши. Щелчок по компоненту позволяет переместить его.</string>
+    <string name="tutorial3">Добавьте элемент «Исключающее ИЛИ» из меню «Компоненты → Логика». Разместите его справа от входов, оставив место для проводов.</string>
+    <string name="tutorial4">Добавьте выход и разместите его справа от элемента «Исключающее ИЛИ».</string>
+    <string name="tutorial5">Соедините компоненты проводами.
+
+Щёлкните красную точку первого входа, затем синюю точку на входе элемента «Исключающее ИЛИ». При рисовании провода кнопку мыши удерживать не нужно.</string>
+    <string name="tutorial6">Соедините красную точку второго входа со второй синей точкой элемента «Исключающее ИЛИ», а красную точку этого элемента — с синей точкой выхода.
+
+Щелчок по холсту добавляет изгиб провода. Правая кнопка отменяет рисование; в macOS используйте Control + щелчок.</string>
+    <string name="tutorial7">Первая схема готова. Нажмите кнопку запуска на панели инструментов. При наведении указателя на значки появляются подсказки.</string>
+    <string name="tutorial8">Моделирование запущено. Щёлкайте по входам, чтобы переключать их значения.</string>
+    <string name="tutorial9">Чтобы остановить моделирование, нажмите кнопку остановки на панели инструментов.</string>
+    <string name="tutorial10">Задайте метки входов и выходов.
+
+Щёлкните правой кнопкой по входу, чтобы открыть окно атрибутов. В macOS используйте Control + щелчок. В этом окне можно задать имя входа.</string>
+    <string name="tutorial11">Задайте метки всем входам и выходам.</string>
+    <string name="tutorialUniqueIdents">Каждый вход и выход должен иметь уникальное имя.</string>
+    <string name="tutorialNotNeeded">Пропустить обучение</string>
+    <string name="msg_componentShortcutsHint">A–Z, 0–9, F1–F12 или ENTER; пустое поле отключает сочетание.</string>
+    <string name="msg_invalidComponentShortcuts">Исправьте выделенные сочетания. Используйте допустимые уникальные сочетания, которые не заняты редактором.</string>
+    <string name="msg_componentShortcutsSaved">Горячие клавиши компонентов сохранены.</string>
+</resources>

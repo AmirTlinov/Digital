@@ -1,98 +1,94 @@
 package de.tobihxd;
 
+import de.neemann.digital.lang.Lang;
+import de.neemann.gui.ErrorMessage;
+
 import javax.swing.*;
 import java.awt.*;
+import java.io.IOException;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Set;
 
-public class KeyBindSettingsPanel extends JPanel {
-    private final Map<String, JTextField> fieldMap = new LinkedHashMap<>();
-    private final Map<String, JCheckBox> shiftMap = new LinkedHashMap<>();
-
+/** Edits the component shortcuts owned by KeybindManager. */
+public final class KeyBindSettingsPanel extends JPanel {
+    private final Map<String, JTextField> fields = new LinkedHashMap<>();
+    private final Map<String, JCheckBox> shiftBoxes = new LinkedHashMap<>();
     private final KeybindManager manager = KeybindManager.getInstance();
 
     public KeyBindSettingsPanel() {
         setLayout(new BorderLayout(10, 10));
-        initUI();
-    }
-
-    /** Erstellt UI */
-    private void initUI() {
-        JPanel listPanel = new JPanel(new GridBagLayout());
+        JPanel list = new JPanel(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.insets = new Insets(4, 8, 4, 8);
         gbc.anchor = GridBagConstraints.WEST;
         gbc.fill = GridBagConstraints.HORIZONTAL;
-        gbc.weightx = 1.0;
 
         int row = 0;
         for (Map.Entry<String, String> entry : manager.getKeyBinds().entrySet()) {
-            JLabel label = new JLabel(entry.getKey());
             String value = entry.getValue();
-            boolean shiftUsed = value.startsWith("Shift+");
-            String keyOnly = shiftUsed ? value.substring(6) : value;
+            boolean shift = value.startsWith("Shift+");
+            JTextField field = new JTextField(shift ? value.substring(6) : value, 6);
+            JLabel label = new JLabel(Lang.get("elem_" + entry.getKey()));
+            label.setLabelFor(field);
+            field.getAccessibleContext().setAccessibleName(label.getText());
+            JCheckBox shiftBox = new JCheckBox("Shift", shift);
+            shiftBox.getAccessibleContext().setAccessibleName(label.getText() + " + Shift");
+            fields.put(entry.getKey(), field);
+            shiftBoxes.put(entry.getKey(), shiftBox);
 
-            JTextField field = new JTextField(keyOnly, 10);
-            JCheckBox shiftBox = new JCheckBox("Shift", shiftUsed);
-
-            fieldMap.put(entry.getKey(), field);
-            shiftMap.put(entry.getKey(), shiftBox);
-
+            gbc.gridy = row++;
             gbc.gridx = 0;
-            gbc.gridy = row;
-            listPanel.add(label, gbc);
-
+            gbc.weightx = 1;
+            list.add(label, gbc);
             gbc.gridx = 1;
-            listPanel.add(field, gbc);
-
+            gbc.weightx = 0;
+            list.add(field, gbc);
             gbc.gridx = 2;
-            listPanel.add(shiftBox, gbc);
-
-            row++;
+            list.add(shiftBox, gbc);
         }
 
-        JButton saveButton = new JButton("Speichern");
-        saveButton.addActionListener(e -> saveKeybinds());
-
-        JScrollPane scrollPane = new JScrollPane(listPanel);
+        JScrollPane scrollPane = new JScrollPane(list);
         scrollPane.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-        scrollPane.setPreferredSize(new Dimension(400, 300));
-        scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
-        scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-
+        scrollPane.setPreferredSize(new Dimension(460, 360));
         add(scrollPane, BorderLayout.CENTER);
-        add(saveButton, BorderLayout.SOUTH);
+        JLabel hint = new JLabel(Lang.get("msg_componentShortcutsHint"));
+        hint.setBorder(BorderFactory.createEmptyBorder(4, 8, 4, 8));
+        add(hint, BorderLayout.NORTH);
+        JButton save = new JButton(Lang.get("btn_save"));
+        save.addActionListener(e -> saveKeybinds());
+        add(save, BorderLayout.SOUTH);
     }
 
-    /** Speichert Keybinds mit Validierung über den Manager */
     private void saveKeybinds() {
-        final LinkedHashMap<String, String> keyBinds = new LinkedHashMap<>(manager.getKeyBinds());
-        boolean allValid = true;
-
-        for (Map.Entry<String, JTextField> entry : fieldMap.entrySet()) {
-            String key = entry.getValue().getText().trim().toUpperCase();
-            JCheckBox shiftBox = shiftMap.get(entry.getKey());
-
-            if (!manager.isValidKey(key)) {
-                allValid = false;
-                entry.getValue().setBackground(Color.PINK);
-            } else {
-                entry.getValue().setBackground(Color.WHITE);
-                String finalKey = (shiftBox.isSelected() ? "Shift+" : "") + key;
-                if (manager.isValidKey(key)) {
-                    keyBinds.put(entry.getKey(), finalKey);
-                }
-            }
+        LinkedHashMap<String, String> bindings = new LinkedHashMap<>();
+        for (Map.Entry<String, JTextField> entry : fields.entrySet()) {
+            String key = entry.getValue().getText().trim();
+            bindings.put(entry.getKey(), key.isEmpty() ? ""
+                    : (shiftBoxes.get(entry.getKey()).isSelected() ? "Shift+" : "") + key);
+        }
+        Set<String> invalid = manager.getInvalidKeyBinds(bindings);
+        JTextField firstInvalid = null;
+        for (Map.Entry<String, JTextField> entry : fields.entrySet()) {
+            boolean error = invalid.contains(entry.getKey());
+            entry.getValue().putClientProperty("JComponent.outline", error ? "error" : null);
+            if (error && firstInvalid == null)
+                firstInvalid = entry.getValue();
+        }
+        if (firstInvalid != null) {
+            JOptionPane.showMessageDialog(this, Lang.get("msg_invalidComponentShortcuts"),
+                    Lang.get("error"), JOptionPane.ERROR_MESSAGE);
+            firstInvalid.requestFocusInWindow();
+            firstInvalid.selectAll();
+            return;
         }
 
-        if (allValid) {
-            manager.save(keyBinds);
-
-            JOptionPane.showMessageDialog(this, "Keybinds gespeichert!");
-        } else {
-            JOptionPane.showMessageDialog(this,
-                    "Ungültige Key(s) gefunden. Bitte korrigiere die markierten Felder.",
-                    "Fehler", JOptionPane.ERROR_MESSAGE);
+        try {
+            manager.save(bindings);
+            JOptionPane.showMessageDialog(this, Lang.get("msg_componentShortcutsSaved"),
+                    Lang.get("attr_panel_keybinds"), JOptionPane.INFORMATION_MESSAGE);
+        } catch (IOException e) {
+            new ErrorMessage(Lang.get("msg_errorWritingFile")).addCause(e).show(this);
         }
     }
 }

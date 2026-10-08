@@ -40,8 +40,6 @@ public class LibraryNode implements Iterable<LibraryNode> {
     private ElementTypeDescription description;
     private String toolTipText;
     private ImageIcon icon;
-    private String key = null;
-    private String modifier = null;
     private ElementLibrary library;
     private LibraryNode parent;
     private boolean unique;
@@ -110,64 +108,9 @@ public class LibraryNode implements Iterable<LibraryNode> {
         return this;
     }
 
-    public LibraryNode add(LibraryNode node, String key) {
-        boolean shiftUsed = false;
-        if (key != null)
-            shiftUsed = key.startsWith("Shift+");
-        if (shiftUsed)
-            node.modifier = "SHIFT";
-        String keyOnly = shiftUsed ? key.substring(6) : key;
-        children.add(node);
-        node.key = keyOnly;
-        node.parent = this;
-        node.setLibrary(library);
-        return this;
-    }
-
     LibraryNode add(ElementTypeDescription node) {
         add(new LibraryNode(node));
         return this;
-    }
-
-    public LibraryNode add(ElementTypeDescription node, String key) {
-        add(new LibraryNode(node), key);
-        return this;
-    }
-
-    /**
-     * Checks if the node as a key set
-     * @return true if a key is set
-     */
-    public boolean hasKey() {
-        return this.key != null;
-    }
-
-    /**
-     * Gets the key of the node
-     * @return The key as a string
-     */
-    public String getKey() {
-        return this.key;
-    }
-
-    public void setKey(String key) {
-        this.key = key;
-    }
-
-    /**
-     * Check if the node a s a modifier set
-     * @return true if a modifier is set
-     */
-    public boolean hasModifier() {
-        return this.modifier != null;
-    }
-
-    /**
-     * Gets the modifier of the node
-     * @return The modifier as a string
-     */
-    public String getModifier() {
-        return this.modifier;
     }
 
     /**

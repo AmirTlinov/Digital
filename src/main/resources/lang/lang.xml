@@ -21,6 +21,7 @@ modified keys.
 
 -->
 <languages>
+    <lang name="ru" display="Русский" file="Russian"/>
     <lang name="en" display="English" file="English"/>
     <lang name="de" display="Deutsch" file="Deutsch"/>
     <lang name="es" display="Español" file="Espanol"/>

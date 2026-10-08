@@ -13,10 +13,16 @@ import de.neemann.digital.gui.components.CircuitComponent;
 import de.neemann.digital.lang.Lang;
 import de.neemann.gui.ErrorMessage;
 import de.neemann.gui.ToolTipAction;
+import de.tobihxd.KeybindManager;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.LinkedHashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * The LibrarySelector is responsible for building the menu used to select items for adding them to the circuit.
@@ -24,10 +30,12 @@ import java.io.IOException;
 public class LibrarySelector implements LibraryListener {
     private final ElementLibrary library;
     private final ShapeFactory shapeFactory;
+    private final KeybindManager keybinds;
+    private final List<InsertAction> insertActions = new ArrayList<>();
     private JMenu componentsMenu;
     private InsertHistory insertHistory;
     private CircuitComponent circuitComponent;
-    private MainGui main;
+    private final MainGui main;
 
     /**
      * Creates a new library selector.
@@ -36,11 +44,13 @@ public class LibrarySelector implements LibraryListener {
      * @param library      the library to select elements from
      * @param shapeFactory The shape factory
      * @param main         The main method creating this object
+     * @param keybinds     The owner of the component shortcut settings
      */
-    public LibrarySelector(ElementLibrary library, ShapeFactory shapeFactory, MainGui main) {
+    public LibrarySelector(ElementLibrary library, ShapeFactory shapeFactory, MainGui main, KeybindManager keybinds) {
         this.main = main;
         this.library = library;
         this.shapeFactory = shapeFactory;
+        this.keybinds = keybinds;
     }
 
     /**
@@ -57,16 +67,22 @@ public class LibrarySelector implements LibraryListener {
         this.circuitComponent = circuitComponent;
         componentsMenu = new JMenu(Lang.get("menu_elements"));
         libraryChanged(null);
+        keybinds.addSelector(this);
 
         return componentsMenu;
     }
 
     @Override
     public void libraryChanged(LibraryNode node) {
+        for (InsertAction action : insertActions)
+            action.setComponentShortcut(null);
+        insertActions.clear();
         componentsMenu.removeAll();
 
         for (LibraryNode n : library.getRoot())
             addComponents(componentsMenu, n);
+
+        updateKeyBinds();
 
         if (library.getCustomNode() != null) {
             JMenuItem m = componentsMenu.getItem(componentsMenu.getItemCount() - 1);
@@ -93,21 +109,7 @@ public class LibrarySelector implements LibraryListener {
 
                 JMenuItem jMenuItem = insertAction.createJMenuItem();
 
-                if (node.hasKey()) {
-                    if (node.hasModifier()) {
-                        String modifier = node.getModifier();
-
-                        switch (modifier) {
-                            case "SHIFT" ->
-                                    insertAction.setAcceleratorSHIFTplus(node.getKey()).enableAcceleratorIn(main.getCircuitComponent());
-                            case "CTRL" ->
-                                    insertAction.setAcceleratorCTRLplus(node.getKey()).enableAcceleratorIn(main.getCircuitComponent());
-                        }
-                    } else {
-                        insertAction.setAccelerator(node.getKey()).enableAcceleratorIn(main.getCircuitComponent());
-                    }
-                }
-
+                insertActions.add(insertAction);
                 parts.add(jMenuItem);
             }
         } else {
@@ -118,11 +120,58 @@ public class LibrarySelector implements LibraryListener {
         }
     }
 
-    public JMenu getComponentsMenu() {
-        return componentsMenu;
+    /** Applies the current settings to the existing actions, using element identity. */
+    public void updateKeyBinds() {
+        for (InsertAction action : insertActions)
+            action.setComponentShortcut(null);
+        Map<String, String> bindings = keybinds.getKeyBinds();
+        Set<String> conflicts = getConflictingKeyBinds(bindings);
+        for (InsertAction action : insertActions) {
+            if (!action.isCustom() && !conflicts.contains(action.getName()))
+                action.setComponentShortcut(KeybindManager.parseKeyStroke(bindings.get(action.getName())));
+        }
     }
 
-    public MainGui getMain() {
-        return main;
+    /** Finds collisions with shortcuts owned by the editor or its menus. */
+    public Set<String> getConflictingKeyBinds(Map<String, String> bindings) {
+        Set<KeyStroke> reserved = new LinkedHashSet<>();
+        KeyStroke[] strokes = circuitComponent.getInputMap().allKeys();
+        if (strokes != null) {
+            for (KeyStroke stroke : strokes) {
+                Object action = circuitComponent.getInputMap().get(stroke);
+                if (!insertActions.contains(action))
+                    reserved.add(stroke);
+            }
+        }
+        if (main != null && main.getJMenuBar() != null) {
+            for (int i = 0; i < main.getJMenuBar().getMenuCount(); i++)
+                addReservedMenuShortcuts(main.getJMenuBar().getMenu(i), reserved);
+        }
+        Set<String> conflicts = new LinkedHashSet<>();
+        for (Map.Entry<String, String> binding : bindings.entrySet()) {
+            if (reserved.contains(KeybindManager.parseKeyStroke(binding.getValue())))
+                conflicts.add(binding.getKey());
+        }
+        return conflicts;
+    }
+
+    private void addReservedMenuShortcuts(JMenu menu, Set<KeyStroke> reserved) {
+        if (menu == null || menu == componentsMenu)
+            return;
+        for (int i = 0; i < menu.getItemCount(); i++) {
+            JMenuItem item = menu.getItem(i);
+            if (item instanceof JMenu)
+                addReservedMenuShortcuts((JMenu) item, reserved);
+            else if (item != null && item.getAccelerator() != null)
+                reserved.add(item.getAccelerator());
+        }
+    }
+
+    /** Releases the closed editor's shortcut registrations. */
+    public void dispose() {
+        keybinds.removeSelector(this);
+        for (InsertAction action : insertActions)
+            action.setComponentShortcut(null);
+        insertActions.clear();
     }
 }

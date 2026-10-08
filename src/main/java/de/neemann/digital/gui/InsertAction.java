@@ -17,6 +17,7 @@ import de.neemann.gui.ToolTipAction;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
 import java.io.IOException;
 
 /**
@@ -27,6 +28,7 @@ public final class InsertAction extends ToolTipAction {
     private final CircuitComponent circuitComponent;
     private final ShapeFactory shapeFactory;
     private LibraryNode node;
+    private KeyStroke componentShortcut;
 
     /**
      * Creates a new instance
@@ -102,6 +104,19 @@ public final class InsertAction extends ToolTipAction {
         return node;
     }
 
+    /** Updates this insertion shortcut without retaining the previous input mapping. */
+    public void setComponentShortcut(KeyStroke shortcut) {
+        if (componentShortcut != null && circuitComponent.getInputMap().get(componentShortcut) == this)
+            circuitComponent.getInputMap().remove(componentShortcut);
+        circuitComponent.getActionMap().remove(this);
+        componentShortcut = shortcut;
+        putValue(Action.ACCELERATOR_KEY, shortcut);
+        if (shortcut != null) {
+            circuitComponent.getInputMap().put(shortcut, this);
+            circuitComponent.getActionMap().put(this, this);
+        }
+    }
+
 
     /**
      * Implements a lazy loading of the tooltips.
@@ -112,14 +127,20 @@ public final class InsertAction extends ToolTipAction {
      */
     @Override
     public JMenuItem createJMenuItem() {
-        JMenuItem i = new JMenuItem(node.getTranslatedName(), getIcon()) {
+        JMenuItem i = new JMenuItem(InsertAction.this) {
             @Override
             public String getToolTipText() {
                 return node.getToolTipText();
             }
+
+            @Override
+            protected boolean processKeyBinding(KeyStroke stroke, KeyEvent event, int condition, boolean pressed) {
+                // Plain component shortcuts belong to the canvas; text fields keep their keys.
+                if (stroke.equals(getAccelerator()) && !circuitComponent.isFocusOwner())
+                    return false;
+                return super.processKeyBinding(stroke, event, condition, pressed);
+            }
         };
-        i.addActionListener(InsertAction.this);
-        i.setEnabled(node.isUnique());
         ToolTipManager.sharedInstance().registerComponent(i);
         return i;
     }

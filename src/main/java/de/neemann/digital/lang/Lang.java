@@ -9,6 +9,7 @@ import de.neemann.gui.language.Bundle;
 import de.neemann.gui.language.Language;
 import de.neemann.gui.language.Resources;
 
+import javax.swing.UIManager;
 import java.text.MessageFormat;
 import java.util.Arrays;
 import java.util.Locale;
@@ -69,6 +70,14 @@ public final class Lang {
      */
     public static Language currentLanguage() {
         return InstanceHolder.INSTANCE.currentLanguage;
+    }
+
+    /**
+     * Adds Russian translations for built-in Swing controls after the look and feel is installed.
+     */
+    public static void initializeSwingResources() {
+        if ("ru".equals(currentLanguage().getName()))
+            UIManager.getLookAndFeelDefaults().addResourceBundle("lang.swing");
     }
 
     /**

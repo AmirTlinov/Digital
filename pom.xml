@@ -6,9 +6,9 @@
 
     <groupId>de.neemann.digital</groupId>
     <artifactId>digital</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.2.0</version>
     <name>Digital</name>
-    <url>https://github.com/hneemann/Digital</url>
+    <url>https://github.com/AmirTlinov/Digital</url>
 
     <properties>
         <maven.build.timestamp.format>yyyy-MM-dd HH:mm</maven.build.timestamp.format>
@@ -90,8 +90,7 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.11.0</version>
                 <configuration>
-                    <source>20</source>
-                    <target>20</target>
+                    <release>21</release>
                     <compilerArgs>
                         <!--arg>-g:none</arg-->
                     </compilerArgs>
@@ -137,11 +136,11 @@
                             <addClasspath>true</addClasspath>
                             <mainClass>de.neemann.digital.Main</mainClass>
                         </manifest>
-<!--                        <manifestEntries>-->
-<!--                            <Build-SCM-Revision>${git.commit.id.describe}</Build-SCM-Revision>-->
-<!--                            <Build-Time>${buildTimestamp}</Build-Time>-->
-<!--                            <SplashScreen-Image>icons/splash.png</SplashScreen-Image>-->
-<!--                        </manifestEntries>-->
+                        <manifestEntries>
+                            <Implementation-Version>${project.version}</Implementation-Version>
+                            <Build-SCM-Revision>${project.version} (${git.commit.id.abbrev})</Build-SCM-Revision>
+                            <Build-Time>${buildTimestamp}</Build-Time>
+                        </manifestEntries>
                     </archive>
                 </configuration>
             </plugin>
@@ -202,11 +201,11 @@
                             <addClasspath>true</addClasspath>
                             <mainClass>de.neemann.digital.Main</mainClass>
                         </manifest>
-<!--                        <manifestEntries>-->
-<!--                            <Build-SCM-Revision>${git.commit.id.describe}</Build-SCM-Revision>-->
-<!--                            <Build-Time>${buildTimestamp}</Build-Time>-->
-<!--                            <SplashScreen-Image>icons/splash.png</SplashScreen-Image>-->
-<!--                        </manifestEntries>-->
+                        <manifestEntries>
+                            <Implementation-Version>${project.version}</Implementation-Version>
+                            <Build-SCM-Revision>${project.version} (${git.commit.id.abbrev})</Build-SCM-Revision>
+                            <Build-Time>${buildTimestamp}</Build-Time>
+                        </manifestEntries>
                     </archive>
                     <appendAssemblyId>false</appendAssemblyId>
                 </configuration>
@@ -235,7 +234,7 @@
             <plugin>
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
-                <version>0.8.4</version>
+                <version>0.8.12</version>
                 <executions>
                     <execution>
                         <id>default-prepare-agent</id>

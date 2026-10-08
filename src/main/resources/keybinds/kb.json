@@ -12,14 +12,13 @@
   "Clock": "C",
   "Button": "B",
   "PullUp": "Shift+P",
-  "PullDown": "P",
-  "RS_FF": "R",
+  "PullDown": "",
+  "RS_FF": "",
   "RS_FF_AS": "Shift+R",
   "JK_FF": "J",
   "JK_FF_AS": "Shift+J",
-  "D_FF": "D",
+  "D_FF": "",
   "D_FF_AS": "Shift+D",
-  "T_FF": "T",
-  "Monoflop": "M",
-  "Run": "Shift+ENTER"
+  "T_FF": "",
+  "Monoflop": "M"
 }

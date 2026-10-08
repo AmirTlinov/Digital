@@ -2,158 +2,170 @@ package de.tobihxd;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import de.neemann.digital.draw.library.ElementLibrary;
-import de.neemann.digital.gui.InsertAction;
 import de.neemann.digital.gui.LibrarySelector;
-import de.neemann.digital.lang.Lang;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-import javax.swing.*;
-import java.awt.event.ActionListener;
+import javax.swing.KeyStroke;
 import java.awt.event.InputEvent;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.OutputStream;
-import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.StandardCopyOption;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
+import java.util.Locale;
 import java.util.Map;
+import java.util.Set;
+import java.util.regex.Pattern;
 
-public class KeybindManager {
-    private static KeybindManager instance;
-    private LinkedHashMap<String, String> keyBinds = new LinkedHashMap<>();
+/** Owns the saved shortcuts for inserting built-in components. */
+public final class KeybindManager {
+    private static final Logger LOGGER = LoggerFactory.getLogger(KeybindManager.class);
+    private static final Pattern KEY_PATTERN = Pattern.compile("(Shift\\+)?([A-Z0-9]|F[1-9]|F1[0-2]|ENTER)");
+
+    private static class InstanceHolder {
+        private static final KeybindManager INSTANCE = new KeybindManager(localFile());
+    }
+
     private final ObjectMapper mapper = new ObjectMapper();
-    private ElementLibrary library;
-    private Path localFile;
+    private final Path localFile;
+    private final LinkedHashMap<String, String> defaults;
+    private final Set<LibrarySelector> selectors = new LinkedHashSet<>();
+    private LinkedHashMap<String, String> keyBinds;
 
-    private KeybindManager() {
-        setupLocalFile();
+    KeybindManager(Path localFile) {
+        this.localFile = localFile;
+        try (InputStream in = getClass().getClassLoader().getResourceAsStream("keybinds/kb.json")) {
+            if (in == null)
+                throw new IllegalStateException("Missing component shortcuts");
+            defaults = mapper.readValue(in, new TypeReference<>() { });
+        } catch (IOException e) {
+            throw new IllegalStateException("Could not read component shortcuts", e);
+        }
         load();
     }
-    private KeybindManager(ElementLibrary library){
-        this.library = library;
-        setupLocalFile();
-        load();
-    }
 
-    public static void createInstance(ElementLibrary library){
-        instance = new KeybindManager(library);
-    }
     public static KeybindManager getInstance() {
-        if (instance == null) {
-            instance = new KeybindManager();
-        }
-        return instance;
+        return InstanceHolder.INSTANCE;
     }
 
-    private void setupLocalFile() {
-        String os = System.getProperty("os.name").toLowerCase();
-        if (os.contains("win")) {
-            localFile = Path.of(System.getenv("APPDATA"), "Digital", "keybinds", "kb.json");
-        } else {
-            localFile = Path.of(System.getProperty("user.home"), ".digital", "keybinds", "kb.json");
-        }
-        try {
-            Files.createDirectories(localFile.getParent());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    private static Path localFile() {
+        String appData = System.getenv("APPDATA");
+        if (System.getProperty("os.name").toLowerCase(Locale.ROOT).contains("win") && appData != null)
+            return Path.of(appData, "Digital", "keybinds", "kb.json");
+        return Path.of(System.getProperty("user.home"), ".digital", "keybinds", "kb.json");
     }
 
-    public void load() {
-        try {
-            if (Files.exists(localFile)) {
-                try (InputStream in = Files.newInputStream(localFile)) {
-                    Map<String, String> loaded = mapper.readValue(in, new TypeReference<>() {
-                    });
-                    keyBinds.clear();
-                    keyBinds.putAll(loaded);
-                    return;
+    private void load() {
+        keyBinds = new LinkedHashMap<>(defaults);
+        if (!Files.exists(localFile))
+            return;
+
+        try (InputStream in = Files.newInputStream(localFile)) {
+            Map<String, String> saved = mapper.readValue(in, new TypeReference<>() { });
+            LinkedHashMap<String, String> loaded = new LinkedHashMap<>(defaults);
+            if (saved != null) {
+                for (String name : defaults.keySet()) {
+                    if (saved.containsKey(name) && isValidKey(saved.get(name)))
+                        loaded.put(name, normalizeKey(saved.get(name)));
                 }
             }
-
-            URL resource = getClass().getClassLoader().getResource("keybinds/kb.json");
-            if (resource != null) {
-                try (InputStream in = getClass().getClassLoader().getResourceAsStream("keybinds/kb.json")) {
-                    if (in != null) {
-                        Map<String, String> defaults = mapper.readValue(in, new TypeReference<>() {
-                        });
-                        keyBinds.clear();
-                        keyBinds.putAll(defaults);
-                        save(null); // lokale Kopie anlegen
-                    }
-                }
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void save(LinkedHashMap<String, String> newKeyBinds) {
-        try (OutputStream out = Files.newOutputStream(localFile)) {
-            if (keyBinds != null) {
-                updateLibraryKeybinds(newKeyBinds);
-                keyBinds = newKeyBinds;
-            }
-            mapper.writerWithDefaultPrettyPrinter().writeValue(out, keyBinds);
+            if (getInvalidKeyBinds(loaded).isEmpty())
+                keyBinds = loaded;
+            else
+                LOGGER.warn("Ignoring conflicting component shortcuts in {}", localFile);
         } catch (IOException e) {
-            e.printStackTrace();
+            LOGGER.warn("Could not read component shortcuts from {}; using defaults: {}", localFile, e.getMessage());
         }
     }
 
-    private void updateLibraryKeybinds(LinkedHashMap<String, String> newKeyBinds) {
-        for (Map.Entry<String, String> entry : keyBinds.entrySet()) {
-            String name = Lang.get("elem_"+entry.getKey());
-            String newKey = newKeyBinds.get(entry.getKey());
-            boolean shiftUsed = newKey.startsWith("Shift+");
-            if (shiftUsed)
-                newKey = newKey.substring(6);
-            KeyStroke keyStroke = KeyStroke.getKeyStroke(newKey);
-            keyStroke = shiftUsed ? KeyStroke.getKeyStroke(keyStroke.getKeyCode(), InputEvent.SHIFT_DOWN_MASK): keyStroke;
+    /** Persists a complete valid settings snapshot before updating any open editor. */
+    public void save(Map<String, String> newKeyBinds) throws IOException {
+        if (newKeyBinds == null || !newKeyBinds.keySet().equals(defaults.keySet())
+                || !getInvalidKeyBinds(newKeyBinds).isEmpty())
+            throw new IllegalArgumentException("Invalid component shortcuts");
 
-            LibrarySelector selector = library.getLibraryListener();
-            if (selector == null)
-                return;
-            JMenu componentsMenu = selector.getComponentsMenu();
-            JMenuItem menuComponent = getJMenuByName(name, componentsMenu);
-            if (menuComponent == null)
-                return;
-            KeyStroke oldKey = KeyStroke.getKeyStroke(entry.getValue());
-            ActionListener[] actions = menuComponent.getListeners(ActionListener.class);
-            for (ActionListener action : actions) {
-                selector.getMain().getCircuitComponent().getInputMap().remove(oldKey);
-                ((InsertAction) action).setAccelerator(keyStroke).enableAcceleratorIn(selector.getMain().getCircuitComponent());
-            }
-        }
-    }
+        LinkedHashMap<String, String> normalized = new LinkedHashMap<>();
+        for (String name : defaults.keySet())
+            normalized.put(name, normalizeKey(newKeyBinds.get(name)));
 
-    private JMenuItem getJMenuByName(String name, JMenu component){
-        JMenuItem result = null;
-        System.out.println(component.getText());
-        for (int i = 0; i < component.getItemCount(); i++) {
-            JMenuItem instance = component.getItem(i);
-            if (instance.getText().equals(name))
-                return instance;
-            if (instance instanceof JMenu sub) {
-                JMenuItem tempResult = getJMenuByName(name, sub);
-                if (tempResult != null)
-                    return tempResult;
-            }
+        Files.createDirectories(localFile.getParent());
+        Path pending = Files.createTempFile(localFile.getParent(), "kb-", ".json");
+        try {
+            mapper.writerWithDefaultPrettyPrinter().writeValue(pending.toFile(), normalized);
+            Files.move(pending, localFile, StandardCopyOption.ATOMIC_MOVE, StandardCopyOption.REPLACE_EXISTING);
+        } finally {
+            Files.deleteIfExists(pending);
         }
-        return null;
+
+        keyBinds = normalized;
+        for (LibrarySelector selector : selectors)
+            selector.updateKeyBinds();
     }
 
     public LinkedHashMap<String, String> getKeyBinds() {
-        return keyBinds;
+        return new LinkedHashMap<>(keyBinds);
     }
 
-    public void setKeyBind(String action, String key) {
-        if (isValidKey(key)) {
-            keyBinds.put(action, key);
+    /** Identifies invalid, duplicate, or reserved combinations by component identity. */
+    public Set<String> getInvalidKeyBinds(Map<String, String> bindings) {
+        Set<String> invalid = new LinkedHashSet<>();
+        Map<KeyStroke, String> used = new HashMap<>();
+        for (String name : defaults.keySet()) {
+            String key = bindings.get(name);
+            if (!isValidKey(key)) {
+                invalid.add(name);
+                continue;
+            }
+            KeyStroke stroke = parseKeyStroke(key);
+            if (stroke != null) {
+                String previous = used.putIfAbsent(stroke, name);
+                if (previous != null) {
+                    invalid.add(previous);
+                    invalid.add(name);
+                }
+            }
         }
+        for (LibrarySelector selector : selectors)
+            invalid.addAll(selector.getConflictingKeyBinds(bindings));
+        return invalid;
     }
 
     public boolean isValidKey(String key) {
-        return key.matches("(Shift\\+)?([A-Z0-9]|F[1-9]|F1[0-2]|ENTER)");
+        if (key == null)
+            return false;
+        String normalized = normalizeKey(key);
+        return normalized.isEmpty() || KEY_PATTERN.matcher(normalized).matches();
+    }
+
+    private static String normalizeKey(String key) {
+        String normalized = key.trim().toUpperCase(Locale.ROOT);
+        if (normalized.startsWith("SHIFT+"))
+            return "Shift+" + normalized.substring(6);
+        return normalized;
+    }
+
+    public static KeyStroke parseKeyStroke(String key) {
+        if (key == null)
+            return null;
+        String normalized = normalizeKey(key);
+        if (normalized.isEmpty())
+            return null;
+        boolean shift = normalized.startsWith("Shift+");
+        KeyStroke stroke = KeyStroke.getKeyStroke(shift ? normalized.substring(6) : normalized);
+        if (stroke == null || !KEY_PATTERN.matcher(normalized).matches())
+            return null;
+        return shift ? KeyStroke.getKeyStroke(stroke.getKeyCode(), InputEvent.SHIFT_DOWN_MASK) : stroke;
+    }
+
+    public void addSelector(LibrarySelector selector) {
+        selectors.add(selector);
+    }
+
+    public void removeSelector(LibrarySelector selector) {
+        selectors.remove(selector);
     }
 }
