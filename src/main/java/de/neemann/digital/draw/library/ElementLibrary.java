@@ -45,6 +45,10 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.*;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.CompletionException;
+
+import javax.swing.SwingUtilities;
 
 /**
  * The ElementLibrary is responsible for storing all the components which can be used in a circuit.
@@ -98,6 +102,10 @@ public class ElementLibrary implements Iterable<ElementLibrary.ElementContainer>
     private Exception exception;
     private long lastRescanTime;
     private StringBuilder warningMessage;
+    private volatile long scanGeneration;
+    private volatile CompletableFuture<LibraryNode> pendingScan;
+    private volatile IOException scanError;
+    private boolean rescanRequested;
 
     /**
      * Creates a new instance.
@@ -250,8 +258,13 @@ public class ElementLibrary implements Iterable<ElementLibrary.ElementContainer>
         custom = new ElementLibraryFolder(root, Lang.get("menu_custom"));
 
         File libPath = Settings.getInstance().get(Keys.SETTINGS_LIBRARY_PATH);
-        if (libPath != null && libPath.exists())
-            new ElementLibraryFolder(root, Lang.get("menu_library")).scanFolder(libPath, true);
+        if (libPath != null && libPath.exists()) {
+            try {
+                new ElementLibraryFolder(root, Lang.get("menu_library")).scanFolder(libPath, true);
+            } catch (IOException e) {
+                exception = e;
+            }
+        }
 
         populateNodeMap();
 
@@ -382,15 +395,17 @@ public class ElementLibrary implements Iterable<ElementLibrary.ElementContainer>
      * @throws IOException IOException
      */
     public void setRootFilePath(File rootLibraryPath) throws IOException {
-        if (rootLibraryPath == null) {
-            if (this.rootLibraryPath != null) {
-                this.rootLibraryPath = null;
-                rescanFolder();
-            }
-        } else if (!rootLibraryPath.equals(this.rootLibraryPath)) {
-            this.rootLibraryPath = rootLibraryPath;
+        if (Objects.equals(rootLibraryPath, this.rootLibraryPath))
+            return;
+        cancelPendingScan();
+        this.rootLibraryPath = rootLibraryPath;
+        scanError = null;
+        LibraryNode changed = custom.publish(rootLibraryPath == null ? null : new LibraryNode(Lang.get("menu_custom")));
+        populateNodeMap();
+        if (changed != null)
+            fireLibraryChanged(changed);
+        if (rootLibraryPath != null)
             rescanFolder();
-        }
     }
 
     /**
@@ -398,6 +413,26 @@ public class ElementLibrary implements Iterable<ElementLibrary.ElementContainer>
      */
     public File getRootFilePath() {
         return rootLibraryPath;
+    }
+
+    /** @return whether a custom folder scan is waiting to publish. */
+    public boolean isScanPending() {
+        return pendingScan != null;
+    }
+
+    /** @return the most recent custom folder scan failure, or null. */
+    public IOException getScanError() {
+        return scanError;
+    }
+
+    /** Cancels work when its owning editor closes; shared child editors must not call this. */
+    public void cancelPendingScan() {
+        scanGeneration++;
+        rescanRequested = false;
+        CompletableFuture<LibraryNode> pending = pendingScan;
+        pendingScan = null;
+        if (pending != null)
+            pending.cancel(false);
     }
 
     /**
@@ -461,7 +496,7 @@ public class ElementLibrary implements Iterable<ElementLibrary.ElementContainer>
 
             LOGGER.debug("could not find " + elementName);
 
-            if (System.currentTimeMillis() - lastRescanTime > MIN_RESCAN_INTERVAL) {
+            if (!isScanPending() && System.currentTimeMillis() - lastRescanTime > MIN_RESCAN_INTERVAL) {
                 rescanFolder();
 
                 node = map.get(elementName);
@@ -475,15 +510,62 @@ public class ElementLibrary implements Iterable<ElementLibrary.ElementContainer>
         throw new ElementNotFoundException(Lang.get("err_element_N_notFound", elementName));
     }
 
-    private void rescanFolder() {
+    private void rescanFolder() throws IOException {
         LOGGER.debug("rescan folder");
-        LibraryNode cn = custom.scanFolder(rootLibraryPath, false);
-
-        populateNodeMap();
-
-        if (cn != null)
-            fireLibraryChanged(cn);
+        if (isScanPending()) {
+            rescanRequested = true;
+            return;
+        }
+        scanError = null;
         lastRescanTime = System.currentTimeMillis();
+        long generation = ++scanGeneration;
+        File path = rootLibraryPath;
+        if (!SwingUtilities.isEventDispatchThread() || path == null) {
+            try {
+                publishScan(custom.scan(path, false, () -> false), null);
+            } catch (IOException e) {
+                publishScan(null, e);
+                throw e;
+            }
+            return;
+        }
+        CompletableFuture<LibraryNode> scan = CompletableFuture.supplyAsync(() -> {
+            try {
+                return custom.scan(path, false, () -> generation != scanGeneration);
+            } catch (IOException e) {
+                throw new CompletionException(e);
+            }
+        });
+        pendingScan = scan;
+        fireLibraryChanged(root);
+        scan.whenComplete((snapshot, failure) -> SwingUtilities.invokeLater(() -> {
+            if (generation != scanGeneration || !Objects.equals(path, rootLibraryPath))
+                return;
+            pendingScan = null;
+            if (rescanRequested) {
+                rescanRequested = false;
+                try {
+                    rescanFolder();
+                } catch (IOException e) {
+                    publishScan(null, e);
+                }
+                return;
+            }
+            Throwable cause = failure instanceof CompletionException ? failure.getCause() : failure;
+            IOException error = cause == null ? null : cause instanceof IOException
+                    ? (IOException) cause : new IOException("Cannot scan library folder: " + path, cause);
+            publishScan(snapshot, error);
+        }));
+    }
+
+    private void publishScan(LibraryNode snapshot, IOException error) {
+        scanError = error;
+        LibraryNode changed = null;
+        if (error == null) {
+            changed = custom.publish(snapshot);
+            populateNodeMap();
+        }
+        fireLibraryChanged(changed == null ? root : changed);
     }
 
     /**

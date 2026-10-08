@@ -1,0 +1,12 @@
+{
+  "name": "digital-local",
+  "interface": { "displayName": "Digital" },
+  "plugins": [
+    {
+      "name": "digital",
+      "source": { "source": "local", "path": "./target/codex/digital" },
+      "policy": { "installation": "AVAILABLE", "authentication": "ON_USE" },
+      "category": "Education"
+    }
+  ]
+}

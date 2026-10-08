@@ -10,8 +10,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.concurrent.CancellationException;
+import java.util.function.BooleanSupplier;
 
 /**
  * Handles a single folder
@@ -49,85 +52,107 @@ public class ElementLibraryFolder {
      * @param path      the path to scan
      * @param isLibrary true if this is the library
      * @return the node which has changed
+     * @throws IOException if the directory cannot be read
      */
-    public LibraryNode scanFolder(File path, boolean isLibrary) {
-        LibraryNode changedNode = null;
-        if (path != null) {
-            if (node == null) {
-                node = new LibraryNode(menuTitle);
-                root.add(node);
-                changedNode = root;
-            } else {
-                node.removeAll();
-                changedNode = node;
-            }
-            final ScanCounter scanCounter = new ScanCounter();
-            scanFolder(path, node, scanCounter, isLibrary);
-            LOGGER.debug("found " + scanCounter.getCircuitCounter() + " files in " + path);
-        } else if (node != null) {
-            root.remove(node);
-            node = null;
-            changedNode = root;
-        }
-        return changedNode;
+    public LibraryNode scanFolder(File path, boolean isLibrary) throws IOException {
+        return publish(scan(path, isLibrary, () -> false));
     }
 
-    private static void scanFolder(File path, LibraryNode node, ScanCounter scanCounter, boolean isLibrary) {
+    /** Reads a detached tree without changing the live library. */
+    LibraryNode scan(File path, boolean isLibrary, BooleanSupplier cancelled) throws IOException {
+        if (path == null)
+            return null;
+        LibraryNode snapshot = new LibraryNode(menuTitle);
+        ScanCounter scanCounter = new ScanCounter();
+        scanFolder(path, snapshot, scanCounter, isLibrary, cancelled);
+        LOGGER.debug("found " + scanCounter.getCircuitCounter() + " files in " + path);
+        return snapshot;
+    }
+
+    /** Publishes a completed scan on the library owner's thread. */
+    LibraryNode publish(LibraryNode snapshot) {
+        if (snapshot == null) {
+            if (node == null)
+                return null;
+            root.remove(node);
+            node = null;
+            return root;
+        }
+        if (node == null) {
+            node = snapshot;
+            root.add(node);
+            return root;
+        }
+        node.removeAll();
+        for (LibraryNode child : snapshot)
+            node.add(child);
+        return node;
+    }
+
+    private static void scanFolder(File path, LibraryNode node, ScanCounter scanCounter,
+                                   boolean isLibrary, BooleanSupplier cancelled) throws IOException {
+        checkCancelled(cancelled);
+        if (scanCounter.getFileCounter() >= MAX_FILES_TO_SCAN)
+            return;
         File[] list = path.listFiles();
-        if (list != null && scanCounter.getFileCounter() < MAX_FILES_TO_SCAN) {
-            ArrayList<File> orderedList = new ArrayList<>(Arrays.asList(list));
-            orderedList.sort((f1, f2) -> NumStringComparator.compareStr(f1.getName(), f2.getName()));
-            for (File f : orderedList) {
-                if (f.isDirectory() && !f.isHidden()) {
-                    LibraryNode n = new LibraryNode(f.getName());
-                    scanFolder(f, n, scanCounter, isLibrary);
-                    if (!n.isEmpty())
-                        node.add(n);
-                }
-            }
-
-            ArrayList<File> fileList = new ArrayList<>();
-            for (File f : orderedList) {
-                scanCounter.incFile();
-                final String name = f.getName();
-                if (f.isFile() && name.endsWith(".dig")) {
-                    fileList.add(f);
-                    scanCounter.incCircuit();
-                }
-            }
-
-            if (fileList.size() <= MAX_MENU_SIZE + 1) {
-                for (File f : fileList)
-                    node.add(new LibraryNode(f, isLibrary));
-            } else {
-                for (int i = 0; i < MAX_MENU_SIZE; i++)
-                    node.add(new LibraryNode(fileList.get(i), isLibrary));
-
-                final int size = fileList.size() - MAX_MENU_SIZE;
-                int subMenus = (size - 1) / MAX_MENU_SIZE + 1;
-                int delta = (size - 1) / subMenus + 1;
-
-                int pos = MAX_MENU_SIZE;
-                while (pos < fileList.size()) {
-                    int pos2 = pos + delta;
-                    if (pos2 > fileList.size())
-                        pos2 = fileList.size();
-
-                    String name;
-                    if (subMenus > 1)
-                        name = clean(fileList.get(pos)) + " - " + clean(fileList.get(pos2 - 1));
-                    else
-                        name = Lang.get("lib_more");
-
-                    LibraryNode n = new LibraryNode(name);
+        checkCancelled(cancelled);
+        if (list == null)
+            throw new IOException("Cannot read library folder: " + path);
+        ArrayList<File> orderedList = new ArrayList<>(Arrays.asList(list));
+        orderedList.sort((f1, f2) -> NumStringComparator.compareStr(f1.getName(), f2.getName()));
+        ArrayList<File> fileList = new ArrayList<>();
+        for (File f : orderedList) {
+            checkCancelled(cancelled);
+            if (scanCounter.getFileCounter() >= MAX_FILES_TO_SCAN)
+                break;
+            scanCounter.incFile();
+            if (f.isDirectory() && !f.isHidden()) {
+                LibraryNode n = new LibraryNode(f.getName());
+                scanFolder(f, n, scanCounter, isLibrary, cancelled);
+                if (!n.isEmpty())
                     node.add(n);
-                    for (int p = pos; p < pos2; p++)
-                        n.add(new LibraryNode(fileList.get(p), isLibrary));
-
-                    pos = pos2;
-                }
+            } else if (f.isFile() && f.getName().endsWith(".dig")) {
+                fileList.add(f);
+                scanCounter.incCircuit();
             }
         }
+
+        if (fileList.size() <= MAX_MENU_SIZE + 1) {
+            for (File f : fileList)
+                node.add(new LibraryNode(f, isLibrary));
+        } else {
+            for (int i = 0; i < MAX_MENU_SIZE; i++)
+                node.add(new LibraryNode(fileList.get(i), isLibrary));
+
+            final int size = fileList.size() - MAX_MENU_SIZE;
+            int subMenus = (size - 1) / MAX_MENU_SIZE + 1;
+            int delta = (size - 1) / subMenus + 1;
+
+            int pos = MAX_MENU_SIZE;
+            while (pos < fileList.size()) {
+                int pos2 = pos + delta;
+                if (pos2 > fileList.size())
+                    pos2 = fileList.size();
+
+                String name;
+                if (subMenus > 1)
+                    name = clean(fileList.get(pos)) + " - " + clean(fileList.get(pos2 - 1));
+                else
+                    name = Lang.get("lib_more");
+
+                LibraryNode n = new LibraryNode(name);
+                node.add(n);
+                for (int p = pos; p < pos2; p++)
+                    n.add(new LibraryNode(fileList.get(p), isLibrary));
+
+                pos = pos2;
+            }
+        }
+    }
+
+    private static void checkCancelled(BooleanSupplier cancelled) {
+        if (cancelled.getAsBoolean())
+            throw new CancellationException("Library scan superseded");
     }
 
     private static String clean(File file) {

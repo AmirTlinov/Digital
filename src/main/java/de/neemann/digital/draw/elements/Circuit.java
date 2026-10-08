@@ -44,6 +44,12 @@ import org.slf4j.LoggerFactory;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.AtomicMoveNotSupportedException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.StandardCopyOption;
+import java.nio.file.attribute.PosixFileAttributeView;
+import java.nio.file.attribute.PosixFilePermission;
 import java.util.*;
 
 import static de.neemann.digital.core.element.PinInfo.input;
@@ -180,7 +186,33 @@ public class Circuit implements Copyable<Circuit> {
      * @throws IOException IOException
      */
     public void save(File filename) throws IOException {
-        save(new FileOutputStream(filename));
+        Path target = filename.toPath().toAbsolutePath();
+        if (Files.exists(target) || Files.isSymbolicLink(target))
+            target = target.toRealPath();
+        Set<PosixFilePermission> permissions = null;
+        if (Files.exists(target) && Files.getFileAttributeView(target, PosixFileAttributeView.class) != null)
+            permissions = Files.getPosixFilePermissions(target);
+
+        Path pending = Files.createTempFile(target.getParent(), ".digital-", ".tmp");
+        try {
+            try (OutputStream out = Files.newOutputStream(pending)) {
+                save(out);
+            }
+            if (permissions != null)
+                Files.setPosixFilePermissions(pending, permissions);
+            try {
+                Files.move(pending, target, StandardCopyOption.ATOMIC_MOVE, StandardCopyOption.REPLACE_EXISTING);
+            } catch (AtomicMoveNotSupportedException e) {
+                Files.move(pending, target, StandardCopyOption.REPLACE_EXISTING);
+            }
+        } catch (IOException | RuntimeException | Error e) {
+            try {
+                Files.deleteIfExists(pending);
+            } catch (IOException cleanupError) {
+                e.addSuppressed(cleanupError);
+            }
+            throw e;
+        }
     }
 
     /**

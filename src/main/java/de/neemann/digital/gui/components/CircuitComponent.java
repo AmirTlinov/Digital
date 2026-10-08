@@ -1368,7 +1368,7 @@ public class CircuitComponent extends JComponent implements ChangedListener, Lib
 
     @Override
     public void libraryChanged(LibraryNode node) {
-        getCircuit().clearState();
+        if (activeMouseController != mouseRun) getCircuit().clearState();
         graphicHasChangedFlag = true;
         repaint();
     }

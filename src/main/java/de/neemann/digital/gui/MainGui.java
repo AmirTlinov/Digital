@@ -28,6 +28,7 @@ import de.neemann.digital.draw.graphics.*;
 import de.neemann.digital.draw.library.ElementLibrary;
 import de.neemann.digital.draw.library.ElementNotFoundException;
 import de.neemann.digital.draw.library.ElementTypeDescriptionCustom;
+import de.neemann.digital.draw.library.LibraryListener;
 import de.neemann.digital.draw.model.AsyncSequentialClock;
 import de.neemann.digital.draw.model.ModelCreator;
 import de.neemann.digital.draw.model.RealTimeClock;
@@ -80,6 +81,7 @@ import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
+import java.util.function.Consumer;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -194,20 +196,21 @@ public final class MainGui extends JFrame implements ClosingWindowListener.Confi
 
         circuitComponent = new CircuitComponent(this, library, shapeFactory);
         circuitComponent.addListener(this);
+        Runnable initializeDocument;
         if (builder.circuit != null) {
             LOGGER.debug("create with given circuit: " + builder.circuit.getOrigin());
-            SwingUtilities.invokeLater(() -> circuitComponent.setCircuit(builder.circuit));
-            setFilename(builder.fileToOpen, false);
+            initializeDocument = () -> {
+                circuitComponent.setCircuit(builder.circuit);
+                setFilename(builder.fileToOpen, false);
+            };
         } else {
             if (builder.fileToOpen != null) {
                 LOGGER.debug("create with given file " + builder.fileToOpen);
-                SwingUtilities.invokeLater(() -> loadFile(builder.fileToOpen, builder.library == null, builder.library == null));
+                initializeDocument = () -> loadFile(builder.fileToOpen, builder.library == null, builder.library == null);
             } else {
                 File name = fileHistory.getMostRecent();
                 LOGGER.debug("create with history file " + name);
-                if (name != null) {
-                    SwingUtilities.invokeLater(() -> loadFile(name, true, false));
-                }
+                initializeDocument = () -> { if (name != null) loadFile(name, true, false); };
             }
         }
         circuitScrollPanel = new CircuitScrollPanel(circuitComponent);
@@ -222,6 +225,23 @@ public final class MainGui extends JFrame implements ClosingWindowListener.Confi
         statusLabel = new JLabel(" ");
         statusLabel.setBorder(BorderFactory.createEmptyBorder(0, Screen.getInstance().getFontSize() * 2 / 3, 0, 0));
         getContentPane().add(statusLabel, BorderLayout.SOUTH);
+        String libraryProgress = Lang.get("menu_library") + "...";
+        String libraryError = Lang.get("err_loadingLibrary");
+        LibraryListener libraryNotifications = node -> {
+            if (library.isScanPending()) {
+                statusLabel.setText(libraryProgress);
+            } else if (library.getScanError() != null) {
+                statusLabel.setText(libraryError);
+                statusLabel.setToolTipText(library.getScanError().getMessage());
+            } else if (library.getWarningMessage() != null) {
+                statusLabel.setText(Lang.get("msg_errorUpdatingLibrary"));
+                statusLabel.setToolTipText(library.getWarningMessage().toString());
+            } else if (statusLabel.getText().equals(libraryProgress) || statusLabel.getText().equals(libraryError)) {
+                statusLabel.setText(" ");
+                statusLabel.setToolTipText(null);
+            }
+        };
+        if (builder.library == null) library.addListener(libraryNotifications);
 
         setupStates();
 
@@ -288,6 +308,7 @@ public final class MainGui extends JFrame implements ClosingWindowListener.Confi
                 library.removeListener(librarySelector);
                 library.removeListener(insertHistory);
                 library.removeListener(circuitComponent);
+                library.removeListener(libraryNotifications);
                 if (treeModel != null)
                     library.removeListener(treeModel);
                 windowPosManager.shutdown();
@@ -320,7 +341,8 @@ public final class MainGui extends JFrame implements ClosingWindowListener.Confi
             setLocationRelativeTo(null);
 
         checkIDEIntegration(builder, menuBar);
-
+        if (SwingUtilities.isEventDispatchThread()) initializeDocument.run();
+        else SwingUtilities.invokeLater(initializeDocument);
     }
 
     private void checkIDEIntegration(MainBuilder builder, JMenuBar menuBar) {
@@ -641,8 +663,6 @@ public final class MainGui extends JFrame implements ClosingWindowListener.Confi
                                     case 0:
                                         saveFile(file, true);
                                         library.setRootFilePath(file.getParentFile());
-                                        if (library.getWarningMessage() != null)
-                                            SwingUtilities.invokeLater(new ErrorMessage(library.getWarningMessage().toString()).setComponent(MainGui.this));
                                         break;
                                     case 1:
                                         saveAsHelper.retryFileSelect();
@@ -1232,13 +1252,7 @@ public final class MainGui extends JFrame implements ClosingWindowListener.Confi
         ToolTipAction stats = new ToolTipAction(Lang.get("menu_stats")) {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                try {
-                    model = new ModelCreator(getCircuitComponent().getCircuit(), library).createModel(false);
-                    Statistics stats = new Statistics(model);
-                    new StatsDialog(MainGui.this, stats.getTableModel()).setVisible(true);
-                } catch (ElementNotFoundException | PinException | NodeException e) {
-                    new ErrorMessage(Lang.get("msg_couldNotCreateStats")).addCause(e).show(MainGui.this);
-                }
+                showCircuitStatistics();
             }
         }.setToolTip(Lang.get("menu_stats_tt"));
 
@@ -1417,13 +1431,7 @@ public final class MainGui extends JFrame implements ClosingWindowListener.Confi
         analyse.add(new ToolTipAction(Lang.get("menu_stats")) {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                try {
-                    model = new ModelCreator(getCircuitComponent().getCircuit(), library).createModel(false);
-                    Statistics stats = new Statistics(model);
-                    new StatsDialog(MainGui.this, stats.getTableModel()).setVisible(true);
-                } catch (ElementNotFoundException | PinException | NodeException e) {
-                    new ErrorMessage(Lang.get("msg_couldNotCreateStats")).addCause(e).show(MainGui.this);
-                }
+                showCircuitStatistics();
             }
         }.setToolTip(Lang.get("menu_stats_tt")).createJMenuItem());
 
@@ -1440,6 +1448,20 @@ public final class MainGui extends JFrame implements ClosingWindowListener.Confi
                 }
             }
         }.setToolTip(Lang.get("menu_calcMaxPathLen_tt")).createJMenuItem());
+    }
+
+    private void showCircuitStatistics() {
+        try {
+            Model statisticsModel = new ModelCreator(circuitComponent.getCircuit().createDeepCopy(), library).createModel(false);
+            try {
+                Statistics statistics = new Statistics(statisticsModel);
+                new StatsDialog(this, statistics.getTableModel()).setVisible(true);
+            } finally {
+                statisticsModel.close();
+            }
+        } catch (ElementNotFoundException | PinException | NodeException e) {
+            new ErrorMessage(Lang.get("msg_couldNotCreateStats")).addCause(e).show(this);
+        }
     }
 
     private void orderMeasurements() {
@@ -1526,31 +1548,48 @@ public final class MainGui extends JFrame implements ClosingWindowListener.Confi
         }
 
         void enter(boolean runRealTime, ModelModifier modelModifier) {
+            enter(runRealTime, modelModifier, null);
+        }
+
+        void enter(boolean runRealTime, ModelModifier modelModifier, Consumer<Exception> onError) {
             super.enter();
             stoppedState.getAction().setEnabled(true);
             showMeasurementDialog.setEnabled(true);
             showMeasurementGraph.setEnabled(true);
             runTests.setEnabled(false);
-            createAndStartModel(runRealTime, ModelEventType.STEP, modelModifier);
+            createAndStartModel(runRealTime, ModelEventType.STEP, modelModifier, onError);
         }
     }
 
     private void clearModelDescription() {
-        if (model != null)
-            model.close();
-
+        closeModel();
         modelCreator = null;
         model = null;
     }
 
+    private void closeModel() {
+        if (model != null) {
+            Model closingModel = model;
+            closingModel.close();
+            CircuitModifierPostClosed modifications = closingModel.getObserver(CircuitModifierPostClosed.class);
+            if (modifications != null) modifications.applyPending();
+        }
+    }
+
     private void createAndStartModel(boolean globalRunClock, ModelEventType updateEvent, ModelModifier modelModifier) {
+        createAndStartModel(globalRunClock, updateEvent, modelModifier,
+                null);
+    }
+
+    private void createAndStartModel(boolean globalRunClock, ModelEventType updateEvent, ModelModifier modelModifier,
+                                     Consumer<Exception> onError) {
         try {
             circuitComponent.removeHighLighted();
 
             if (model != null) {
                 ModelClosedObserver mco = model.getObserver(ModelClosedObserver.class);
                 if (mco != null) mco.setClosedByRestart(true);
-                model.close();
+                closeModel();
                 circuitComponent.getCircuit().clearState();
                 model = null;
             }
@@ -1606,8 +1645,15 @@ public final class MainGui extends JFrame implements ClosingWindowListener.Confi
                 circuitComponent.setCopy(modelCreator.getCircuit());
 
             // Allows the model to modify the circuit
+            Circuit simulatedDocument = circuitComponent.getCircuit();
             CircuitModifierPostClosed cmpc = new CircuitModifierPostClosed(
-                    modification -> SwingUtilities.invokeLater(() -> circuitComponent.modify(modification)));
+                    modification -> {
+                        if (circuitComponent.getCircuit() == simulatedDocument)
+                            circuitComponent.modify(modification);
+                    }, action -> {
+                        if (SwingUtilities.isEventDispatchThread()) action.run();
+                        else SwingUtilities.invokeLater(action);
+                    });
             modelCreator.connectToGui(cmpc);
             this.model.addObserver(cmpc);
 
@@ -1652,14 +1698,17 @@ public final class MainGui extends JFrame implements ClosingWindowListener.Confi
                     this.model.addObserver(new UpdateViewPeriodic());
             }
 
-            this.model.addObserver(new ModelClosedObserver());
+            this.model.addObserver(new ModelClosedObserver(this.model, onError != null));
 
-            this.model.init();
+            Model initializedModel = this.model;
+            initializedModel.init();
+            if (onError != null) checkControlledSimulationError(initializedModel);
 
         } catch (NodeException | PinException | RuntimeException | ElementNotFoundException e) {
             if (model != null)
                 model.close();
-            showError(Lang.get("msg_errorCreatingModel"), e);
+            if (onError == null) showError(Lang.get("msg_errorCreatingModel"), e);
+            else onError.accept(e);
         }
     }
 
@@ -1692,6 +1741,36 @@ public final class MainGui extends JFrame implements ClosingWindowListener.Confi
      */
     public Model getModel() {
         return model;
+    }
+
+    /** Starts the existing GUI simulation with a manual clock and reports errors to the caller. */
+    public void startControlledSimulation() {
+        if (!SwingUtilities.isEventDispatchThread())
+            throw new IllegalStateException("Simulation must be started on the Swing event dispatch thread");
+        ((RunModelState) runModelState).enter(false, null, error -> {
+            ensureModelIsStopped();
+            throw new IllegalStateException(error.getMessage(), error);
+        });
+    }
+
+    /** Reports a model calculation error after the model has completed its normal close transition. */
+    public void checkControlledSimulationError(Model observedModel) {
+        ModelClosedObserver observer = observedModel.getObserver(ModelClosedObserver.class);
+        if (observer != null && observer.controlled && observer.failure != null) {
+            Exception failure = observer.failure;
+            if (model == observedModel) ensureModelIsStopped();
+            throw new IllegalStateException(failure.getMessage(), failure);
+        }
+    }
+
+    /** @return whether the live model is driven by a real-time clock. */
+    public boolean isRealTimeClockRunning() {
+        return realTimeClockRunning;
+    }
+
+    /** @return the actual document path, or null for an unsaved document. */
+    public File getCurrentFile() {
+        return filename;
     }
 
     private void showError(String message, Exception cause) {
@@ -1760,23 +1839,8 @@ public final class MainGui extends JFrame implements ClosingWindowListener.Confi
     }
 
     private void loadFile(File filename, boolean setLibraryRoot, boolean toPref) {
-        LOGGER.debug("loadFile: " + filename);
         try {
-            if (setLibraryRoot) {
-                LOGGER.debug("set library root: " + filename);
-                library.setRootFilePath(filename.getParentFile());
-                if (library.getWarningMessage() != null)
-                    SwingUtilities.invokeLater(new ErrorMessage(library.getWarningMessage().toString()).setComponent(this));
-            }
-            Circuit circuit = Circuit.loadCircuit(filename, shapeFactory);
-            circuitComponent.setCircuit(circuit);
-
-            // requests the circuit modified state, so place it behind circuitComponent.setCircuit(circuit);
-            setFilename(filename, toPref);
-
-            ensureModelIsStopped();
-            windowPosManager.closeAll();
-            statusLabel.setText(" ");
+            loadCircuitFrom(filename, setLibraryRoot, toPref);
         } catch (Exception e) {
             circuitComponent.setCircuit(new Circuit());
             setFilename(null, false);
@@ -1784,22 +1848,37 @@ public final class MainGui extends JFrame implements ClosingWindowListener.Confi
         }
     }
 
+    /** Synchronously loads a document on its existing editor owner. */
+    public void loadCircuitFrom(File filename, boolean setLibraryRoot, boolean toPref) throws IOException {
+        if (!SwingUtilities.isEventDispatchThread())
+            throw new IllegalStateException("Opening must run on the Swing event dispatch thread");
+        LOGGER.debug("loadFile: " + filename);
+        Circuit circuit = Circuit.loadCircuit(filename, shapeFactory);
+        ensureModelIsStopped();
+        if (setLibraryRoot) library.setRootFilePath(filename.getParentFile());
+        circuitComponent.setCircuit(circuit);
+        setFilename(filename, toPref);
+        windowPosManager.closeAll();
+        statusLabel.setText(library.isScanPending() ? Lang.get("menu_library") + "..." : " ");
+    }
+
     private void saveFile(File filename, boolean toPrefs) {
         try {
-            circuitComponent.save(filename);
-            ensureModelIsStopped();
-            setFilename(filename, toPrefs);
-
-            library.invalidateElement(filename);
-
-            if (library.getRootFilePath() == null) {
-                library.setRootFilePath(filename.getParentFile());
-                if (library.getWarningMessage() != null)
-                    SwingUtilities.invokeLater(new ErrorMessage(library.getWarningMessage().toString()).setComponent(this));
-            }
+            saveCircuitTo(filename, toPrefs);
         } catch (IOException e) {
             new ErrorMessage(Lang.get("msg_errorWritingFile")).addCause(e).show(this);
         }
+    }
+
+    /** Saves through the same document owner and lets integrations handle I/O errors without a modal dialog. */
+    public void saveCircuitTo(File filename, boolean toPrefs) throws IOException {
+        if (!SwingUtilities.isEventDispatchThread())
+            throw new IllegalStateException("Saving must run on the Swing event dispatch thread");
+        ensureModelIsStopped();
+        circuitComponent.save(filename);
+        setFilename(filename, toPrefs);
+        library.invalidateElement(filename);
+        if (library.getRootFilePath() == null) library.setRootFilePath(filename.getParentFile());
     }
 
     private void setFilename(File filename, boolean toPrefs) {
@@ -1843,7 +1922,7 @@ public final class MainGui extends JFrame implements ClosingWindowListener.Confi
 
     @Override
     public void hasChanged() {
-        ensureModelIsStopped();
+        if (model != null && model.isRunning()) ensureModelIsStopped();
         if (modifiedPrefixVisible != circuitComponent.isModified())
             setFilename(filename, false);
     }
@@ -1864,20 +1943,36 @@ public final class MainGui extends JFrame implements ClosingWindowListener.Confi
      * Used to update the gui if the model is closed
      */
     private class ModelClosedObserver implements ModelStateObserverTyped {
-
+        private final Model observedModel;
+        private final boolean controlled;
+        private volatile Exception failure;
         private boolean closedByRestart = false;
-        private boolean errorDialogIsOpened = true;
+        private boolean errorDialogIsOpened;
+
+        ModelClosedObserver(Model observedModel, boolean controlled) {
+            this.observedModel = observedModel;
+            this.controlled = controlled;
+            errorDialogIsOpened = !controlled;
+        }
 
         @Override
         public void handleEvent(ModelEvent event) {
             switch (event.getType()) {
                 case ERROR_OCCURRED:
-                    SwingUtilities.invokeLater(() -> showError(Lang.get("msg_errorCalculatingStep"), event.getCause()));
-                    errorDialogIsOpened = true;
+                    failure = event.getCause();
+                    if (!controlled) {
+                        SwingUtilities.invokeLater(() -> {
+                            if (model == observedModel)
+                                showError(Lang.get("msg_errorCalculatingStep"), event.getCause());
+                        });
+                        errorDialogIsOpened = true;
+                    }
                     break;
                 case CLOSED:
                     if (!errorDialogIsOpened && !closedByRestart)
-                        SwingUtilities.invokeLater(MainGui.this::ensureModelIsStopped);
+                        SwingUtilities.invokeLater(() -> {
+                            if (model == observedModel) ensureModelIsStopped();
+                        });
                     break;
             }
         }

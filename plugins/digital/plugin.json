@@ -1,0 +1,21 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "digital",
+  "version": "0.1.0",
+  "description": "Создавайте, исследуйте и запускайте логические схемы в установленном Digital вместе с Codex.",
+  "author": { "name": "Amir Tlinov" },
+  "license": "GPL-3.0-only",
+  "extensions": {
+    "com.openai": {
+      "interface": {
+        "displayName": "Digital",
+        "shortDescription": "Логические схемы в живом приложении",
+        "longDescription": "Codex работает с теми же схемами, элементами и сигналами, которые вы видите в Digital на Mac.",
+        "developerName": "Amir Tlinov",
+        "category": "Education",
+        "capabilities": ["Read", "Write"],
+        "defaultPrompt": "Открой Digital и помоги мне построить и проверить логическую схему."
+      }
+    }
+  }
+}

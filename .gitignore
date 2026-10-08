@@ -84,3 +84,6 @@ nbactions.xml
 .settings
 .vscode
 .DS_Store
+
+# Digital Codex plugin build dependencies
+/plugins/digital/node_modules/

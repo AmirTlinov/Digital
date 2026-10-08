@@ -13,7 +13,7 @@ import de.neemann.digital.lang.Lang;
 import de.neemann.digital.undo.Modification;
 import de.neemann.digital.undo.Modifications;
 
-import javax.swing.*;
+import java.util.concurrent.Executor;
 
 /**
  * Allows the model to modify the circuit
@@ -22,6 +22,9 @@ public class CircuitModifierPostClosed implements CircuitModifier, ModelStateObs
 
     private final Modifications.Builder<Circuit> builder;
     private final CircuitModifier circuitModifier;
+    private final Executor dispatcher;
+    private Modification<Circuit> pending;
+    private boolean closed;
 
     /**
      * Creates a new instance
@@ -29,12 +32,21 @@ public class CircuitModifierPostClosed implements CircuitModifier, ModelStateObs
      * @param circuitModifier the parent modifier used to modify the circuit
      */
     public CircuitModifierPostClosed(CircuitModifier circuitModifier) {
+        this(circuitModifier, Runnable::run);
+    }
+
+    /**
+     * @param circuitModifier the document's modifier
+     * @param dispatcher dispatches the pending modification to its document owner
+     */
+    public CircuitModifierPostClosed(CircuitModifier circuitModifier, Executor dispatcher) {
         this.circuitModifier = circuitModifier;
+        this.dispatcher = dispatcher;
         builder = new Modifications.Builder<>(Lang.get("mod_modifiedByRunningModel"));
     }
 
     @Override
-    public void modify(Modification<Circuit> modification) {
+    public synchronized void modify(Modification<Circuit> modification) {
         builder.add(modification);
     }
 
@@ -46,9 +58,26 @@ public class CircuitModifierPostClosed implements CircuitModifier, ModelStateObs
     @Override
     public void handleEvent(ModelEvent event) {
         if (event.getType().equals(ModelEventType.POSTCLOSED)) {
-            Modification<Circuit> m = builder.build();
-            if (m != null)
-                circuitModifier.modify(m);
+            synchronized (this) {
+                if (closed)
+                    return;
+                closed = true;
+                pending = builder.build();
+                if (pending == null)
+                    return;
+            }
+            dispatcher.execute(this::applyPending);
         }
+    }
+
+    /** Flushes a staged close modification once, before its owner saves or replaces the document. */
+    public void applyPending() {
+        Modification<Circuit> modification;
+        synchronized (this) {
+            modification = pending;
+            pending = null;
+        }
+        if (modification != null)
+            circuitModifier.modify(modification);
     }
 }

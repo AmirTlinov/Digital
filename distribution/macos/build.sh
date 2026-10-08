@@ -116,6 +116,7 @@ done
     --java-options '-Dapple.laf.useScreenMenuBar=true'
 
 app_path="$work_dir/image/Digital.app"
+plutil -insert NSDocumentsFolderUsageDescription -string 'Digital читает соседние схемы в папке Документы, чтобы подключать вложенные компоненты и обновлять библиотеку проекта.' "$app_path/Contents/Info.plist"
 codesign --force --deep --sign - "$app_path"
 codesign --verify --deep --strict "$app_path"
 output_app="$project_dir/target/macos/Digital.app"

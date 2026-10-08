@@ -17,6 +17,7 @@ final class DesktopIntegration {
     }
 
     static void install() {
+        de.neemann.digital.integration.DigitalBridge.start();
         if (!Desktop.isDesktopSupported())
             return;
         Desktop desktop = Desktop.getDesktop();

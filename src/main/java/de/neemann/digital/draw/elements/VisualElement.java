@@ -65,7 +65,8 @@ public class VisualElement implements Drawable, Movable, AttributeListener {
     public VisualElement(VisualElement proto) {
         this.elementName = proto.elementName;
         this.elementAttributes = new ElementAttributes(proto.elementAttributes);
-        setPos(new Vector(proto.pos));
+        // A copy preserves stored geometry; snapping belongs to an actual position change.
+        this.pos = new Vector(proto.pos);
         this.shapeFactory = proto.shapeFactory;
     }
 

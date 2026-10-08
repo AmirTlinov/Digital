@@ -24,10 +24,14 @@ import de.neemann.digital.testing.TestExecutor;
 import de.neemann.digital.testing.TestingDataException;
 import de.neemann.digital.testing.parser.ParserException;
 import de.neemann.digital.undo.Modification;
+import de.neemann.digital.undo.ModifyException;
 import junit.framework.TestCase;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.ArrayList;
 import java.util.List;
 
 public class CircuitModifierTest extends TestCase {
@@ -65,5 +69,50 @@ public class CircuitModifierTest extends TestCase {
         DataField data = ma.getValue();
         for (int i = 0; i < 30; i++)
             assertEquals(i, data.getDataWord(i));
+    }
+
+    public void testDeferredEEPROMCloseFlushesBeforeSaveOnce() throws IOException, ElementNotFoundException, PinException, NodeException, TestingDataException, ParserException {
+        ElementLibrary library = new ElementLibrary();
+        ShapeFactory shapeFactory = new ShapeFactory(library);
+        Circuit circuit = Circuit.loadCircuit(new File(Resources.getRoot(), "dig/test/eeprom.dig"), shapeFactory);
+        TestCaseDescription testCase = circuit.getElements(v -> v.equalsDescription(TestCaseElement.DESCRIPTION))
+                .get(0).getElementAttributes().get(Keys.TESTDATA);
+        List<Runnable> dispatched = new ArrayList<>();
+        int[] applied = {0};
+        CircuitModifierPostClosed modifier = new CircuitModifierPostClosed(modification -> {
+            try {
+                modification.modify(circuit);
+                applied[0]++;
+            } catch (ModifyException e) {
+                throw new AssertionError(e);
+            }
+        }, dispatched::add);
+        ModelCreator creator = new ModelCreator(circuit, library);
+        Model model = creator.createModel(false);
+        creator.connectToGui(modifier);
+        model.addObserver(modifier);
+
+        new TestExecutor(testCase, model).execute();
+        assertFalse(model.isRunning());
+        assertEquals(1, dispatched.size());
+        assertEquals(0, applied[0]);
+
+        modifier.applyPending();
+        assertEquals(1, applied[0]);
+        Path saved = Files.createTempFile("digital-eeprom-close-", ".dig");
+        try {
+            circuit.save(saved.toFile());
+            Circuit loaded = Circuit.loadCircuit(saved.toFile(), shapeFactory);
+            DataField data = loaded.getElements(v -> v.getElementName().equals("EEPROM"))
+                    .get(0).getElementAttributes().get(Keys.DATA);
+            for (int i = 0; i < 30; i++)
+                assertEquals(i, data.getDataWord(i));
+        } finally {
+            Files.deleteIfExists(saved);
+        }
+
+        dispatched.get(0).run();
+        modifier.applyPending();
+        assertEquals(1, applied[0]);
     }
 }
